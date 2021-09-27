@@ -1,7 +1,8 @@
-package com.example.everybody_android
+package com.example.everybody_android.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.everybody_android.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
