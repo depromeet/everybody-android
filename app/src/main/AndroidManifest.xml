@@ -3,7 +3,7 @@
     package="com.example.everybody_android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
     <application
         android:name=".di.HiltApplication"
         android:allowBackup="true"
