@@ -19,8 +19,9 @@
 
         </activity>
         <activity
-            android:name=".ui.camera.CameraActivity"
-            android:screenOrientation="fullSensor" >
+            android:name=".ui.camera.ExampleCameraActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
