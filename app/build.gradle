@@ -6,6 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdk 31
@@ -87,4 +88,9 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase_database"
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-core:19.0.2'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+
+
 }
