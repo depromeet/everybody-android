@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.example.everybody_android.ui.camera.CameraViewModel.ClickEvent" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.camera.CameraViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Back.INSTANCE)}"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toBottomOf="@id/tw_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tw_title" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Switch.INSTANCE)}"
+            android:src="@drawable/ic_switch"
+            app:layout_constraintBottom_toBottomOf="@id/tw_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tw_title" />
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:text="사진 촬영"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/pv_finder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+
+        <include
+            android:id="@+id/include_grid"
+            layout="@layout/include_grid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/pv_finder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pv_finder" />
+
+        <ImageView
+            android:id="@+id/img_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Grid.INSTANCE)}"
+            android:src="@drawable/selector_grid"
+            app:layout_constraintEnd_toEndOf="@id/pv_finder"
+            app:layout_constraintTop_toTopOf="@id/pv_finder" />
+
+        <View
+            android:id="@+id/vw_info"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:background="@color/purple_op80"
+            app:layout_constraintBottom_toBottomOf="@id/pv_finder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tw_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="원하는 포즈를 선택하세요"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/vw_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vw_info" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tw_info,vw_info" />
+
+        <ImageView
+            android:id="@+id/img_shutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Shutter.INSTANCE)}"
+            android:src="@drawable/ic_shutter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pv_finder"
+            app:layout_constraintVertical_bias="1" />
+
+        <ImageView
+            android:id="@+id/img_pose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Pose.INSTANCE)}"
+            android:src="@drawable/ic_pose"
+            app:layout_constraintBottom_toTopOf="@id/tw_pose"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_shutter"
+            app:layout_constraintTop_toTopOf="@id/img_shutter"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tw_pose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Pose.INSTANCE)}"
+            android:text="포즈"
+            android:textColor="@color/gray_90"
+            app:layout_constraintBottom_toBottomOf="@id/img_shutter"
+            app:layout_constraintEnd_toEndOf="@id/img_pose"
+            app:layout_constraintStart_toStartOf="@id/img_pose"
+            app:layout_constraintTop_toBottomOf="@id/img_pose" />
+
+        <ImageView
+            android:id="@+id/img_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Album.INSTANCE)}"
+            android:src="@drawable/ic_pose"
+            app:layout_constraintBottom_toTopOf="@id/tw_album"
+            app:layout_constraintEnd_toStartOf="@id/img_shutter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_shutter"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tw_album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Album.INSTANCE)}"
+            android:text="앨범"
+            android:textColor="@color/gray_90"
+            app:layout_constraintBottom_toBottomOf="@id/img_shutter"
+            app:layout_constraintEnd_toEndOf="@id/img_album"
+            app:layout_constraintStart_toStartOf="@id/img_album"
+            app:layout_constraintTop_toBottomOf="@id/img_album" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
