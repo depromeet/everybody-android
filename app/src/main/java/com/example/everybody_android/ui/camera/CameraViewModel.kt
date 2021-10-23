@@ -1,9 +1,7 @@
 package com.example.everybody_android.ui.camera
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.everybody_android.base.BaseViewModel
 import com.example.everybody_android.base.MutableEventFlow
 import com.example.everybody_android.base.asEventFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,11 +17,7 @@ class CameraViewModel @Inject constructor() : ViewModel() {
     fun onClickEvent(event: ClickEvent) {
         viewModelScope.launch { _clickEvent.emit(event) }
     }
-
-    fun onBack(){
-        Log.e("asdasd","asdasds")
-    }
-
+    
     sealed class ClickEvent {
         object Shutter : ClickEvent()
         object Album : ClickEvent()
