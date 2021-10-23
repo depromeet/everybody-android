@@ -19,7 +19,7 @@
 
         </activity>
         <activity
-            android:name=".ui.camera.ExampleCameraActivity"
+            android:name=".ui.camera.CameraActivity"
             android:exported="true"
             android:screenOrientation="fullSensor">
             <intent-filter>

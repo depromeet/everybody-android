@@ -19,10 +19,14 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
+import androidx.core.view.isVisible
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityCameraBinding
+import com.example.everybody_android.repeatOnStarted
+import com.example.everybody_android.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,7 +34,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
-class ExampleCameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
+class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
     override val layoutId: Int = R.layout.activity_camera
     override val viewModel: CameraViewModel by viewModels()
     private var displayId: Int = -1
@@ -46,7 +50,7 @@ class ExampleCameraActivity : BaseActivity<ActivityCameraBinding, CameraViewMode
         override fun onDisplayAdded(displayId: Int) = Unit
         override fun onDisplayRemoved(displayId: Int) = Unit
         override fun onDisplayChanged(displayId: Int) = binding.root.let { view ->
-            if (displayId == this@ExampleCameraActivity.displayId) {
+            if (displayId == this@CameraActivity.displayId) {
                 imageCapture?.targetRotation = view.display.rotation
                 imageAnalyzer?.targetRotation = view.display.rotation
             }
@@ -74,61 +78,76 @@ class ExampleCameraActivity : BaseActivity<ActivityCameraBinding, CameraViewMode
     }
 
     override fun init() {
-        binding.btnSwitch.setOnClickListener {
-            lensFacing =
-                if (CameraSelector.LENS_FACING_FRONT == lensFacing) CameraSelector.LENS_FACING_BACK
-                else CameraSelector.LENS_FACING_FRONT
-            bindCameraUseCases()
-        }
-        binding.btnCapture.setOnClickListener {
-            imageCapture?.let { imageCapture ->
-                val photoFile = createFile(getOutputDirectory(), FILENAME, PHOTO_EXTENSION)
-                val metadata = ImageCapture.Metadata().apply {
-                    isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
-                }
-
-                val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
-                    .setMetadata(metadata)
-                    .build()
-
-                imageCapture.takePicture(
-                    outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
-                        override fun onError(exc: ImageCaptureException) {
-                            Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
-                        }
-
-                        override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                            val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
-                            Log.d(TAG, "Photo capture succeeded: $savedUri")
-
-                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                                sendBroadcast(
-                                    Intent(Camera.ACTION_NEW_PICTURE, savedUri)
-                                )
-                            }
-
-                            val mimeType = MimeTypeMap.getSingleton()
-                                .getMimeTypeFromExtension(savedUri.toFile().extension)
-                            MediaScannerConnection.scanFile(
-                                this@ExampleCameraActivity,
-                                arrayOf(savedUri.toFile().absolutePath),
-                                arrayOf(mimeType)
-                            ) { _, uri ->
-                                Log.d(TAG, "Image capture scanned into media store: $uri")
-                            }
-                        }
-                    })
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    binding.root.postDelayed({
-                        binding.root.foreground = ColorDrawable(Color.WHITE)
-                        binding.root.postDelayed(
-                            { binding.root.foreground = null }, ANIMATION_FAST_MILLIS
-                        )
-                    }, ANIMATION_SLOW_MILLIS)
+        repeatOnStarted {
+            viewModel.clickEvent.collect {
+                when (it) {
+                    CameraViewModel.ClickEvent.Album -> toast("앨범 버튼")
+                    CameraViewModel.ClickEvent.Pose -> toast("포즈 버튼")
+                    CameraViewModel.ClickEvent.Shutter -> clickShutter()
+                    CameraViewModel.ClickEvent.Back -> finish()
+                    CameraViewModel.ClickEvent.Switch -> {
+                        lensFacing =
+                            if (CameraSelector.LENS_FACING_FRONT == lensFacing) CameraSelector.LENS_FACING_BACK
+                            else CameraSelector.LENS_FACING_FRONT
+                        bindCameraUseCases()
+                    }
+                    CameraViewModel.ClickEvent.Grid -> {
+                        binding.imgGrid.isSelected = !binding.imgGrid.isSelected
+                        binding.includeGrid.isVisible = binding.imgGrid.isSelected
+                    }
                 }
             }
         }
         displayManager.registerDisplayListener(displayListener, null)
+    }
+
+    private fun clickShutter() {
+        imageCapture?.let { imageCapture ->
+            val photoFile = createFile(getOutputDirectory(), FILENAME, PHOTO_EXTENSION)
+            val metadata = ImageCapture.Metadata().apply {
+                isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
+            }
+
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile)
+                .setMetadata(metadata)
+                .build()
+
+            imageCapture.takePicture(
+                outputOptions, cameraExecutor, object : ImageCapture.OnImageSavedCallback {
+                    override fun onError(exc: ImageCaptureException) {
+                        Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    }
+
+                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                        val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+                        Log.d(TAG, "Photo capture succeeded: $savedUri")
+
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                            sendBroadcast(
+                                Intent(Camera.ACTION_NEW_PICTURE, savedUri)
+                            )
+                        }
+
+                        val mimeType = MimeTypeMap.getSingleton()
+                            .getMimeTypeFromExtension(savedUri.toFile().extension)
+                        MediaScannerConnection.scanFile(
+                            this@CameraActivity,
+                            arrayOf(savedUri.toFile().absolutePath),
+                            arrayOf(mimeType)
+                        ) { _, uri ->
+                            Log.d(TAG, "Image capture scanned into media store: $uri")
+                        }
+                    }
+                })
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                binding.root.postDelayed({
+                    binding.root.foreground = ColorDrawable(Color.WHITE)
+                    binding.root.postDelayed(
+                        { binding.root.foreground = null }, ANIMATION_FAST_MILLIS
+                    )
+                }, ANIMATION_SLOW_MILLIS)
+            }
+        }
     }
 
 
@@ -149,8 +168,7 @@ class ExampleCameraActivity : BaseActivity<ActivityCameraBinding, CameraViewMode
         val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
         val rotation = binding.pvFinder.display.rotation
         val cameraProvider = cameraProvider ?: return run {
-            Toast.makeText(this@ExampleCameraActivity, "Camera Setting Error", Toast.LENGTH_SHORT)
-                .show()
+            toast("Camera Setting Error")
             finish()
         }
         val preview = Preview.Builder()

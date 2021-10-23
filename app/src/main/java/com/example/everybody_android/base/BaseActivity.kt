@@ -6,9 +6,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
 import com.example.everybody_android.BR
 
-abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding, R : ViewModel> : AppCompatActivity() {
     lateinit var binding: T
 
     abstract val layoutId: Int

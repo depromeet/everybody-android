@@ -4,7 +4,7 @@ buildscript {
     ext.hilt_version = '2.38.1'
     ext.gson_version = '2.8.6'
     ext.retrofit_version = '2.9.0'
-    ext.lifecycle_version = '2.3.1'
+    ext.lifecycle_version = '2.4.0-rc01'
     ext.room_version = '2.3.0'
     ext.okhttp_version = '5.0.0-alpha.2'
     ext.rxandroid_version = '2.1.1'
