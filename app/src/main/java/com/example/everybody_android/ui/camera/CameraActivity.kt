@@ -82,7 +82,9 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             viewModel.clickEvent.collect {
                 when (it) {
                     CameraViewModel.ClickEvent.Album -> toast("앨범 버튼")
-                    CameraViewModel.ClickEvent.Pose -> toast("포즈 버튼")
+                    CameraViewModel.ClickEvent.Pose -> {
+                        binding.motionCamera.transitionToEnd()
+                    }
                     CameraViewModel.ClickEvent.Shutter -> clickShutter()
                     CameraViewModel.ClickEvent.Back -> finish()
                     CameraViewModel.ClickEvent.Switch -> {

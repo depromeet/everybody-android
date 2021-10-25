@@ -11,12 +11,15 @@
             type="com.example.everybody_android.ui.camera.CameraViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_camera"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        app:layoutDescription="@xml/scene_camera">
 
         <ImageView
+            android:id="@+id/img_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -28,6 +31,7 @@
 
 
         <ImageView
+            android:id="@+id/img_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -109,6 +113,18 @@
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="tw_info,vw_info" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_pose"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pv_finder" />
+
         <ImageView
             android:id="@+id/img_shutter"
             android:layout_width="wrap_content"
@@ -148,6 +164,7 @@
             app:layout_constraintStart_toStartOf="@id/img_pose"
             app:layout_constraintTop_toBottomOf="@id/img_pose" />
 
+
         <ImageView
             android:id="@+id/img_album"
             android:layout_width="wrap_content"
@@ -173,5 +190,12 @@
             app:layout_constraintEnd_toEndOf="@id/img_album"
             app:layout_constraintStart_toStartOf="@id/img_album"
             app:layout_constraintTop_toBottomOf="@id/img_album" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_camera_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="img_album,tw_album,img_pose,tw_pose" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
