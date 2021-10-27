@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">everybody-android</string>
+    <string name="text_make_album">앨범이 없습니다.\n지금 앨범을 만들어 기록해보세요.</string>
+    <string name="create_album">앨범 생성</string>
 </resources>

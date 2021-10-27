@@ -1,5 +1,6 @@
 package com.example.everybody_android.di
 
+import com.example.everybody_android.remote.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,9 +41,10 @@ object ApiModule {
         .build()
 
 
-//    @Singleton
-//    @Provides
-//    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(
-//        ApiService::class.java)
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(
+        ApiService::class.java
+    )
 
 }
