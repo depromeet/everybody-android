@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,7 +21,10 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
+import com.example.everybody_android.BR
 import com.example.everybody_android.R
+import com.example.everybody_android.adapter.RecyclerItem
+import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityCameraBinding
 import com.example.everybody_android.repeatOnStarted
@@ -65,6 +69,9 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                 cameraExecutor = Executors.newSingleThreadExecutor()
                 cameraSetting()
             }
+        }
+        binding.recyclerPose.adapter = RecyclerViewAdapter().apply {
+            setItems(List(10) { RecyclerItem("ㅎ", R.layout.item_camera_pose, BR.data) })
         }
     }
 

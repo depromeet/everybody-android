@@ -117,6 +117,7 @@
             android:id="@+id/recycler_pose"
             android:layout_width="0dp"
             android:layout_height="72dp"
+            android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"

@@ -23,9 +23,14 @@
         <Constraint
             android:id="@+id/recycler_pose"
             android:visibility="gone" />
+        <Constraint android:id="@+id/include_grid">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet
+        android:id="@+id/end"
+        motion:deriveConstraintsFrom="@id/start">
         <Constraint
             android:id="@+id/img_shutter"
             android:layout_width="44dp"

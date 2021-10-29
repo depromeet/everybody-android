@@ -1,9 +1,7 @@
 package com.example.everybody_android.adapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -42,6 +40,13 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.BindingView
 
     private fun getItems(position: Int): RecyclerItem {
         return items[position]
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setItems(item: List<RecyclerItem>) {
+        items.clear()
+        items.addAll(item)
+        notifyDataSetChanged()
     }
 
     inner class BindingViewHolder(
