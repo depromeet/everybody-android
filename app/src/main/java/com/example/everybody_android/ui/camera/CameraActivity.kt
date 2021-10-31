@@ -21,6 +21,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.example.everybody_android.BR
 import com.example.everybody_android.R
 import com.example.everybody_android.adapter.RecyclerItem
@@ -29,6 +30,8 @@ import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityCameraBinding
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.toast
+import com.example.everybody_android.ui.picture.PictureActivity
+import com.example.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.File
@@ -64,7 +67,13 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.pvFinder.post {
-            setPermissionCallback(arrayOf(Manifest.permission.CAMERA)) {
+            setPermissionCallback(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
                 displayId = binding.pvFinder.display.displayId
                 cameraExecutor = Executors.newSingleThreadExecutor()
                 cameraSetting()
@@ -144,7 +153,17 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                             arrayOf(savedUri.toFile().absolutePath),
                             arrayOf(mimeType)
                         ) { _, uri ->
-                            Log.d(TAG, "Image capture scanned into media store: $uri")
+                            val fileUri =
+                                ContentUriUtil.getFilePath(this@CameraActivity, uri).toString()
+
+                            startActivity(
+                                Intent(
+                                    this@CameraActivity,
+                                    PictureActivity::class.java
+                                ).apply {
+                                    putExtra("image", fileUri)
+                                })
+                            finish()
                         }
                     }
                 })

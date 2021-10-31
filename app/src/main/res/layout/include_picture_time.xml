@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.example.everybody_android.ui.picture.PictureFragmentViewModel.ClickEvent" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.picture.PictureFragmentViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,6 +26,7 @@
             android:backgroundTint="@color/selector_purple_gray20"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.TimePicture.INSTANCE)}"
             android:text="사진 시간"
             android:textColor="@color/selector_white_gray90"
             android:textSize="14sp"
@@ -33,6 +43,7 @@
             android:backgroundTint="@color/selector_purple_gray20"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.TimeNow.INSTANCE)}"
             android:text="현재 시간"
             android:textColor="@color/selector_white_gray90"
             android:textSize="14sp"
@@ -50,6 +61,7 @@
             android:backgroundTint="@color/selector_purple_gray20"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.TimePerson.INSTANCE)}"
             android:text="직접 입력"
             android:textColor="@color/selector_white_gray90"
             android:textSize="14sp"
@@ -58,7 +70,60 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tw_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="43dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tw_month"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/tw_time_picture"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            tools:text="2021" />
+
+        <TextView
+            android:id="@+id/tw_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="43dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tw_day"
+            app:layout_constraintStart_toEndOf="@id/tw_year"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            tools:text="Oct" />
+
+        <TextView
+            android:id="@+id/tw_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="43dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tw_time"
+            app:layout_constraintStart_toEndOf="@id/tw_month"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            tools:text="09" />
+
+        <TextView
+            android:id="@+id/tw_time"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="43dp"
             android:layout_marginBottom="28dp"
@@ -68,9 +133,137 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/tw_person_picture"
+            app:layout_constraintStart_toEndOf="@id/tw_day"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            tools:text="10 : 32" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_time_tw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="tw_day,tw_month,tw_time,tw_year" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_year"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/np_month"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="@id/tw_time_picture"
             app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
-            tools:text="2021 Oct 09 10 : 32" />
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3"
+            tools:ignore="SpeakableTextPresentCheck" />
 
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_month"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/np_day"
+            app:layout_constraintStart_toEndOf="@id/np_year"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_day"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/np_hour"
+            app:layout_constraintStart_toEndOf="@id/np_month"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tw_colon"
+            app:layout_constraintStart_toEndOf="@id/np_day"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/tw_colon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="43dp"
+            android:layout_marginBottom="28dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:text=":"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/np_min"
+            app:layout_constraintStart_toEndOf="@id/np_hour"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_min"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tw_person_picture"
+            app:layout_constraintStart_toEndOf="@id/tw_colon"
+            app:layout_constraintTop_toBottomOf="@id/tw_time_picture"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_numberpicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="np_day,np_hour,np_min,np_month,np_year,tw_colon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

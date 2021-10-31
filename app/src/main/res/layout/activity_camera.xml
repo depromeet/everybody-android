@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -117,14 +118,17 @@
             android:id="@+id/recycler_pose"
             android:layout_width="0dp"
             android:layout_height="72dp"
+            android:layout_marginBottom="26dp"
+            android:background="@color/white"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/img_shutter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pv_finder" />
+            tools:listitem="@layout/item_camera_pose" />
 
         <ImageView
             android:id="@+id/img_shutter"

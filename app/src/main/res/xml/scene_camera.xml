@@ -39,8 +39,7 @@
             android:layout_marginBottom="24dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/recycler_pose" />
+            motion:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/group_camera_menu"
             android:visibility="gone" />
@@ -48,10 +47,11 @@
             android:id="@+id/recycler_pose"
             android:layout_width="0dp"
             android:layout_height="72dp"
+            android:layout_marginBottom="26dp"
             android:visibility="visible"
+            motion:layout_constraintBottom_toTopOf="@id/img_shutter"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/pv_finder" />
+            motion:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
 </MotionScene>

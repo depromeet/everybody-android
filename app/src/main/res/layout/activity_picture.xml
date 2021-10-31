@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <import type="com.example.everybody_android.ui.picture.PictureViewModel.ClickEvent" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.picture.PictureViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
         <ImageButton
             android:id="@+id/img_back"
@@ -14,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:background="@drawable/ic_back"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Back.INSTANCE)}"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/tw_title" />
@@ -37,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Next.INSTANCE)}"
             android:text="완료"
             android:textColor="#333333"
             android:textSize="16sp"
@@ -44,86 +52,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tw_title" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_picture"
+        <FrameLayout
+            android:id="@+id/fl_fragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="3:4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_title"
-            tools:background="@color/gray_90">
-
-            <ImageView
-                android:id="@+id/img_picture"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tw_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="12dp"
-                android:textColor="@color/gray_10"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="2021.10.01" />
-
-            <TextView
-                android:id="@+id/tw_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:textColor="@color/gray_10"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="AM 9:00" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tw_part_choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="부위 선택"
-            android:textColor="@color/selector_purple_black333"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/tw_time_choice"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_picture" />
-
-        <TextView
-            android:id="@+id/tw_time_choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/pretendard_bold"
-            android:text="시간 입력"
-            android:textColor="@color/selector_purple_black333"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tw_part_choice"
-            app:layout_constraintTop_toBottomOf="@id/cl_picture" />
-
-        <include
-            layout="@layout/include_picture_part"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_part_choice" />
-
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

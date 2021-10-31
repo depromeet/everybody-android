@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <import type="com.example.everybody_android.ui.picture.PictureFragmentViewModel.ClickEvent" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.picture.PictureFragmentViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,6 +35,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/rectangle_radius_4"
             android:backgroundTint="@color/selector_purple_gray20"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.PartWhole.INSTANCE)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:0.86"
             app:layout_constraintEnd_toStartOf="@id/fl_upper"
@@ -44,6 +54,7 @@
                 android:gravity="center"
                 android:text="전신"
                 android:textColor="@color/selector_white_gray90"
+                android:textSize="14sp"
                 app:drawableTint="@color/selector_white_gray90"
                 app:drawableTopCompat="@drawable/ic_whole_body" />
         </FrameLayout>
@@ -57,6 +68,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/rectangle_radius_4"
             android:backgroundTint="@color/selector_purple_gray20"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.PartUpper.INSTANCE)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:0.86"
             app:layout_constraintEnd_toStartOf="@id/fl_lower"
@@ -74,6 +86,7 @@
                 android:gravity="center"
                 android:text="상체"
                 android:textColor="@color/selector_white_gray90"
+                android:textSize="14sp"
                 app:drawableTint="@color/selector_white_gray90"
                 app:drawableTopCompat="@drawable/ic_upper_body" />
         </FrameLayout>
@@ -87,6 +100,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/rectangle_radius_4"
             android:backgroundTint="@color/selector_purple_gray20"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.PartLower.INSTANCE)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:0.86"
             app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +120,7 @@
                 android:gravity="center"
                 android:text="하체"
                 android:textColor="@color/selector_white_gray90"
+                android:textSize="14sp"
                 app:drawableTint="@color/selector_white_gray90"
                 app:drawableTopCompat="@drawable/ic_lower_body" />
         </FrameLayout>
