@@ -5,12 +5,23 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.1814814814814815" />
+        <entry key="app/src/main/res/drawable/ic_frame.xml" value="0.18611111111111112" />
+        <entry key="app/src/main/res/drawable/ic_frame_5240.xml" value="0.18611111111111112" />
+        <entry key="app/src/main/res/drawable/ic_frame_5241.xml" value="0.18611111111111112" />
+        <entry key="app/src/main/res/drawable/ic_frame_628__1_.xml" value="0.18611111111111112" />
         <entry key="app/src/main/res/drawable/ic_grid.xml" value="0.2722222222222222" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_test_profile.xml" value="0.2722222222222222" />
         <entry key="app/src/main/res/drawable/item_half_mainfeed.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/layout-v23/activity_create_folder.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout-v29/activity_select_day.xml" value="0.13728470111448834" />
+        <entry key="app/src/main/res/layout/activity_create_folder.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/item_full_mainfeed.xml" value="0.1526268115942029" />
+        <entry key="app/src/main/res/layout/activity_select_day.xml" value="0.29074074074074074" />
+        <entry key="app/src/main/res/layout/activity_selete_day.xml" value="0.1526268115942029" />
+        <entry key="app/src/main/res/layout/item_full_mainfeed.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_half_mainfeed.xml" value="0.5" />
       </map>
     </option>

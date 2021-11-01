@@ -17,4 +17,12 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel(){
     val feedStatus = 0
 
+    fun getMainFeed(){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                val response = apiService.getMainFeed("")
+                println(response)
+            }
+        }
+    }
 }

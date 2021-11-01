@@ -13,6 +13,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
     override val viewModel: MainViewModel by viewModels()
 
     override fun init() {
+        //viewModel.getMainFeed()
     }
 
 
