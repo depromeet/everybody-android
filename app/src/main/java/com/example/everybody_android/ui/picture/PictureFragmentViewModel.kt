@@ -1,4 +1,4 @@
-package com.example.everybody_android.ui.camera
+package com.example.everybody_android.ui.picture
 
 import androidx.lifecycle.viewModelScope
 import com.example.everybody_android.base.BaseViewModel
@@ -9,8 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CameraViewModel @Inject constructor() : BaseViewModel() {
-
+class PictureFragmentViewModel @Inject constructor() : BaseViewModel() {
     private val _clickEvent = MutableEventFlow<ClickEvent>()
     val clickEvent = _clickEvent.asEventFlow()
 
@@ -19,13 +18,14 @@ class CameraViewModel @Inject constructor() : BaseViewModel() {
     }
 
     sealed class ClickEvent {
-        object Shutter : ClickEvent()
-        object Album : ClickEvent()
-        object Pose : ClickEvent()
-        object Back : ClickEvent()
-        object Switch : ClickEvent()
-        object Grid : ClickEvent()
-        object Expand : ClickEvent()
+        object PartTab : ClickEvent()
+        object PartWhole : ClickEvent()
+        object PartUpper : ClickEvent()
+        object PartLower : ClickEvent()
+        object TimeTab : ClickEvent()
+        object TimeNow : ClickEvent()
+        object TimePerson : ClickEvent()
+        object TimePicture : ClickEvent()
     }
 
 }

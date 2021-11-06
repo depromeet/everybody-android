@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@+id/start"
+        motion:duration="1000"
+        motion:motionInterpolator="anticipate" />
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/img_shutter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:layout_marginBottom="42dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@id/pv_finder" />
+        <Constraint
+            android:id="@+id/group_camera_menu"
+            android:visibility="visible" />
+        <Constraint
+            android:id="@+id/recycler_pose"
+            android:visibility="gone" />
+        <Constraint android:id="@+id/include_grid">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/img_expand"
+            android:visibility="gone" />
+        <Constraint android:id="@+id/group_info">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint android:id="@+id/tw_info">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint android:id="@+id/vw_info">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint android:id="@+id/img_pv_pose">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet
+        android:id="@+id/end"
+        motion:deriveConstraintsFrom="@id/start">
+        <Constraint
+            android:id="@+id/img_shutter"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="24dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/group_camera_menu"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/img_expand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toBottomOf="@id/img_shutter"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/img_shutter" />
+        <Constraint
+            android:id="@+id/recycler_pose"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="26dp"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toTopOf="@id/img_shutter"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+
+</MotionScene>

@@ -11,7 +11,11 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,11 +24,18 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.everybody_android.BR
 import com.example.everybody_android.R
+import com.example.everybody_android.adapter.RecyclerItem
+import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityCameraBinding
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.toast
+import com.example.everybody_android.ui.picture.PictureActivity
+import com.example.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.File
@@ -56,16 +67,43 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             }
         }
     }
+    private val postList = listOf(
+        Unit,
+        R.drawable.ic_man_whole,
+        R.drawable.ic_man_upper,
+        R.drawable.ic_man_lower,
+        R.drawable.ic_woman_whole,
+        R.drawable.ic_woman_upper,
+        R.drawable.ic_woman_lower
+    ).map { RecyclerItem(it, R.layout.item_camera_pose, BR.data) }.toMutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.pvFinder.post {
-            setPermissionCallback(arrayOf(Manifest.permission.CAMERA)) {
+            setPermissionCallback(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
                 displayId = binding.pvFinder.display.displayId
                 cameraExecutor = Executors.newSingleThreadExecutor()
                 cameraSetting()
             }
         }
+        binding.recyclerPose.adapter = RecyclerViewAdapter {
+            if (it is Unit) binding.imgPvPose.isVisible = false
+            else {
+                binding.imgPvPose.isVisible = true
+                binding.imgPvPose.setImageResource(it as @androidx.annotation.DrawableRes Int)
+            }
+        }.apply {
+            setItems(postList)
+        }
+        Handler(Looper.myLooper() ?: return).postDelayed({
+            binding.groupInfo.isVisible = false
+        }, 3000)
     }
 
     private fun getOutputDirectory(): File {
@@ -82,7 +120,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             viewModel.clickEvent.collect {
                 when (it) {
                     CameraViewModel.ClickEvent.Album -> toast("앨범 버튼")
-                    CameraViewModel.ClickEvent.Pose -> toast("포즈 버튼")
+                    CameraViewModel.ClickEvent.Pose -> binding.motionCamera.transitionToEnd()
                     CameraViewModel.ClickEvent.Shutter -> clickShutter()
                     CameraViewModel.ClickEvent.Back -> finish()
                     CameraViewModel.ClickEvent.Switch -> {
@@ -95,6 +133,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                         binding.imgGrid.isSelected = !binding.imgGrid.isSelected
                         binding.includeGrid.isVisible = binding.imgGrid.isSelected
                     }
+                    CameraViewModel.ClickEvent.Expand -> binding.motionCamera.transitionToStart()
                 }
             }
         }
@@ -135,7 +174,17 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                             arrayOf(savedUri.toFile().absolutePath),
                             arrayOf(mimeType)
                         ) { _, uri ->
-                            Log.d(TAG, "Image capture scanned into media store: $uri")
+                            val fileUri =
+                                ContentUriUtil.getFilePath(this@CameraActivity, uri).toString()
+
+                            startActivity(
+                                Intent(
+                                    this@CameraActivity,
+                                    PictureActivity::class.java
+                                ).apply {
+                                    putExtra("image", fileUri)
+                                })
+                            finish()
                         }
                     }
                 })
