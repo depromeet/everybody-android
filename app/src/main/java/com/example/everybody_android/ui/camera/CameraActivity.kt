@@ -11,7 +11,10 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
@@ -21,6 +24,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.everybody_android.BR
 import com.example.everybody_android.R
@@ -63,6 +67,15 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             }
         }
     }
+    private val postList = listOf(
+        Unit,
+        R.drawable.ic_man_whole,
+        R.drawable.ic_man_upper,
+        R.drawable.ic_man_lower,
+        R.drawable.ic_woman_whole,
+        R.drawable.ic_woman_upper,
+        R.drawable.ic_woman_lower
+    ).map { RecyclerItem(it, R.layout.item_camera_pose, BR.data) }.toMutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,9 +92,18 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                 cameraSetting()
             }
         }
-        binding.recyclerPose.adapter = RecyclerViewAdapter().apply {
-            setItems(List(10) { RecyclerItem("ㅎ", R.layout.item_camera_pose, BR.data) })
+        binding.recyclerPose.adapter = RecyclerViewAdapter {
+            if (it is Unit) binding.imgPvPose.isVisible = false
+            else {
+                binding.imgPvPose.isVisible = true
+                binding.imgPvPose.setImageResource(it as @androidx.annotation.DrawableRes Int)
+            }
+        }.apply {
+            setItems(postList)
         }
+        Handler(Looper.myLooper() ?: return).postDelayed({
+            binding.groupInfo.isVisible = false
+        }, 3000)
     }
 
     private fun getOutputDirectory(): File {
@@ -98,9 +120,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             viewModel.clickEvent.collect {
                 when (it) {
                     CameraViewModel.ClickEvent.Album -> toast("앨범 버튼")
-                    CameraViewModel.ClickEvent.Pose -> {
-                        binding.motionCamera.transitionToEnd()
-                    }
+                    CameraViewModel.ClickEvent.Pose -> binding.motionCamera.transitionToEnd()
                     CameraViewModel.ClickEvent.Shutter -> clickShutter()
                     CameraViewModel.ClickEvent.Back -> finish()
                     CameraViewModel.ClickEvent.Switch -> {
@@ -113,6 +133,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                         binding.imgGrid.isSelected = !binding.imgGrid.isSelected
                         binding.includeGrid.isVisible = binding.imgGrid.isSelected
                     }
+                    CameraViewModel.ClickEvent.Expand -> binding.motionCamera.transitionToStart()
                 }
             }
         }

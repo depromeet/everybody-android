@@ -25,6 +25,7 @@ class CameraViewModel @Inject constructor() : BaseViewModel() {
         object Back : ClickEvent()
         object Switch : ClickEvent()
         object Grid : ClickEvent()
+        object Expand : ClickEvent()
     }
 
 }

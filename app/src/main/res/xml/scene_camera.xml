@@ -5,7 +5,7 @@
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@+id/start"
         motion:duration="1000"
-        motion:motionInterpolator="linear" />
+        motion:motionInterpolator="anticipate" />
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/img_shutter"
@@ -26,6 +26,21 @@
         <Constraint android:id="@+id/include_grid">
             <PropertySet motion:visibilityMode="ignore" />
         </Constraint>
+        <Constraint
+            android:id="@+id/img_expand"
+            android:visibility="gone" />
+        <Constraint android:id="@+id/group_info">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint android:id="@+id/tw_info">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint android:id="@+id/vw_info">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint android:id="@+id/img_pv_pose">
+            <PropertySet motion:visibilityMode="ignore" />
+        </Constraint>
     </ConstraintSet>
 
     <ConstraintSet
@@ -43,6 +58,15 @@
         <Constraint
             android:id="@+id/group_camera_menu"
             android:visibility="gone" />
+        <Constraint
+            android:id="@+id/img_expand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toBottomOf="@id/img_shutter"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/img_shutter" />
         <Constraint
             android:id="@+id/recycler_pose"
             android:layout_width="0dp"

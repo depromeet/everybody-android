@@ -76,6 +76,16 @@
             app:layout_constraintTop_toTopOf="@id/pv_finder" />
 
         <ImageView
+            android:id="@+id/img_pv_pose"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/pv_finder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pv_finder" />
+
+        <ImageView
             android:id="@+id/img_grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,6 +211,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="img_album,tw_album,img_pose,tw_pose" />
+
+        <ImageView
+            android:id="@+id/img_expand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Expand.INSTANCE)}"
+            android:src="@drawable/ic_expand"
+            app:layout_constraintBottom_toBottomOf="@id/img_shutter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_shutter" />
+
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
