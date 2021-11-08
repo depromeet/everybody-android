@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/ib_before"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -24,29 +24,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_input_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="34dp"
             android:text="@string/type_folder_name"
+            android:fontFamily="@font/pretendard_semibold"
             android:textColor="@color/gray_90"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+            app:layout_constraintTop_toBottomOf="@+id/ib_before" />
 
         <EditText
+            android:id="@+id/et_folder_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="70dp"
             android:layout_marginEnd="20dp"
             android:hint="@string/folder_name_hint"
+            android:padding="12dp"
+            android:background="@drawable/edittext_folder_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_input_name" />
 
         <ImageButton
+            android:id="@+id/ib_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="34dp"
