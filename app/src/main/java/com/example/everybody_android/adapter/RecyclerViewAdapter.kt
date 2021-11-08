@@ -1,9 +1,7 @@
 package com.example.everybody_android.adapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -12,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.BindingViewHolder>() {
 
     private val items = arrayListOf<RecyclerItem>()
-
-    private lateinit var recyclerItem: RecyclerItem
 
     override fun getItemCount(): Int {
         return items.size
@@ -38,6 +34,19 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.BindingView
     ) {
         getItems(position).bind(holder.binding)
         holder.binding.executePendingBindings()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearData() {
+        this.items.clear()
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun changeData(newItems: List<RecyclerItem>) {
+        this.items.clear()
+        this.items.addAll(newItems)
+        notifyDataSetChanged()
     }
 
     private fun getItems(position: Int): RecyclerItem {
