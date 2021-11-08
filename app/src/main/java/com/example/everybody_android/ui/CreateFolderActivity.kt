@@ -1,5 +1,6 @@
 package com.example.everybody_android.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -19,6 +20,7 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding,CreateFold
 
     override fun init() {
         edittextClick()
+        back()
     }
 
     private fun edittextClick(){
@@ -34,6 +36,13 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding,CreateFold
             override fun afterTextChanged(p0: Editable?) {
             }
         })
+    }
+
+    private fun back(){
+        binding.ibBack.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
