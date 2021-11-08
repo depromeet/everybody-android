@@ -7,7 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.BindingViewHolder>() {
+class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
+    RecyclerView.Adapter<RecyclerViewAdapter.BindingViewHolder>() {
 
     private val items = arrayListOf<RecyclerItem>()
 
@@ -32,6 +33,7 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.BindingView
         holder: BindingViewHolder,
         position: Int
     ) {
+        holder.itemView.setOnClickListener { clickCallBack.invoke(getItems(position).data) }
         getItems(position).bind(holder.binding)
         holder.binding.executePendingBindings()
     }
@@ -51,6 +53,13 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.BindingView
 
     private fun getItems(position: Int): RecyclerItem {
         return items[position]
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setItems(item: List<RecyclerItem>) {
+        items.clear()
+        items.addAll(item)
+        notifyDataSetChanged()
     }
 
     inner class BindingViewHolder(

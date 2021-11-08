@@ -3,6 +3,9 @@
     package="com.example.everybody_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".di.HiltApplication"
@@ -19,12 +22,19 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.picture.PictureActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.example.everybody_android.ui.picture.PictureViewModel.ClickEvent" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.picture.PictureViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/ic_back"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Back.INSTANCE)}"
+            app:layout_constraintBottom_toBottomOf="@id/tw_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tw_title" />
+
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:text="사진 확인"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.Next.INSTANCE)}"
+            android:text="완료"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tw_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tw_title" />
+
+        <FrameLayout
+            android:id="@+id/fl_fragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
