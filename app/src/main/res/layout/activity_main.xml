@@ -8,6 +8,10 @@
         <variable
             name="vm"
             type="com.example.everybody_android.viewmodel.MainViewModel" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,18 +40,7 @@
             android:background="@color/white"
             android:scaleType="centerInside"
             android:src="@drawable/ic_grid"
-            app:layout_constraintEnd_toStartOf="@+id/ib_sort2"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/ib_sort2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/white"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_grid"
+            android:onClick="@{() -> vm.sortFeed()}"
             app:layout_constraintEnd_toStartOf="@+id/ib_add"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,12 +81,6 @@
             tools:text="천천히 그리고 꾸준히" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,7 +101,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_half_sort"
@@ -123,11 +109,12 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="45dp"
             android:layout_marginEnd="20dp"
+            app:halfRecyclerView="@{vm.halfFeedAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_full_sort"
@@ -140,12 +127,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal"
+            app:recyclerView="@{vm.fullFeedAdapter}" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/white"
             android:src="@drawable/ic_camera"
             app:layout_constraintBottom_toBottomOf="parent"
