@@ -21,8 +21,13 @@
         <entry key="app/src/main/res/layout-v29/activity_select_day.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout/activity_create_folder.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_picture.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_select_day.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/layout/activity_selete_day.xml" value="0.1526268115942029" />
+        <entry key="app/src/main/res/layout/fragment_folder_choice.xml" value="0.35144927536231885" />
+        <entry key="app/src/main/res/layout/fragment_picture.xml" value="0.35144927536231885" />
+        <entry key="app/src/main/res/layout/include_grid.xml" value="0.35144927536231885" />
+        <entry key="app/src/main/res/layout/include_picture_part.xml" value="0.35144927536231885" />
         <entry key="app/src/main/res/layout/item_full_mainfeed.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_half_mainfeed.xml" value="0.25" />
       </map>

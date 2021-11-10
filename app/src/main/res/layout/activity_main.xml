@@ -35,12 +35,12 @@
             android:id="@+id/ib_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/white"
+            android:onClick="@{() -> vm.sortFeed()}"
             android:scaleType="centerInside"
             android:src="@drawable/ic_grid"
-            android:onClick="@{() -> vm.sortFeed()}"
             app:layout_constraintEnd_toStartOf="@+id/ib_add"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +48,7 @@
             android:id="@+id/ib_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
             android:scaleType="centerInside"
@@ -81,6 +81,12 @@
             tools:text="천천히 그리고 꾸준히" />
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_no_feed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,6 +107,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_half_sort"
@@ -131,12 +139,13 @@
             app:recyclerView="@{vm.fullFeedAdapter}" />
 
         <ImageButton
+            android:id="@+id/ib_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@color/white"
             android:src="@drawable/ic_camera"
+            android:background="#00000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

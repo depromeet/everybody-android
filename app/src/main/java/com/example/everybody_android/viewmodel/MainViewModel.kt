@@ -6,15 +6,12 @@ import com.example.everybody_android.R
 import com.example.everybody_android.adapter.RecyclerItem
 import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseViewModel
-import com.example.everybody_android.di.ApiModule
+import com.example.everybody_android.base.MutableEventFlow
+import com.example.everybody_android.base.asEventFlow
 import com.example.everybody_android.dto.MainFeedData
 import com.example.everybody_android.dto.MainFeedPictureData
-import com.example.everybody_android.remote.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,8 +22,15 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     private var testFeedData = ArrayList<MainFeedData>()
 
-    val halfFeedAdapter = RecyclerViewAdapter()
-    val fullFeedAdapter = RecyclerViewAdapter()
+    val halfFeedAdapter = RecyclerViewAdapter {}
+    val fullFeedAdapter = RecyclerViewAdapter {}
+
+    private val _clickEvent = MutableEventFlow<ClickEvent>()
+    val clickEvent = _clickEvent.asEventFlow()
+
+    fun onClickEvent(event: ClickEvent) {
+        viewModelScope.launch { _clickEvent.emit(event) }
+    }
 
     fun sortFeed(){
         recyclerStatus = !recyclerStatus
@@ -34,12 +38,11 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         else {
             if (recyclerStatus) {
                 halfFeedAdapter.changeData(testFeedData.map { it.toHalfRecyclerItem() })
-                fullFeedAdapter.clearData()
             }
             else {
                 fullFeedAdapter.changeData(testFeedData.map { it.toFullRecyclerItem() })
-                halfFeedAdapter.clearData()
             }
+            onClickEvent(ClickEvent.SortFeed)
         }
     }
 
@@ -83,4 +86,8 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
             variableId = BR.repo,
             layoutId = R.layout.item_half_mainfeed
         )
+
+    sealed class ClickEvent {
+        object SortFeed : ClickEvent()
+    }
 }
