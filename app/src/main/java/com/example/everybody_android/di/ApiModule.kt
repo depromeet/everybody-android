@@ -39,8 +39,10 @@ object ApiModule {
         .client(providesOkHttpClient(providesHttpLoggingInterceptor()))
         .build()
 
-//    @Singleton
-//    @Provides
-//    fun <T> provideApiService(service: Class<T>): T = provideRetrofit().create(service)
+
+
+    @Singleton
+    @Provides
+    fun <T> provideApiService(service: Class<T>): T = provideRetrofit().create(service)
 
 }

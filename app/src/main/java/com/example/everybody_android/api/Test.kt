@@ -12,7 +12,9 @@ class Test {
     }
 
     companion object {
-        //suspend fun ss(): Albums = ApiModule.provideApiService(TestApi::class.java).putNotice()
+
+        suspend fun ss(): Albums = ApiModule.provideApiService(TestApi::class.java).putNotice()
+
     }
 
 }
