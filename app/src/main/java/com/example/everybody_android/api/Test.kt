@@ -5,12 +5,5 @@ import retrofit2.http.PUT
 
 class Test {
 
-    interface TestApi {
-        @PUT("/test")
-        suspend fun putNotice(): AlbumsResponse
-    }
-
-    companion object {
-    }
 
 }

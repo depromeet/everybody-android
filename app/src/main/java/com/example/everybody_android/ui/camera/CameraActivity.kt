@@ -20,6 +20,7 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile

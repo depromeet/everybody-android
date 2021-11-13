@@ -2,6 +2,7 @@ package com.example.everybody_android.di
 
 import com.example.everybody_android.api.AlbumRepo.AlbumApi
 import com.example.everybody_android.api.PictureRepo
+import com.example.everybody_android.remote.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,6 +48,7 @@ object ApiModule {
         .baseUrl(BASE_URL)
         .client(providesOkHttpClient(providesHttpLoggingInterceptor()))
         .build()
+
 
 
     @Singleton

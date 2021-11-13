@@ -14,22 +14,33 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Everybodyandroid">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".ui.CreateFolderActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".ui.camera.CameraActivity"
-            android:exported="true"
-            android:screenOrientation="fullSensor">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
+            
+        </activity>
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+
         <activity android:name=".ui.picture.PictureActivity" />
     </application>
 

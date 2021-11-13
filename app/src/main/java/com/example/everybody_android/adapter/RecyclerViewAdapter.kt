@@ -12,8 +12,6 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
 
     private val items = arrayListOf<RecyclerItem>()
 
-    private lateinit var recyclerItem: RecyclerItem
-
     override fun getItemCount(): Int {
         return items.size
     }
@@ -38,6 +36,19 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         holder.itemView.setOnClickListener { clickCallBack.invoke(getItem(position).data) }
         getItem(position).bind(holder.binding)
         holder.binding.executePendingBindings()
+    }
+    
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearData() {
+        this.items.clear()
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun changeData(newItems: List<RecyclerItem>) {
+        this.items.clear()
+        this.items.addAll(newItems)
+        notifyDataSetChanged()
     }
 
     private fun getItem(position: Int): RecyclerItem {
