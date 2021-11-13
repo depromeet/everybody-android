@@ -16,8 +16,8 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -50,6 +50,9 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     testImplementation 'junit:junit:4.+'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    //noinspection GradleCompatible
+    implementation("com.android.support:appcompat-v7:23.2.0")
+
 
     // retrofit
     implementation "com.google.code.gson:gson:$gson_version"
@@ -101,4 +104,8 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase_database"
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //coroutines
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    implementation 'com.github.applikeysolutions:cosmocalendar:1.0.4'
 }
