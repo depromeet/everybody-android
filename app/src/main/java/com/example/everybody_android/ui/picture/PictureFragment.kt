@@ -28,11 +28,7 @@ class PictureFragment(private val image: String) :
     private val datePictureFormat = SimpleDateFormat("yyyy.MM.dd a hh:mm", Locale("en", "US"))
     private val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "US"))
     private val dateTextFormat = SimpleDateFormat("yyyy MMM dd kk:mm", Locale("en", "US"))
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.imgPicture.imageLoad(image)
-        initSetting()
-    }
+
 
     private fun initSetting() {
         setPictureTime()
@@ -81,6 +77,8 @@ class PictureFragment(private val image: String) :
     }
 
     override fun init() {
+        binding.imgPicture.imageLoad(image)
+        initSetting()
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
@@ -137,10 +135,15 @@ class PictureFragment(private val image: String) :
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         binding.clPicture.draw(canvas)
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,FileOutputStream(image))
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
         val newExif = ExifInterface(image)
-        newExif.setAttribute(ExifInterface.TAG_ORIENTATION,"1")
+        newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
         newExif.saveAttributes()
+        activity?.apply {
+            if (this is PictureActivity) {
+                saveComplete()
+            }
+        }
     }
 
     private fun settingNumberPickerEvent() {

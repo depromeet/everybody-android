@@ -7,6 +7,7 @@ import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityPictureBinding
 import com.example.everybody_android.repeatOnStarted
+import com.example.everybody_android.ui.picture.folder.FolderChoiceFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.collect
 class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>() {
     override val layoutId: Int = R.layout.activity_picture
     override val viewModel: PictureViewModel by viewModels()
+    private val folderChoiceFragment by lazy { FolderChoiceFragment() }
     private lateinit var pictureFragment: PictureFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +36,20 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
         transaction.commit()
     }
 
+    fun saveComplete() {
+        removeFragment(pictureFragment)
+        addFragment(folderChoiceFragment)
+    }
+
     override fun init() {
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
                     PictureViewModel.ClickEvent.Back -> {
-//                        if(supportFragmentManager.fragments.contains()) removeFragment()
-//                        else finish()
+                        if (supportFragmentManager.fragments.contains(folderChoiceFragment)) removeFragment(
+                            folderChoiceFragment
+                        )
+                        else finish()
                     }
                     PictureViewModel.ClickEvent.Next -> {
                         pictureFragment.saveView()
