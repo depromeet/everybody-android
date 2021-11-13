@@ -45,7 +45,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
         isFolder = true
     }
 
-    fun photoUpload(map: HashMap<String, String>) {
+    fun photoUpload(map: Map<String, String>) {
         viewModel.photoUpload(map)
     }
 
@@ -58,6 +58,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                         if (isFolder) {
                             transaction.hide(folderChoiceFragment)
                             transaction.show(pictureFragment)
+                            transaction.commit()
                             isFolder = false
                         } else finish()
                     }

@@ -21,8 +21,10 @@ class PictureViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _clickEvent.emit(event) }
     }
 
-    fun photoUpload(valueMap: HashMap<String, String>) {
-        val image = valueMap.remove("image") ?: return
+    fun photoUpload(valueMap: Map<String, String>) {
+        val map = hashMapOf<String,String>()
+        map.putAll(valueMap)
+        val image = map.remove("image") ?: return
         val partMap = valueMap.mapValues { it.value.toRequestBody() }
         val filePart = prepareFilePart("image", image.toUri())
         runScope({
