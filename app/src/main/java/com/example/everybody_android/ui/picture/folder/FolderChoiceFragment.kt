@@ -9,7 +9,9 @@ import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseFragment
 import com.example.everybody_android.databinding.FragmentFolderChoiceBinding
 import com.example.everybody_android.repeatOnStarted
+import com.example.everybody_android.toast
 import com.example.everybody_android.ui.dialog.folder.FolderAddDialog
+import com.example.everybody_android.ui.picture.PictureActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -31,7 +33,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
                                 data.name ?: "",
                                 ResourcesCompat.getDrawable(resources, R.drawable.ic_add, null)!!,
                                 false,
-                                data.hashCode(),
+                                data.id,
                                 data.description ?: ""
                             ),
                             R.layout.item_folder_choice,
@@ -40,9 +42,29 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
                     )
                 }.show(childFragmentManager, "")
             } else if (it is FolderChoiceViewModel.Item) {
+                val checkIndex = adapter.getItems()
+                    .indexOfFirst { data ->
+                        if (data.data is FolderChoiceViewModel.Item) data.data.isCheck
+                        else false
+                    }
+                if (checkIndex > -1) {
+                    val checkData =
+                        adapter.getItems()[checkIndex].data as FolderChoiceViewModel.Item
+                    adapter.changeItem(
+                        adapter.getItems()[checkIndex].copy(
+                            data = checkData.copy(
+                                isCheck = !checkData.isCheck
+                            )
+                        ), checkIndex
+                    )
+                    viewModel.valueMap["album_id"] = ""
+                }
                 val index = adapter.getItems().indexOfFirst { data -> data.data == it }
-                val data = adapter.getItems()[index]
-                adapter.changeItem(data.copy(data = it.copy(isCheck = !it.isCheck)), index)
+                if (index > -1) {
+                    val data = adapter.getItems()[index]
+                    viewModel.valueMap["album_id"] = it.id.toString()
+                    adapter.changeItem(data.copy(data = it.copy(isCheck = !it.isCheck)), index)
+                }
             }
         }
         binding.recyclerFolder.addItemDecoration(FolderItemDecoration())
@@ -57,7 +79,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
                         data.name ?: "",
                         ResourcesCompat.getDrawable(resources, R.drawable.ic_add, null)!!,
                         false,
-                        data.hashCode(),
+                        data.id,
                         data.description ?: ""
                     )
                     RecyclerItem(
@@ -71,4 +93,20 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
             }
         }
     }
+
+    fun getValue() {
+        val map = viewModel.valueMap
+        if (map.containsKey("album_id")) {
+            activity?.apply {
+                if (this is PictureActivity) {
+                    photoUpload(map)
+                }
+            }
+        } else context?.toast("앨범을 선택해주세요.")
+    }
+
+    fun setValue(map: HashMap<String, String>) {
+        viewModel.valueMap = map
+    }
+
 }

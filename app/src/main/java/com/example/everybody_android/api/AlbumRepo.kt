@@ -18,10 +18,10 @@ class AlbumRepo {
 
     companion object {
         suspend fun getAlbums(): AlbumsResponse =
-            ApiModule.provideApiService().getAlbums()
+            ApiModule.provideApiAlbum().getAlbums()
 
         suspend fun createAlbum(map:Map<String,String>): AlbumsResponse.Album =
-            ApiModule.provideApiService().createAlbum(map)
+            ApiModule.provideApiAlbum().createAlbum(map)
     }
 
 }

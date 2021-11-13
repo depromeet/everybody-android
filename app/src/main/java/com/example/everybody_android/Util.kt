@@ -3,12 +3,15 @@ package com.example.everybody_android
 import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.util.DisplayMetrics
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.FontRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -21,6 +24,11 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import kotlin.math.roundToInt
 
 
@@ -62,4 +70,12 @@ fun folderLoadImage(view: ImageView, url: String, placeholder: Drawable) {
         RequestOptions().transform(CenterCrop(), RoundedCorners(view.context.convertDpToPx(4)))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
     )
+}
+
+fun prepareFilePart(key: String, fileUri: Uri): MultipartBody.Part {
+    val uri = if (!fileUri.toString().contains("file")) "file://$fileUri".toUri()
+    else fileUri
+    val file = uri.toFile()
+    val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
+    return MultipartBody.Part.createFormData(key, file.name, requestFile)
 }

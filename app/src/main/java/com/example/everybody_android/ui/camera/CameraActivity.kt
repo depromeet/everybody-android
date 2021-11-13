@@ -181,10 +181,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                                 Intent(
                                     this@CameraActivity,
                                     PictureActivity::class.java
-                                ).apply {
-                                    putExtra("image", fileUri)
-                                })
-                            finish()
+                                ).apply { putExtra("image", fileUri) })
                         }
                     }
                 })

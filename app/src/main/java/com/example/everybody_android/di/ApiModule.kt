@@ -1,6 +1,7 @@
 package com.example.everybody_android.di
 
 import com.example.everybody_android.api.AlbumRepo.AlbumApi
+import com.example.everybody_android.api.PictureRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,6 +51,10 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApiService(): AlbumApi = provideRetrofit().create(AlbumApi::class.java)
+    fun provideApiAlbum(): AlbumApi = provideRetrofit().create(AlbumApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiPicture(): PictureRepo.PictureApi = provideRetrofit().create(PictureRepo.PictureApi::class.java)
 
 }

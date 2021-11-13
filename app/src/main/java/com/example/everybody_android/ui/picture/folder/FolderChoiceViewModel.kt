@@ -16,7 +16,7 @@ class FolderChoiceViewModel @Inject constructor() : BaseViewModel() {
 
     private val _albumsResponse = MutableEventFlow<AlbumsResponse>()
     val albumsResponse = _albumsResponse.asEventFlow()
-
+    var valueMap = hashMapOf<String, String>()
     fun getAlbums() {
         runScope({
             AlbumRepo.getAlbums()
@@ -30,7 +30,7 @@ class FolderChoiceViewModel @Inject constructor() : BaseViewModel() {
         val name: String,
         val holder: Drawable,
         val isCheck: Boolean,
-        val hash: Int,
+        val id: Int,
         val description: String
     )
 

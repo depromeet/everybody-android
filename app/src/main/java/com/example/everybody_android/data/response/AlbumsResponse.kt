@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 class AlbumsResponse : ArrayList<AlbumsResponse.Album>() {
     data class Album(
         @SerializedName("id")
-        val id: Int? = null, // 10
+        val id: Int, // 10
         @SerializedName("name")
         val name: String? = null, // 아요미의 두 번째 앨범!
         @SerializedName("created_at")

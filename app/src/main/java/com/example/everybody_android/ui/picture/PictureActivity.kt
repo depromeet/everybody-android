@@ -16,12 +16,18 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     override val layoutId: Int = R.layout.activity_picture
     override val viewModel: PictureViewModel by viewModels()
     private val folderChoiceFragment by lazy { FolderChoiceFragment() }
+    private var isFolder = false
     private lateinit var pictureFragment: PictureFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!intent.hasExtra("image")) finish()
         pictureFragment = PictureFragment(intent.getStringExtra("image") ?: "")
         addFragment(pictureFragment)
+        addFragment(folderChoiceFragment)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.hide(folderChoiceFragment)
+        transaction.commit()
     }
 
     private fun addFragment(fragment: Fragment) {
@@ -30,15 +36,17 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
         transaction.commit()
     }
 
-    private fun removeFragment(fragment: Fragment) {
+    fun saveComplete(map: HashMap<String, String>) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.remove(fragment)
+        transaction.hide(pictureFragment)
+        folderChoiceFragment.setValue(map)
+        transaction.show(folderChoiceFragment)
         transaction.commit()
+        isFolder = true
     }
 
-    fun saveComplete() {
-        removeFragment(pictureFragment)
-        addFragment(folderChoiceFragment)
+    fun photoUpload(map: HashMap<String, String>) {
+        viewModel.photoUpload(map)
     }
 
     override fun init() {
@@ -46,14 +54,19 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
             viewModel.clickEvent.collect {
                 when (it) {
                     PictureViewModel.ClickEvent.Back -> {
-                        if (supportFragmentManager.fragments.contains(folderChoiceFragment)) removeFragment(
-                            folderChoiceFragment
-                        )
-                        else finish()
+                        val transaction = supportFragmentManager.beginTransaction()
+                        if (isFolder) {
+                            transaction.hide(folderChoiceFragment)
+                            transaction.show(pictureFragment)
+                            isFolder = false
+                        } else finish()
                     }
                     PictureViewModel.ClickEvent.Next -> {
-                        pictureFragment.saveView()
+                        if (isFolder) folderChoiceFragment.getValue()
+                        else pictureFragment.saveView()
+
                     }
+                    PictureViewModel.ClickEvent.Complete -> finish()
                 }
             }
         }
