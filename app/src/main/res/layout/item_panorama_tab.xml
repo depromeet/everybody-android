@@ -14,9 +14,12 @@
             android:background="@drawable/rectangle_radius_4_stroke_2"
             android:padding="2dp"
             android:scaleType="fitXY"
-            android:src="@drawable/test_full_feed" />
+            android:src="@drawable/test_full_feed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tw_count"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginTop="4dp"

@@ -1,14 +1,17 @@
 package com.example.everybody_android.ui.panorama
 
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import com.example.everybody_android.R
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.example.everybody_android.*
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaBinding
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.toast
-import com.example.everybody_android.typeFace
+import com.example.everybody_android.databinding.ItemPanoramaTabBinding
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -63,24 +66,46 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
         }
     }
 
-    private fun viewPagerSetting() {
+    private fun viewPagerSetting(data: List<Picture>) {
         binding.vpPanorama.adapter
         binding.tabPanorama.setupWithViewPager(binding.vpPanorama)
-        for(i in 0..binding.tabPanorama.tabCount){
-            val tab = binding.tabPanorama.getTabAt(i)
+        for (i in 0..binding.tabPanorama.tabCount) {
+            val tab = binding.tabPanorama.getTabAt(i) ?: continue
+            val bind = ItemPanoramaTabBinding.inflate(LayoutInflater.from(this), null, false)
+            bind.imgTab.imageLoad(
+                data[i].imageUrl ?: "",
+                RequestOptions().transform(
+                    CenterCrop(),
+                    RoundedCorners(convertDpToPx(4))
+                ).diskCacheStrategy(DiskCacheStrategy.ALL)
+            )
+            bind.twCount.text = (i + 1).toString()
+            tab.customView = bind.root
 
         }
-        binding.tabPanorama.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+        binding.tabPanorama.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+                tab?.customView?.apply {
+                    val bind = ItemPanoramaTabBinding.bind(this)
+                    bind.imgTab.isSelected = true
+                    bind.twCount.isSelected = true
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+                tab?.customView?.apply {
+                    val bind = ItemPanoramaTabBinding.bind(this)
+                    bind.imgTab.isSelected = false
+                    bind.twCount.isSelected = false
+                }
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+                tab?.customView?.apply {
+                    val bind = ItemPanoramaTabBinding.bind(this)
+                    bind.imgTab.isSelected = true
+                    bind.twCount.isSelected = true
+                }
             }
         })
     }
