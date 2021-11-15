@@ -6,10 +6,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
 import com.example.everybody_android.BR
+import com.example.everybody_android.repeatOnStarted
+import com.example.everybody_android.toast
+import kotlinx.coroutines.flow.collect
 
-abstract class BaseActivity<T : ViewDataBinding, R : ViewModel> : AppCompatActivity() {
+abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
     lateinit var binding: T
 
     abstract val layoutId: Int
@@ -37,7 +39,11 @@ abstract class BaseActivity<T : ViewDataBinding, R : ViewModel> : AppCompatActiv
         init()
     }
 
-    abstract fun init()
+    open fun init() {
+        repeatOnStarted {
+            viewModel.toast.collect { toast(it) }
+        }
+    }
 
     fun setPermissionCallback(permission: Array<String>, action: () -> (Unit)) {
         permissionAction = action

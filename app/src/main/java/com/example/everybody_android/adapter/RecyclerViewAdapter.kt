@@ -17,7 +17,7 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return getItems(position).layoutId
+        return getItem(position).layoutId
     }
 
     override fun onCreateViewHolder(
@@ -33,11 +33,11 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         holder: BindingViewHolder,
         position: Int
     ) {
-        holder.itemView.setOnClickListener { clickCallBack.invoke(getItems(position).data) }
-        getItems(position).bind(holder.binding)
+        holder.itemView.setOnClickListener { clickCallBack.invoke(getItem(position).data) }
+        getItem(position).bind(holder.binding)
         holder.binding.executePendingBindings()
     }
-
+    
     @SuppressLint("NotifyDataSetChanged")
     fun clearData() {
         this.items.clear()
@@ -51,7 +51,7 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         notifyDataSetChanged()
     }
 
-    private fun getItems(position: Int): RecyclerItem {
+    private fun getItem(position: Int): RecyclerItem {
         return items[position]
     }
 
@@ -61,6 +61,18 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         items.addAll(item)
         notifyDataSetChanged()
     }
+
+    fun changeItem(item: RecyclerItem, position: Int) {
+        items[position] = item
+        notifyItemChanged(position)
+    }
+
+    fun addItem(item: RecyclerItem) {
+        items.add(item)
+        notifyItemInserted(items.size)
+    }
+
+    fun getItems() = items
 
     inner class BindingViewHolder(
         val binding: ViewDataBinding,

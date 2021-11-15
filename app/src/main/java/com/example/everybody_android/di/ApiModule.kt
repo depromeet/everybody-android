@@ -1,5 +1,7 @@
 package com.example.everybody_android.di
 
+import com.example.everybody_android.api.AlbumRepo.AlbumApi
+import com.example.everybody_android.api.PictureRepo
 import com.example.everybody_android.remote.ApiService
 import dagger.Module
 import dagger.Provides
@@ -14,7 +16,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-    private const val BASE_URL = ""
+    private const val BASE_URL = "https://api.noonbody.me"
 
     @Singleton
     @Provides
@@ -28,7 +30,15 @@ object ApiModule {
     fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient
             .Builder()
-            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(httpLoggingInterceptor)
+            .addInterceptor {
+                it.proceed(
+                    it.request().newBuilder().addHeader(
+                        "Authorization",
+                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NTIwOTIxMTAsInVzZXJfaWQiOjIwfQ.9jBo1aZ8-CWyB79FEqvtWe_yntWWpPUxmNgB0vr_uZQ"
+                    ).build()
+                )
+            }
             .build()
 
     @Singleton
@@ -43,6 +53,10 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun <T> provideApiService(service: Class<T>): T = provideRetrofit().create(service)
+    fun provideApiAlbum(): AlbumApi = provideRetrofit().create(AlbumApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiPicture(): PictureRepo.PictureApi = provideRetrofit().create(PictureRepo.PictureApi::class.java)
 
 }

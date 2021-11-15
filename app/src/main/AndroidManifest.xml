@@ -17,12 +17,12 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".ui.CreateFolderActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
-        <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,14 +32,12 @@
             android:name=".ui.camera.CameraActivity"
             android:exported="true"
             android:screenOrientation="fullSensor">
-            
+
         </activity>
         <activity
             android:name=".ui.camera.CameraActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor">
-
-        </activity>
+            android:screenOrientation="fullSensor" />
 
         <activity android:name=".ui.picture.PictureActivity" />
     </application>

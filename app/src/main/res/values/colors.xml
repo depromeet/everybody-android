@@ -21,5 +21,6 @@
     <color name="gray_90">#222529</color>
     <color name="purple">#7448FF</color>
     <color name="purple_op80">#CC7448FF</color>
+    <color name="purple_op50">#807448FF</color>
     <color name="black_333">#333333</color>
 </resources>
