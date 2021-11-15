@@ -39,7 +39,12 @@
             android:exported="true"
             android:screenOrientation="fullSensor" />
 
-        <activity android:name=".ui.picture.PictureActivity" />
+        <activity
+            android:name=".ui.picture.PictureActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.panorama.PanoramaActivity"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>
