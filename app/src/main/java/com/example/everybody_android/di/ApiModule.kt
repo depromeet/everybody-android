@@ -38,8 +38,7 @@ object ApiModule {
         .baseUrl(BASE_URL)
         .client(providesOkHttpClient(providesHttpLoggingInterceptor()))
         .build()
-
-
+    
     @Singleton
     @Provides
     fun provideApiService(): ApiService = provideRetrofit().create(ApiService::class.java)
