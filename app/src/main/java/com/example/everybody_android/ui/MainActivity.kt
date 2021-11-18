@@ -1,9 +1,7 @@
 package com.example.everybody_android.ui
 
 import android.content.Intent
-import android.os.Build
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.viewModels
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
@@ -19,10 +17,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val layoutId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
 
-    var feedStatus = true
+    private var feedStatus = true
 
     override fun init() {
         liveEvent()
+        viewModel.token()
         viewModel.testFeed()
         intentCreateFolder()
         feedSort()

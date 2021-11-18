@@ -10,12 +10,17 @@ import com.example.everybody_android.base.MutableEventFlow
 import com.example.everybody_android.base.asEventFlow
 import com.example.everybody_android.dto.MainFeedData
 import com.example.everybody_android.dto.MainFeedPictureData
+import com.example.everybody_android.pref.LocalStorage
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val localStorage : LocalStorage
+) : BaseViewModel() {
 
     private var feedStatus = true
     private var recyclerStatus = true
@@ -72,6 +77,14 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         sortFeed()
     }
 
+
+    fun token(){
+        FirebaseMessaging.getInstance().token.addOnSuccessListener(OnSuccessListener {
+            localStorage.saveToken(it)
+            println("Token $it")
+        })
+
+    }
 
     private fun MainFeedData.toFullRecyclerItem() =
         RecyclerItem(
