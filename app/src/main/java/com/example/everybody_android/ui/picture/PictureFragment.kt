@@ -28,11 +28,7 @@ class PictureFragment(private val image: String) :
     private val datePictureFormat = SimpleDateFormat("yyyy.MM.dd a hh:mm", Locale("en", "US"))
     private val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "US"))
     private val dateTextFormat = SimpleDateFormat("yyyy MMM dd kk:mm", Locale("en", "US"))
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.imgPicture.imageLoad(image)
-        initSetting()
-    }
+    private var part = "whole"
 
     private fun initSetting() {
         setPictureTime()
@@ -81,6 +77,8 @@ class PictureFragment(private val image: String) :
     }
 
     override fun init() {
+        binding.imgPicture.imageLoad(image)
+        initSetting()
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
@@ -111,6 +109,11 @@ class PictureFragment(private val image: String) :
                             it == PictureFragmentViewModel.ClickEvent.PartUpper
                         binding.includePicturePart.twUpper.isSelected =
                             it == PictureFragmentViewModel.ClickEvent.PartUpper
+                        part = when (it) {
+                            PictureFragmentViewModel.ClickEvent.PartLower -> "lower"
+                            PictureFragmentViewModel.ClickEvent.PartUpper -> "upper"
+                            else -> "whole"
+                        }
                     }
                     PictureFragmentViewModel.ClickEvent.TimeNow, PictureFragmentViewModel.ClickEvent.TimePicture, PictureFragmentViewModel.ClickEvent.TimePerson -> {
                         binding.includePictureTime.groupNumberpicker.isVisible =
@@ -137,10 +140,23 @@ class PictureFragment(private val image: String) :
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         binding.clPicture.draw(canvas)
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,FileOutputStream(image))
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
         val newExif = ExifInterface(image)
-        newExif.setAttribute(ExifInterface.TAG_ORIENTATION,"1")
+        newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
         newExif.saveAttributes()
+        activity?.apply {
+            if (this is PictureActivity) {
+                val date = this@PictureFragment.binding.twDate.text.toString().split(".")
+                val valueMap = hashMapOf(
+                    "body_part" to part,
+                    "taken_at_year" to date[0],
+                    "taken_at_month" to date[1],
+                    "taken_at_day" to date[2],
+                    "image" to image
+                )
+                saveComplete(valueMap)
+            }
+        }
     }
 
     private fun settingNumberPickerEvent() {

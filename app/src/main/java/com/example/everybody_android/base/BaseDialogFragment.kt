@@ -6,18 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.example.everybody_android.BR
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.toast
 import kotlinx.coroutines.flow.collect
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
-) : Fragment() {
+abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(
+) : DialogFragment() {
 
     lateinit var binding: B
     abstract val viewModel: VM
     abstract val layoutId : Int
+
+    override fun onStart() {
+        super.onStart()
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
