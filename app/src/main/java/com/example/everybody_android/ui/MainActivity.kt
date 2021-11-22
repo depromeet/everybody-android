@@ -1,15 +1,14 @@
 package com.example.everybody_android.ui
 
 import android.content.Intent
-import android.os.Build
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.viewModels
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityMainBinding
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.ui.camera.CameraActivity
+import com.example.everybody_android.ui.panorama.PanoramaActivity
 import com.example.everybody_android.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -19,10 +18,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val layoutId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
 
-    var feedStatus = true
+    private var feedStatus = true
 
     override fun init() {
         liveEvent()
+        viewModel.token()
         viewModel.testFeed()
         intentCreateFolder()
         feedSort()
@@ -41,12 +41,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             viewModel.clickEvent.collect {
                 when (it) {
                     is MainViewModel.ClickEvent.SortFeed -> feedSort()
+                    MainViewModel.ClickEvent.PanoramaActivity -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            PanoramaActivity::class.java
+                        )
+                    )
                 }
             }
         }
     }
 
-    private fun onClickCamara(){
+    private fun onClickCamara() {
         binding.ibCamera.setOnClickListener {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
@@ -55,7 +61,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private fun feedSort() {
 
-        if(viewModel.fullFeedAdapter.itemCount != 0) binding.clNoFeed.visibility = View.GONE
+        if (viewModel.fullFeedAdapter.itemCount != 0) binding.clNoFeed.visibility = View.GONE
 
         if (!feedStatus) {
             binding.rvFullSort.visibility = View.VISIBLE

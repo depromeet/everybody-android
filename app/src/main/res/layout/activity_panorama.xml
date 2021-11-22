@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.everybody_android.ui.panorama.PanoramaViewModel.Event" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.panorama.PanoramaViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:onClick="@{()->vm.onClickEvent(ClickEvent.Back.INSTANCE)}"
+            android:onClick="@{()->vm.onClickEvent(Event.Close.INSTANCE)}"
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
+            android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
             android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="@id/img_share"
             app:layout_constraintEnd_toStartOf="@id/img_share"
@@ -43,12 +54,12 @@
             android:layout_height="48dp"
             android:fontFamily="@font/pretendard_bold"
             android:gravity="center"
-            android:text="사진 촬영"
             android:textColor="#333333"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="사진 촬영" />
 
         <TextView
             android:id="@+id/tw_whole"
@@ -56,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onPoseType(1)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
             android:paddingEnd="12dp"
@@ -71,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onPoseType(2)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
             android:paddingEnd="12dp"
@@ -86,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onPoseType(3)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
             android:paddingEnd="12dp"
@@ -101,6 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:onClick="@{()->vm.onClickEvent(Event.ListType.INSTANCE)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
             android:paddingEnd="12dp"

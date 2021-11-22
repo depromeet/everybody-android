@@ -10,20 +10,29 @@ import com.example.everybody_android.base.MutableEventFlow
 import com.example.everybody_android.base.asEventFlow
 import com.example.everybody_android.dto.MainFeedData
 import com.example.everybody_android.dto.MainFeedPictureData
+import com.example.everybody_android.pref.LocalStorage
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val localStorage: LocalStorage
+) : BaseViewModel() {
 
     private var feedStatus = true
     private var recyclerStatus = true
 
     private var testFeedData = ArrayList<MainFeedData>()
 
-    val halfFeedAdapter = RecyclerViewAdapter {}
-    val fullFeedAdapter = RecyclerViewAdapter {}
+    val halfFeedAdapter = RecyclerViewAdapter {
+        onClickEvent(ClickEvent.PanoramaActivity)
+    }
+    val fullFeedAdapter = RecyclerViewAdapter {
+        onClickEvent(ClickEvent.PanoramaActivity)
+    }
 
     private val _clickEvent = MutableEventFlow<ClickEvent>()
     val clickEvent = _clickEvent.asEventFlow()
@@ -32,14 +41,13 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _clickEvent.emit(event) }
     }
 
-    fun sortFeed(){
+    fun sortFeed() {
         recyclerStatus = !recyclerStatus
         if (testFeedData.size == 0) feedStatus = false
         else {
             if (recyclerStatus) {
                 halfFeedAdapter.changeData(testFeedData.map { it.toHalfRecyclerItem() })
-            }
-            else {
+            } else {
                 fullFeedAdapter.changeData(testFeedData.map { it.toFullRecyclerItem() })
             }
             onClickEvent(ClickEvent.SortFeed)
@@ -73,6 +81,14 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     }
 
 
+    fun token() {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener(OnSuccessListener {
+            localStorage.saveToken(it)
+            println("Token $it")
+        })
+
+    }
+
     private fun MainFeedData.toFullRecyclerItem() =
         RecyclerItem(
             data = this,
@@ -89,5 +105,6 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     sealed class ClickEvent {
         object SortFeed : ClickEvent()
+        object PanoramaActivity : ClickEvent()
     }
 }
