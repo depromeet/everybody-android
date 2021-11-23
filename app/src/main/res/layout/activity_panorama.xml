@@ -12,7 +12,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:onClick="@{()->vm.onClickEvent(ClickEvent.Back.INSTANCE)}"
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintStart_toStartOf="parent"

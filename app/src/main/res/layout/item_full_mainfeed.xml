@@ -7,19 +7,21 @@
 
         <variable
             name="repo"
-            type="com.example.everybody_android.dto.MainFeedData" />
+            type="com.example.everybody_android.dto.response.MainFeedResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="16dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="335dp"
-            android:layout_height="446dp"
-            android:src="@drawable/test_full_feed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:url='@{repo.feedPicture}'
+            app:holder="@{@drawable/ic_add}"
+            android:scaleType="fitStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="168dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="@{repo.feedName}"
+            android:text="@{repo.name}"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -58,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="@{repo.feedCreated}"
+            android:text="@{repo.description}"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView"

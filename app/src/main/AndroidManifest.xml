@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".ui.MyPageActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.CreateFolderActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />
@@ -31,14 +34,11 @@
         <activity
             android:name=".ui.camera.CameraActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor">
-
-        </activity>
+            android:screenOrientation="fullSensor"></activity>
         <activity
             android:name=".ui.camera.CameraActivity"
             android:exported="true"
             android:screenOrientation="fullSensor" />
-
         <activity
             android:name=".ui.picture.PictureActivity"
             android:screenOrientation="fullSensor" />

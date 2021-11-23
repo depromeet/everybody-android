@@ -2,7 +2,8 @@ package com.example.everybody_android.di
 
 import com.example.everybody_android.api.AlbumRepo.AlbumApi
 import com.example.everybody_android.api.PictureRepo
-import com.example.everybody_android.remote.ApiService
+import com.example.everybody_android.api.SignRepo
+import com.example.everybody_android.api.UserRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,6 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -51,14 +53,17 @@ object ApiModule {
     
     @Singleton
     @Provides
-<<<<<<< HEAD
-    fun provideApiService(): ApiService = provideRetrofit().create(ApiService::class.java)
-=======
     fun provideApiAlbum(): AlbumApi = provideRetrofit().create(AlbumApi::class.java)
 
     @Singleton
     @Provides
     fun provideApiPicture(): PictureRepo.PictureApi = provideRetrofit().create(PictureRepo.PictureApi::class.java)
 
->>>>>>> feature/part2
+    @Singleton
+    @Provides
+    fun provideApiUser(): UserRepo.UserApi = provideRetrofit().create(UserRepo.UserApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiSign(): SignRepo.SignApi = provideRetrofit().create(SignRepo.SignApi::class.java)
 }

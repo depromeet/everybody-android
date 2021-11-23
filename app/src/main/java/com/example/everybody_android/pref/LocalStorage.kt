@@ -2,7 +2,11 @@ package com.example.everybody_android.pref
 
 interface LocalStorage {
 
-    fun saveToken(token : String)
+    fun saveFcmToken(token : String)
 
-    fun getToken(token: String)
+    fun getFcmToken() : String
+
+    fun saveDeviceToken(token : String)
+
+    fun getDeviceToken() : String
 }

@@ -3,6 +3,7 @@ package com.example.everybody_android.api
 import com.example.everybody_android.data.response.AlbumResponse
 import com.example.everybody_android.data.response.AlbumsResponse
 import com.example.everybody_android.di.ApiModule
+import com.example.everybody_android.dto.response.MainFeedResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,6 +20,9 @@ class AlbumRepo {
 
         @GET("/albums/{id}")
         suspend fun getAlbum(@Path("id") id: String): AlbumResponse
+
+        @GET("/albums")
+        suspend fun getMainFeed(): List<MainFeedResponse>
     }
 
     companion object {
@@ -30,6 +34,9 @@ class AlbumRepo {
 
         suspend fun createAlbum(map: Map<String, String>): AlbumsResponse.Album =
             ApiModule.provideApiAlbum().createAlbum(map)
+
+        suspend fun getMainFeed() : List<MainFeedResponse> =
+            ApiModule.provideApiAlbum().getMainFeed()
     }
 
 }
