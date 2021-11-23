@@ -18,21 +18,26 @@ import com.example.everybody_android.dto.request.SignInRequest
 import com.example.everybody_android.dto.request.SignUpRequest
 import com.example.everybody_android.dto.response.SignUpResponse
 import com.example.everybody_android.pref.LocalStorage
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-) : BaseViewModel() {
+class MainViewModel @Inject constructor() : BaseViewModel() {
 
     private var feedStatus = true
     private var recyclerStatus = true
 
     private var feedData = ArrayList<MainFeedResponse>()
 
-    val halfFeedAdapter = RecyclerViewAdapter {}
-    val fullFeedAdapter = RecyclerViewAdapter {}
+    val halfFeedAdapter = RecyclerViewAdapter {
+        onClickEvent(ClickEvent.PanoramaActivity)
+    }
+    val fullFeedAdapter = RecyclerViewAdapter {
+        onClickEvent(ClickEvent.PanoramaActivity)
+    }
 
     var noFeed = MutableLiveData(true)
 
@@ -43,40 +48,40 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch { _clickEvent.emit(event) }
     }
 
-    fun sortFeed(){
+    fun sortFeed() {
         onClickEvent(ClickEvent.SortFeed)
         recyclerStatus = !recyclerStatus
         if (feedData.size == 0) feedStatus = false
         else {
             if (recyclerStatus) {
-                halfFeedAdapter.changeData(feedData.map { it.toHalfRecyclerItem() } )
-            }
-            else {
+                halfFeedAdapter.changeData(feedData.map { it.toHalfRecyclerItem() })
+            } else {
                 fullFeedAdapter.changeData(feedData.map { it.toFullRecyclerItem() })
             }
         }
     }
-    fun signUp(signUpRequest: SignUpRequest){
+
+    fun signUp(signUpRequest: SignUpRequest) {
         runScope({
             SignRepo.signUp(signUpRequest)
-        }){
-            data -> println("signup $data")
+        }) { data ->
+            println("signup $data")
         }
     }
 
-    fun signIn(signInRequest: SignInRequest){
+    fun signIn(signInRequest: SignInRequest) {
         runScope({
             SignRepo.signIn(signInRequest)
-        }){
-            data -> println("signIn $data")
+        }) { data ->
+            println("signIn $data")
         }
     }
 
-    fun getUserData(){
+    fun getUserData() {
         runScope({
             UserRepo.getUserData()
-        }){
-            data -> println(data)
+        }) { data ->
+            println(data)
             onClickEvent(ClickEvent.GetUserData(data))
         }
     }
@@ -85,7 +90,7 @@ class MainViewModel @Inject constructor(
         runScope({
             AlbumRepo.getMainFeed()
         }) { data ->
-            halfFeedAdapter.changeData(data.map { it.toHalfRecyclerItem()})
+            halfFeedAdapter.changeData(data.map { it.toHalfRecyclerItem() })
             fullFeedAdapter.changeData(data.map { it.toFullRecyclerItem() })
             if (data.isNotEmpty()) noFeed.value = false
         }
@@ -107,7 +112,9 @@ class MainViewModel @Inject constructor(
 
     sealed class ClickEvent {
         object SortFeed : ClickEvent()
-        data class GetFeedData(val data : ArrayList<MainFeedResponse>) : ClickEvent()
-        data class GetUserData(val data : UserData) : ClickEvent()
+        data class GetFeedData(val data: ArrayList<MainFeedResponse>) : ClickEvent()
+        data class GetUserData(val data: UserData) : ClickEvent()
+        object PanoramaActivity : ClickEvent()
     }
+
 }

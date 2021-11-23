@@ -17,6 +17,7 @@ import com.example.everybody_android.dto.request.SignInRequest
 import com.example.everybody_android.pref.LocalStorage
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.ui.camera.CameraActivity
+import com.example.everybody_android.ui.panorama.PanoramaActivity
 import com.example.everybody_android.viewmodel.MainViewModel
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -65,6 +66,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 when (it) {
                     is MainViewModel.ClickEvent.SortFeed -> feedSort()
                     is MainViewModel.ClickEvent.GetUserData -> user(it.data)
+                    MainViewModel.ClickEvent.PanoramaActivity -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            PanoramaActivity::class.java
+                        )
+                    )
                 }
             }
         }
@@ -84,7 +91,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun feedSort() {
-        if(viewModel.fullFeedAdapter.itemCount != 0) binding.clNoFeed.visibility = View.GONE
+
+        if (viewModel.fullFeedAdapter.itemCount != 0) binding.clNoFeed.visibility = View.GONE
 
         if (!feedStatus) {
             binding.rvFullSort.visibility = View.VISIBLE

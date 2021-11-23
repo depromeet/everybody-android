@@ -20,6 +20,10 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _event.emit(event) }
     }
 
+    fun onPoseType(type: Int) {
+        viewModelScope.launch { _event.emit(Event.PoseType(type)) }
+    }
+
     fun getAlbum(id: String) {
         runScope({
             AlbumRepo.getAlbum(id)
@@ -32,7 +36,7 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
         object Close : Event()
         object Edit : Event()
         object ListType : Event()
-        data class PoseType(val type:Int):Event()
+        data class PoseType(val type: Int) : Event()
         data class Album(val albumResponse: AlbumResponse) : Event()
     }
 

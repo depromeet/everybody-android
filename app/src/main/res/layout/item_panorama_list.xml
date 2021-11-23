@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
+    <data>
+
+        <variable
+            name="data"
+            type="com.example.everybody_android.ui.panorama.PanoramaViewPagerAdapter.Item" />
+    </data>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img"
+            imageUrl="@{data.imageUrl}"
+            placeholder="@{data.holder}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </layout>

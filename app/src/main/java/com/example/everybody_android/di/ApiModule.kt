@@ -50,14 +50,15 @@ object ApiModule {
         .baseUrl(BASE_URL)
         .client(providesOkHttpClient(providesHttpLoggingInterceptor()))
         .build()
-    
+
     @Singleton
     @Provides
     fun provideApiAlbum(): AlbumApi = provideRetrofit().create(AlbumApi::class.java)
 
     @Singleton
     @Provides
-    fun provideApiPicture(): PictureRepo.PictureApi = provideRetrofit().create(PictureRepo.PictureApi::class.java)
+    fun provideApiPicture(): PictureRepo.PictureApi =
+        provideRetrofit().create(PictureRepo.PictureApi::class.java)
 
     @Singleton
     @Provides
@@ -66,4 +67,5 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideApiSign(): SignRepo.SignApi = provideRetrofit().create(SignRepo.SignApi::class.java)
+
 }
