@@ -26,6 +26,7 @@ class PanoramaViewPagerAdapter : PagerAdapter() {
             items[position].imageUrl ?: "",
             container.context.getDrawable(R.drawable.test_feed)!!
         )
+        container.addView(bind.root)
         return bind.root
     }
 
