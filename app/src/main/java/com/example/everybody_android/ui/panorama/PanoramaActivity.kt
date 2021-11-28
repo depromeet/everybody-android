@@ -1,5 +1,6 @@
 package com.example.everybody_android.ui.panorama
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,11 +11,13 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.everybody_android.*
+import com.example.everybody_android.adapter.RecyclerItem
+import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaBinding
 import com.example.everybody_android.databinding.ItemPanoramaTabBinding
-import com.example.everybody_android.databinding.ItemPanoramaTabBindingImpl
+import com.example.everybody_android.ui.panorama.edit.PanoramaEditActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -27,11 +30,14 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val upper = mutableListOf<Picture>()
     private val lower = mutableListOf<Picture>()
     private val adapter by lazy { PanoramaViewPagerAdapter() }
+    private lateinit var gridAdapter: RecyclerViewAdapter
     override fun init() {
         super.init()
-//        if (!intent.hasExtra("id")) finish()
         viewModel.getAlbum("10")
+        gridAdapter = RecyclerViewAdapter { }
         binding.vpPanorama.adapter = adapter
+        binding.recyclerGrid.addItemDecoration(PanoramaItemDecoration())
+        binding.recyclerGrid.adapter = gridAdapter
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
@@ -43,10 +49,19 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             lower.addAll(list.lower.orEmpty())
                         }
                         viewPagerSetting(whole)
+                        recyclerSetting(whole)
                         binding.twTitle.text = data.name
+                        viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
                     }
                     PanoramaViewModel.Event.Close -> finish()
-                    PanoramaViewModel.Event.Edit -> toast("수정 클릭")
+                    PanoramaViewModel.Event.Edit -> {
+                        startActivity(
+                            Intent(
+                                this@PanoramaActivity,
+                                PanoramaEditActivity::class.java
+                            )
+                        )
+                    }
                     PanoramaViewModel.Event.ListType -> {
                         binding.imgListType.isSelected = !binding.imgListType.isSelected
                         binding.recyclerGrid.isVisible = binding.imgListType.isSelected
@@ -62,25 +77,37 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             typeFace(if (it.type == 2) R.font.pretendard_bold else R.font.pretendard_regular)
                         binding.twLower.typeface =
                             typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
-                        viewPagerSetting(
-                            when (it.type) {
-                                2 -> whole
-                                3 -> upper
-                                else -> lower
-                            }
-                        )
+                        val list = when (it.type) {
+                            2 -> whole
+                            3 -> upper
+                            else -> lower
+                        }
+                        viewPagerSetting(list)
+                        recyclerSetting(list)
                     }
                 }
             }
         }
     }
 
+    private fun recyclerSetting(data: List<Picture>) {
+        gridAdapter.setItems(data.map {
+            RecyclerItem(
+                PanoramaViewPagerAdapter.Item(
+                    it.imageUrl ?: "",
+                    this.getDrawable(R.drawable.test_feed)!!
+                ), R.layout.item_panorama_grid, BR.data
+            )
+        })
+    }
+
     private fun viewPagerSetting(data: List<Picture>) {
+        binding.vpPanorama.offscreenPageLimit = data.size
         adapter.setItems(data)
         binding.tabPanorama.setupWithViewPager(binding.vpPanorama)
-        for (i in data.indices) {
+        for (i in 0 until binding.tabPanorama.tabCount) {
             val tab = binding.tabPanorama.getTabAt(i) ?: continue
-            val bind = ItemPanoramaTabBinding.inflate(LayoutInflater.from(this), null, false)
+            val bind = ItemPanoramaTabBinding.inflate(LayoutInflater.from(this))
             bind.imgTab.imageLoad(
                 data[i].imageUrl ?: "",
                 RequestOptions().transform(

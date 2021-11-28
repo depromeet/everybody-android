@@ -28,6 +28,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_camera.xml" value="0.33" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_main.xml" value="0.490036231884058" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_panorama.xml" value="0.3079710144927536" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_panorama_edit.xml" value="0.5461393596986818" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_picture.xml" value="0.2" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_add.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/fragment_picture.xml" value="0.5" />
@@ -37,7 +38,9 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_camera_pose.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_folder_add.xml" value="0.31927083333333334" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_folder_choice.xml" value="0.5536458333333333" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_camera.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_grid.xml" value="0.5536458333333333" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_grid_edit.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_list.xml" value="0.5470809792843692" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_tab.xml" value="1.0" />
         <entry key="..\:/work/everybody-android/app/src/main/res/xml/scene_camera.xml" value="0.5536458333333333" />

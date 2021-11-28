@@ -45,6 +45,9 @@
         <activity
             android:name=".ui.panorama.PanoramaActivity"
             android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.panorama.edit.PanoramaEditActivity"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>
