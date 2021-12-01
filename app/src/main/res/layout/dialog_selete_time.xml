@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="vm"
+            type="com.example.everybody_android.viewmodel.TimeSettingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="320dp"
+        android:layout_height="227dp"
+        android:background="@color/white">
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="92dp"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_max="12"
+            app:np_min="0"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="18sp"
+            app:np_textColor="@color/gray_60"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text=":"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/np_hour"
+            app:layout_constraintEnd_toStartOf="@+id/np_min"
+            app:layout_constraintStart_toEndOf="@+id/np_hour"
+            app:layout_constraintTop_toTopOf="@+id/np_hour" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_min"
+            android:layout_width="wrap_content"
+            android:layout_height="92dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="90dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_max="60"
+            app:np_min="0"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="18sp"
+            app:np_textColor="@color/gray_60"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="취소"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_check"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_check"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/white"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="확인"
+            android:textColor="#7448FF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_cancel" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

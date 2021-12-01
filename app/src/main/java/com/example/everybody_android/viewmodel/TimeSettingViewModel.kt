@@ -5,9 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AlarmViewModel @Inject constructor(): BaseViewModel() {
+class TimeSettingViewModel @Inject constructor() : BaseViewModel() {
 
-    fun setAlarmTime(){
 
-    }
+
 }

@@ -17,27 +17,33 @@
         <entry key="app/src/main/res/drawable/ic_grid.xml" value="0.2722222222222222" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_not_pose.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_storage.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/drawable/ic_test_profile.xml" value="0.2722222222222222" />
         <entry key="app/src/main/res/drawable/ic_woman_upper.xml" value="0.17777777777777778" />
         <entry key="app/src/main/res/drawable/item_half_mainfeed.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/drawable/oval_click_day.xml" value="0.24351851851851852" />
         <entry key="app/src/main/res/drawable/oval_day.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ractangle_radius_1.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/rectangle_left_radius_5.xml" value="0.17777777777777778" />
         <entry key="app/src/main/res/drawable/rectangle_radius_12.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/rectangle_radius_4.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/drawable/rectangle_radius_4_stroke_2.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/drawable/selector_panorama_list.xml" value="0.24351851851851852" />
+        <entry key="app/src/main/res/drawable/seletor_day.xml" value="0.17864583333333334" />
+        <entry key="app/src/main/res/drawable/seletor_oval_day.xml" value="0.24351851851851852" />
         <entry key="app/src/main/res/layout-v23/activity_create_folder.xml" value="0.13728470111448834" />
         <entry key="app/src/main/res/layout-v29/activity_select_day.xml" value="0.13728470111448834" />
-        <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.2424402092442968" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.19202898550724637" />
         <entry key="app/src/main/res/layout/activity_create_folder.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_my_page.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_panorama.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_panorama.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_picture.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_select_day.xml" value="0.29074074074074074" />
         <entry key="app/src/main/res/layout/activity_selete_day.xml" value="0.1526268115942029" />
         <entry key="app/src/main/res/layout/dialog_folder_add.xml" value="0.20969202898550723" />
+        <entry key="app/src/main/res/layout/dialog_selete_time.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_folder_choice.xml" value="0.35144927536231885" />
         <entry key="app/src/main/res/layout/fragment_picture.xml" value="0.35144927536231885" />
         <entry key="app/src/main/res/layout/include_grid.xml" value="0.35144927536231885" />
@@ -50,6 +56,7 @@
         <entry key="app/src/main/res/layout/item_half_mainfeed.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_panorama_grid.xml" value="0.20969202898550723" />
         <entry key="app/src/main/res/layout/item_panorama_list.xml" value="0.20969202898550723" />
+        <entry key="app/src/main/res/layout/item_panorama_tab.xml" value="0.1609375" />
       </map>
     </option>
   </component>

@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view_nickname_bottom" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_time_select"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginStart="20dp"
@@ -110,114 +110,171 @@
             android:textColor="@color/gray_70"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_time_select" />
 
 
-        <TextView
-            android:id="@+id/tv_sunday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <FrameLayout
+            android:id="@+id/fl_sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="일"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
+            android:background="@drawable/seletor_oval_day"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
-        <TextView
-            android:id="@+id/tv_monday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:id="@+id/tv_sunday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:textColor="@color/seletor_white_gray80"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="일"
+                android:textSize="14sp"
+                android:focusable="true" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="월"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/tv_tuesday"
-            app:layout_constraintStart_toEndOf="@+id/tv_sunday"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            android:background="@drawable/seletor_oval_day"
+            app:layout_constraintEnd_toStartOf="@+id/fl_tuesday"
+            app:layout_constraintStart_toEndOf="@+id/fl_sunday"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
-        <TextView
-            android:id="@+id/tv_tuesday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:id="@+id/tv_monday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="월"
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp" />
+        </FrameLayout>
+
+
+
+        <FrameLayout
+            android:id="@+id/fl_tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="화"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/tv_wednesday"
-            app:layout_constraintStart_toEndOf="@+id/tv_monday"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            android:background="@drawable/seletor_oval_day"
+            app:layout_constraintEnd_toStartOf="@+id/fl_wedesday"
+            app:layout_constraintStart_toEndOf="@+id/fl_monday"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
-        <TextView
-            android:id="@+id/tv_wednesday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:id="@+id/tv_tuesday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="화"
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_wedesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="수"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/tv_thursday"
-            app:layout_constraintStart_toEndOf="@+id/tv_tuesday"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            android:background="@drawable/seletor_oval_day"
+            app:layout_constraintEnd_toStartOf="@+id/fl_thursday"
+            app:layout_constraintStart_toEndOf="@+id/fl_tuesday"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date" >
 
-        <TextView
-            android:id="@+id/tv_thursday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            <TextView
+                android:id="@+id/tv_wednesday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="수"
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/fl_thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="목"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/tv_friday"
-            app:layout_constraintStart_toEndOf="@+id/tv_wednesday"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            android:background="@drawable/seletor_oval_day"
+            app:layout_constraintEnd_toStartOf="@id/fl_friday"
+            app:layout_constraintStart_toEndOf="@+id/fl_wedesday"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
-        <TextView
-            android:id="@+id/tv_friday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="금"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
+            <TextView
+                android:id="@+id/tv_thursday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="목"
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp"/>
+        </FrameLayout>
 
-            app:layout_constraintEnd_toStartOf="@id/tv_saturday"
-            app:layout_constraintStart_toEndOf="@+id/tv_thursday"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+       <FrameLayout
+           android:id="@+id/fl_friday"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:background="@drawable/seletor_oval_day"
+           android:layout_marginTop="8dp"
+           app:layout_constraintEnd_toStartOf="@id/fl_saturday"
+           app:layout_constraintStart_toEndOf="@+id/fl_thursday"
+           app:layout_constraintTop_toBottomOf="@+id/tv_date" >
 
-        <TextView
-            android:id="@+id/tv_saturday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+           <TextView
+               android:id="@+id/tv_friday"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:duplicateParentState="true"
+               android:fontFamily="@font/pretendard_regular"
+               android:gravity="center"
+               android:text="금"
+               android:textColor="@color/seletor_white_gray80"
+               android:textSize="14sp" />
+       </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/oval_day"
-            android:fontFamily="@font/pretendard_regular"
-            android:gravity="center"
-            android:text="토"
-            android:textColor="@color/gray_80"
-            android:textSize="14sp"
+            android:background="@drawable/seletor_oval_day"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
+
+            <TextView
+                android:id="@+id/tv_saturday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp" />
+
+        </FrameLayout>
+
+
 
         <ImageButton
             android:id="@+id/ib_save"
@@ -229,6 +286,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-        
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

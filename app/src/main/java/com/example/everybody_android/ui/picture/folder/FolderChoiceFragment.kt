@@ -25,7 +25,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         viewModel.getAlbums()
         adapter = RecyclerViewAdapter {
             if (it is Unit) {
-                FolderAddDialog { data ->
+                FolderAddDialog {  data ->
                     adapter.addItem(
                         RecyclerItem(
                             FolderChoiceViewModel.Item(

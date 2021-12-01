@@ -119,7 +119,7 @@
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/pretendard_regular"
-            android:text="천천히 그리고 꾸준히(디폴트)"
+            android:hint="천천히 그리고 꾸준히(디폴트)"
             android:textColor="@color/gray_80"
             android:textColorHint="@color/black"
             android:textSize="16sp"
