@@ -31,27 +31,47 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val lower = mutableListOf<Picture>()
     private val adapter by lazy { PanoramaViewPagerAdapter() }
     private lateinit var gridAdapter: RecyclerViewAdapter
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAlbum("10")
+    }
+
     override fun init() {
         super.init()
-        viewModel.getAlbum("10")
         gridAdapter = RecyclerViewAdapter { }
         binding.vpPanorama.adapter = adapter
         binding.recyclerGrid.addItemDecoration(PanoramaItemDecoration())
         binding.recyclerGrid.adapter = gridAdapter
+        viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
                     is PanoramaViewModel.Event.Album -> {
                         val data = it.albumResponse
                         data.pictures?.also { list ->
+                            whole.clear()
+                            upper.clear()
+                            lower.clear()
                             whole.addAll(list.whole.orEmpty())
                             upper.addAll(list.upper.orEmpty())
                             lower.addAll(list.lower.orEmpty())
                         }
-                        viewPagerSetting(whole)
-                        recyclerSetting(whole)
+                        when {
+                            binding.twWhole.isSelected -> {
+                                viewPagerSetting(whole)
+                                recyclerSetting(whole)
+                            }
+                            binding.twUpper.isSelected -> {
+                                viewPagerSetting(upper)
+                                recyclerSetting(upper)
+                            }
+                            binding.twLower.isSelected -> {
+                                viewPagerSetting(lower)
+                                recyclerSetting(lower)
+                            }
+                        }
                         binding.twTitle.text = data.name
-                        viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
                     }
                     PanoramaViewModel.Event.Close -> finish()
                     PanoramaViewModel.Event.Edit -> {
@@ -78,8 +98,8 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         binding.twLower.typeface =
                             typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
                         val list = when (it.type) {
-                            2 -> whole
-                            3 -> upper
+                            1 -> whole
+                            2 -> upper
                             else -> lower
                         }
                         viewPagerSetting(list)
@@ -102,22 +122,22 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     }
 
     private fun viewPagerSetting(data: List<Picture>) {
-        binding.vpPanorama.offscreenPageLimit = data.size
         adapter.setItems(data)
+        binding.vpPanorama.offscreenPageLimit = data.size
         binding.tabPanorama.setupWithViewPager(binding.vpPanorama)
-        for (i in 0 until binding.tabPanorama.tabCount) {
-            val tab = binding.tabPanorama.getTabAt(i) ?: continue
+        data.forEachIndexed { index, picture ->
+            val tab = binding.tabPanorama.getTabAt(index) ?: return@forEachIndexed
             val bind = ItemPanoramaTabBinding.inflate(LayoutInflater.from(this))
             bind.imgTab.imageLoad(
-                data[i].imageUrl ?: "",
+                picture.imageUrl ?: "",
                 RequestOptions().transform(
                     CenterCrop(),
                     RoundedCorners(convertDpToPx(4))
                 ).diskCacheStrategy(DiskCacheStrategy.ALL)
             )
-            bind.twCount.text = (i + 1).toString()
-            bind.imgTab.isSelected = i == 0
-            bind.twCount.isSelected = i == 0
+            bind.twCount.text = (index + 1).toString()
+            bind.imgTab.isSelected = index == 0
+            bind.twCount.isSelected = index == 0
             tab.customView = bind.root
         }
         binding.tabPanorama.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

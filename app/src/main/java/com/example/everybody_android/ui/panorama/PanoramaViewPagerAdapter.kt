@@ -46,6 +46,7 @@ class PanoramaViewPagerAdapter : PagerAdapter() {
     }
 
     fun setItems(item: List<Picture>) {
+        items.clear()
         items.addAll(item)
         notifyDataSetChanged()
     }

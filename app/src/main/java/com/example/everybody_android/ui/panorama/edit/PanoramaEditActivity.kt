@@ -1,5 +1,6 @@
 package com.example.everybody_android.ui.panorama.edit
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.activity.viewModels
 import com.example.everybody_android.BR
@@ -11,6 +12,8 @@ import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaEditBinding
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.typeFace
+import com.example.everybody_android.ui.camera.CameraActivity
+import com.example.everybody_android.ui.dialog.delete.DeleteDialog
 import com.example.everybody_android.ui.panorama.PanoramaItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -23,12 +26,21 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
     private val upper = mutableListOf<Picture>()
     private val lower = mutableListOf<Picture>()
     private lateinit var gridAdapter: RecyclerViewAdapter
+    private var deleteCount = 0
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAlbum("10")
+    }
+
     override fun init() {
         super.init()
-        viewModel.getAlbum("10")
+        viewModel.onClickEvent(PanoramaEditViewModel.Event.PoseType(1))
         gridAdapter = RecyclerViewAdapter {
             if (it is Unit) {
-
+                startActivity(Intent(this, CameraActivity::class.java).apply {
+                    putExtra("albumId", "10")
+                })
             } else if (it is Item) {
                 val index = gridAdapter.getItems().indexOfFirst { data -> data.data == it }
                 gridAdapter.changeItem(
@@ -36,9 +48,11 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                     index
                 )
                 val checkCount =
-                    gridAdapter.getItems().filter { data -> (data.data as? Item)?.isCheck ?: false }.size
+                    gridAdapter.getItems()
+                        .filter { data -> (data.data as? Item)?.isCheck ?: false }.size
                 if (checkCount == 0) binding.twTitle.text = ""
                 else binding.twTitle.text = "${checkCount}장"
+                deleteCount = checkCount
             }
         }
         binding.recyclerGrid.addItemDecoration(PanoramaItemDecoration())
@@ -49,16 +63,29 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                     is PanoramaEditViewModel.Event.Album -> {
                         val data = it.albumResponse
                         data.pictures?.also { list ->
+                            whole.clear()
+                            upper.clear()
+                            lower.clear()
                             whole.addAll(list.whole.orEmpty())
                             upper.addAll(list.upper.orEmpty())
                             lower.addAll(list.lower.orEmpty())
                         }
-                        recyclerSetting(whole)
-                        viewModel.onClickEvent(PanoramaEditViewModel.Event.PoseType(1))
+                        when {
+                            binding.twWhole.isSelected -> recyclerSetting(whole)
+                            binding.twUpper.isSelected -> recyclerSetting(upper)
+                            binding.twLower.isSelected -> recyclerSetting(lower)
+                        }
                     }
                     PanoramaEditViewModel.Event.Close -> finish()
                     PanoramaEditViewModel.Event.Delete -> {
-
+                        DeleteDialog(deleteCount) {
+                            val deleteItem = gridAdapter.getItems()
+                                .filter { data -> (data.data as? Item)?.isCheck ?: false }
+                                .map { (it.data as? Item)?.id ?: "" }
+                            deleteItem.forEach { id ->
+                                if (id.isNotEmpty()) viewModel.deletePictures(id)
+                            }
+                        }.show(supportFragmentManager, "")
                     }
                     is PanoramaEditViewModel.Event.PoseType -> {
                         binding.twWhole.isSelected = it.type == 1
@@ -71,11 +98,15 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                         binding.twLower.typeface =
                             typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
                         val list = when (it.type) {
-                            2 -> whole
-                            3 -> upper
+                            1 -> whole
+                            2 -> upper
                             else -> lower
                         }
                         recyclerSetting(list)
+                    }
+                    PanoramaEditViewModel.Event.DeleteComplete -> {
+                        deleteCount--
+                        if (deleteCount == 0) finish()
                     }
                 }
             }
@@ -88,7 +119,8 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                 Item(
                     it.imageUrl ?: "",
                     this.getDrawable(R.drawable.test_feed)!!,
-                    false
+                    false,
+                    it.id.toString()
                 ), R.layout.item_panorama_grid_edit, BR.data
             )
         })
@@ -98,7 +130,8 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
     data class Item(
         val imageUrl: String,
         val holder: Drawable,
-        val isCheck: Boolean
+        val isCheck: Boolean,
+        val id: String
     )
 
 }
