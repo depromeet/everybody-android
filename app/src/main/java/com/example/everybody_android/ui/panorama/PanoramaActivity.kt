@@ -1,6 +1,7 @@
 package com.example.everybody_android.ui.panorama
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,7 +30,6 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val whole = mutableListOf<Picture>()
     private val upper = mutableListOf<Picture>()
     private val lower = mutableListOf<Picture>()
-    private val adapter by lazy { PanoramaViewPagerAdapter() }
     private lateinit var gridAdapter: RecyclerViewAdapter
 
     override fun onResume() {
@@ -40,7 +40,6 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     override fun init() {
         super.init()
         gridAdapter = RecyclerViewAdapter { }
-        binding.vpPanorama.adapter = adapter
         binding.recyclerGrid.addItemDecoration(PanoramaItemDecoration())
         binding.recyclerGrid.adapter = gridAdapter
         viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
@@ -122,52 +121,9 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     }
 
     private fun viewPagerSetting(data: List<Picture>) {
-        adapter.setItems(data)
+        binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(data) }
         binding.vpPanorama.offscreenPageLimit = data.size
-        binding.tabPanorama.setupWithViewPager(binding.vpPanorama)
-        data.forEachIndexed { index, picture ->
-            val tab = binding.tabPanorama.getTabAt(index) ?: return@forEachIndexed
-            val bind = ItemPanoramaTabBinding.inflate(LayoutInflater.from(this))
-            bind.imgTab.imageLoad(
-                picture.imageUrl ?: "",
-                RequestOptions().transform(
-                    CenterCrop(),
-                    RoundedCorners(convertDpToPx(4))
-                ).diskCacheStrategy(DiskCacheStrategy.ALL)
-            )
-            bind.twCount.text = (index + 1).toString()
-            bind.imgTab.isSelected = index == 0
-            bind.twCount.isSelected = index == 0
-            tab.customView = bind.root
-        }
-        binding.tabPanorama.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.customView?.apply {
-                    val imgTab = findViewById<ImageView>(R.id.img_tab)
-                    val twCount = findViewById<TextView>(R.id.tw_count)
-                    imgTab.isSelected = true
-                    twCount.isSelected = true
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                tab?.customView?.apply {
-                    val imgTab = findViewById<ImageView>(R.id.img_tab)
-                    val twCount = findViewById<TextView>(R.id.tw_count)
-                    imgTab.isSelected = false
-                    twCount.isSelected = false
-                }
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                tab?.customView?.apply {
-                    val imgTab = findViewById<ImageView>(R.id.img_tab)
-                    val twCount = findViewById<TextView>(R.id.tw_count)
-                    imgTab.isSelected = true
-                    twCount.isSelected = true
-                }
-            }
-        })
+        binding.tabPanorama.setViewPager(binding.vpPanorama)
     }
 
 }
