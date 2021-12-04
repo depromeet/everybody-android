@@ -19,7 +19,7 @@
             android:id="@+id/iv_feed_half"
             android:layout_width="162dp"
             android:layout_height="162dp"
-            app:url='@{repo.feedPicture}'
+            app:url='@{repo}'
             app:holder="@{@drawable/test_feed}"
             android:scaleType="centerCrop"
             android:layout_marginStart="11dp"

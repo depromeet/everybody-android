@@ -14,6 +14,7 @@ import com.example.everybody_android.R
 import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.dto.MainFeedPicturePositionData
 import com.example.everybody_android.dto.UserData
+import com.example.everybody_android.dto.response.MainFeedResponse
 
 @BindingAdapter("recyclerView")
 fun RecyclerView.setRecyclerAdapter(adapter: RecyclerViewAdapter) {
@@ -28,12 +29,12 @@ fun RecyclerView.setHalfRecyclerAdapter(adapter : RecyclerViewAdapter){
 }
 
 @BindingAdapter("url","holder")
-fun loadImage(imageView: ImageView, url: MainFeedPicturePositionData, placeholder: Drawable){
-    if(url.upper.isNullOrEmpty()) imageView.setImageDrawable(placeholder)
+fun loadImage(imageView: ImageView, url: MainFeedResponse, placeholder: Drawable){
+    if(url.thumbnailUrl.isNullOrEmpty()) imageView.setImageDrawable(placeholder)
 
     else{
         Glide.with(imageView.context)
-            .load(url.upper[0].imageUrl)
+            .load(url.thumbnailUrl)
             .placeholder(placeholder)
             .error(placeholder)
             .diskCacheStrategy(DiskCacheStrategy.NONE)

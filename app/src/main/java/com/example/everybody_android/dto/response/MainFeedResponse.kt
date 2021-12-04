@@ -12,7 +12,7 @@ data class MainFeedResponse(
     val name : String,
 
     @SerializedName("thumbnail_url")
-    val thumbnailUrl : String,
+    val thumbnailUrl : String?,
 
     @SerializedName("created_at")
     val feedCreated : String,
