@@ -18,7 +18,7 @@ class TimeSettingDialog(
 
 
     interface DialogListener{
-        fun checkListener(time : String)
+        fun checkListener(hour : Int, minute : Int)
         fun cancelListener()
     }
 
@@ -38,8 +38,7 @@ class TimeSettingDialog(
 
             minute = binding.npMin.value
             hour = binding.npHour.value
-            val time = "$hour : $minute"
-            dialogListener.checkListener(time)
+            dialogListener.checkListener(hour,minute)
             dismiss()
         }
     }

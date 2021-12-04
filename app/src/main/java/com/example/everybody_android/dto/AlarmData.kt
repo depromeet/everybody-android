@@ -5,32 +5,32 @@ import com.google.gson.annotations.SerializedName
 data class AlarmData(
 
     @SerializedName("monday")
-    val monday : Boolean,
+    var monday : Boolean,
 
     @SerializedName("tuesday")
-    val tuesday : Boolean,
+    var tuesday : Boolean,
 
     @SerializedName("wednesday")
-    val wednesday : Boolean,
+    var wednesday : Boolean,
 
     @SerializedName("thursday")
-    val thursday : Boolean,
+    var thursday : Boolean,
 
     @SerializedName("friday")
-    val friday : Boolean,
+    var friday : Boolean,
 
     @SerializedName("saturday")
-    val saturday : Boolean,
+    var saturday : Boolean,
 
     @SerializedName("sunday")
-    val sunday : Boolean,
+    var sunday : Boolean,
 
     @SerializedName("preferred_time_hour")
-    val preferredTimeHour : String,
+    var preferredTimeHour : Int,
 
     @SerializedName("preferred_time_minute")
-    val preferredTimeMinute : String,
+    var preferredTimeMinute : Int,
 
     @SerializedName("is_activated")
-    val isActivated : Boolean
+    var isActivated : Boolean
 )

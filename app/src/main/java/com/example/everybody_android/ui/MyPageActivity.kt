@@ -21,7 +21,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(){
 
     override fun init() {
         val userData = intent.getSerializableExtra("userData") as UserData
-        onClickAlarm()
+        onClickAlarm(userData)
         profile(userData)
         back()
     }
@@ -45,9 +45,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(){
         }
     }
 
-    private fun onClickAlarm(){
+    private fun onClickAlarm(userData: UserData){
         binding.ibSettingAlarm.setOnClickListener {
             val intent = Intent(this, AlarmActivity::class.java)
+            intent.putExtra("userData",userData)
             startActivity(intent)
         }
     }

@@ -3,6 +3,9 @@ package com.example.everybody_android.ui
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
+import android.widget.ImageView
+import android.widget.Toast
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityCreateFolderBinding
@@ -49,11 +52,20 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding, CreateFol
         binding.ibSave.setOnClickListener {
             if (binding.etFolderName.text.toString().isNotEmpty()) {
                 viewModel.createFolder(binding.etFolderName.text.toString())
+                toast()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
         }
+    }
 
+    private fun toast(){
+        val image = ImageView(applicationContext)
+        image.setImageResource(R.drawable.ic_toast_album)
+        val toast = Toast.makeText(applicationContext,"", Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.TOP, Gravity.CENTER, Gravity.TOP)
+        toast.view = image
+        toast.show()
     }
 
 }
