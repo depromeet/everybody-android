@@ -30,7 +30,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override val layoutId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
     private var feedStatus = true
-    @Inject lateinit var localStorage: LocalStorage
+    @Inject
+    lateinit var localStorage: LocalStorage
+
 
     override fun init() {
         fcmToken()
@@ -42,13 +44,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         intentCreateFolder()
         feedSort()
         onClickCamara()
-        onClickMyPage()
-
     }
 
-    private fun onClickMyPage(){
+    private fun onClickMyPage(userData : UserData) {
         binding.ibProfile.setOnClickListener {
             val intent = Intent(this, MyPageActivity::class.java)
+            intent.putExtra("userData", userData)
             startActivity(intent)
         }
     }
@@ -65,7 +66,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             viewModel.clickEvent.collect {
                 when (it) {
                     is MainViewModel.ClickEvent.SortFeed -> feedSort()
-                    is MainViewModel.ClickEvent.GetUserData -> user(it.data)
+                    is MainViewModel.ClickEvent.GetUserData -> {
+                        user(it.data)
+                        onClickMyPage(it.data)
+                    }
                     MainViewModel.ClickEvent.PanoramaActivity -> startActivity(
                         Intent(
                             this@MainActivity,
@@ -77,13 +81,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun user(data : UserData){
+    private fun user(data: UserData) {
         binding.tvNickname.text = data.nickName
         binding.tvGoal.text = data.motto
         Glide.with(this).load(data.profileImage).into(binding.ibProfile)
     }
 
-    private fun onClickCamara(){
+    private fun onClickCamara() {
         binding.ibCamera.setOnClickListener {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
@@ -104,16 +108,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         feedStatus = !feedStatus
     }
 
-    private fun fcmToken(){
+    private fun fcmToken() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener(OnSuccessListener {
             localStorage.saveFcmToken(it)
             println("Token $it")
         })
     }
+
     @SuppressLint("HardwareIds")
-    fun deviceToken(){
+    fun deviceToken() {
         val token = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
         localStorage.saveDeviceToken(token)
-
     }
+
 }

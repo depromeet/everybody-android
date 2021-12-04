@@ -6,9 +6,12 @@ import androidx.activity.viewModels
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityAlarmBinding
+import com.example.everybody_android.dto.AlarmData
+import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.ui.dialog.time.TimeSettingDialog
 import com.example.everybody_android.viewmodel.AlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
@@ -17,22 +20,48 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
     override val viewModel: AlarmViewModel by viewModels()
 
     override fun init() {
+        liveEvent()
         dialog()
-        selector(binding.flSunday, binding.tvSunday)
-        selector(binding.flMonday, binding.tvMonday)
-        selector(binding.flTuesday, binding.tvTuesday)
-        selector(binding.flWedesday, binding.tvWednesday)
-        selector(binding.flThursday, binding.tvThursday)
-        selector(binding.flFriday, binding.tvFriday)
-        selector(binding.flSaturday, binding.tvSaturday)
+        viewModel.getAlarmTime()
+        selector(binding.flSunday, binding.tvSunday, null)
+        selector(binding.flMonday, binding.tvMonday, null)
+        selector(binding.flTuesday, binding.tvTuesday, null)
+        selector(binding.flWedesday, binding.tvWednesday, null)
+        selector(binding.flThursday, binding.tvThursday, null)
+        selector(binding.flFriday, binding.tvFriday, null)
+        selector(binding.flSaturday, binding.tvSaturday, null)
     }
 
-    fun dialog(){
-        binding.tvTimeSelect.setOnClickListener{
+    private fun liveEvent() {
+        repeatOnStarted {
+            viewModel.clickEvent.collect {
+                when (it) {
+                    is AlarmViewModel.Event.AlarmTime -> setTime(it.data)
+                }
+            }
+        }
+    }
+
+    private fun setTime(data: AlarmData) {
+
+        binding.tvTimeSelect.text = "${data.preferredTimeHour} : ${data.preferredTimeMinute}"
+
+        selector(binding.flSunday, binding.tvSunday, data.sunday)
+        selector(binding.flMonday, binding.tvMonday, data.monday)
+        selector(binding.flTuesday, binding.tvTuesday, data.tuesday)
+        selector(binding.flWedesday, binding.tvWednesday, data.wednesday)
+        selector(binding.flThursday, binding.tvThursday, data.thursday)
+        selector(binding.flFriday, binding.tvFriday, data.friday)
+        selector(binding.flSaturday, binding.tvSaturday, data.saturday)
+    }
+
+    fun dialog() {
+        binding.tvTimeSelect.setOnClickListener {
             val dialogFragment = TimeSettingDialog(
-                object : TimeSettingDialog.DialogListener{
+                object : TimeSettingDialog.DialogListener {
                     override fun checkListener(time: String) {
                         binding.tvTimeSelect.text = time
+                        storageButton()
                     }
 
                     override fun cancelListener() {
@@ -41,24 +70,39 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
 
                 }
             )
-            dialogFragment.show(supportFragmentManager,"dialog")
+            dialogFragment.show(supportFragmentManager, "dialog")
 
         }
 
     }
 
-    fun selector(layout : FrameLayout, textView: TextView){
+    fun selector(layout: FrameLayout, textView: TextView, before: Boolean?) {
+
+        if (before == false) {
+            layout.isSelected = false
+            textView.isSelected = false
+        } else {
+            layout.isSelected = true
+            textView.isSelected = true
+        }
         layout.setOnClickListener {
-            if(layout.isSelected){
+            if (layout.isSelected) {
                 layout.isSelected = false
                 textView.isSelected = false
-            }
-            else {
+                storageButton()
+            } else {
                 layout.isSelected = true
                 textView.isSelected = true
+                storageButton()
             }
         }
+    }
 
+    private fun storageButton() {
+        binding.ibSave.setImageDrawable(resources.getDrawable(R.drawable.ic_blue_storage))
+        binding.ibSave.setOnClickListener {
+            
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.everybody_android.dto
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class UserData(
 
@@ -27,4 +28,4 @@ data class UserData(
 
     @SerializedName("created_at")
     val createdAt : String
-)
+) : Serializable

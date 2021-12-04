@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="vm"
             type="com.example.everybody_android.viewmodel.AlarmViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,8 +34,8 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/pretendard_bold"
             android:text="알림설정"
-            android:textSize="18dp"
             android:textColor="@color/black"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +52,7 @@
             android:textColor="@color/gray_80"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/tv_push_alarm"
             android:layout_width="wrap_content"
@@ -74,11 +78,11 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_70"
             android:layout_marginStart="21dp"
             android:layout_marginTop="24dp"
             android:fontFamily="@font/pretendard_regular"
             android:text="시간"
+            android:textColor="@color/gray_70"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_nickname_bottom" />
@@ -128,12 +132,12 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:duplicateParentState="true"
-                android:textColor="@color/seletor_white_gray80"
+                android:focusable="true"
                 android:fontFamily="@font/pretendard_regular"
                 android:gravity="center"
                 android:text="일"
-                android:textSize="14sp"
-                android:focusable="true" />
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp" />
 
         </FrameLayout>
 
@@ -160,7 +164,6 @@
         </FrameLayout>
 
 
-
         <FrameLayout
             android:id="@+id/fl_tuesday"
             android:layout_width="wrap_content"
@@ -180,7 +183,7 @@
                 android:gravity="center"
                 android:text="화"
                 android:textColor="@color/seletor_white_gray80"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </FrameLayout>
 
         <FrameLayout
@@ -191,7 +194,7 @@
             android:background="@drawable/seletor_oval_day"
             app:layout_constraintEnd_toStartOf="@+id/fl_thursday"
             app:layout_constraintStart_toEndOf="@+id/fl_tuesday"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date" >
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
             <TextView
                 android:id="@+id/tv_wednesday"
@@ -226,30 +229,30 @@
                 android:gravity="center"
                 android:text="목"
                 android:textColor="@color/seletor_white_gray80"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </FrameLayout>
 
-       <FrameLayout
-           android:id="@+id/fl_friday"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:background="@drawable/seletor_oval_day"
-           android:layout_marginTop="8dp"
-           app:layout_constraintEnd_toStartOf="@id/fl_saturday"
-           app:layout_constraintStart_toEndOf="@+id/fl_thursday"
-           app:layout_constraintTop_toBottomOf="@+id/tv_date" >
+        <FrameLayout
+            android:id="@+id/fl_friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/seletor_oval_day"
+            app:layout_constraintEnd_toStartOf="@id/fl_saturday"
+            app:layout_constraintStart_toEndOf="@+id/fl_thursday"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
-           <TextView
-               android:id="@+id/tv_friday"
-               android:layout_width="40dp"
-               android:layout_height="40dp"
-               android:duplicateParentState="true"
-               android:fontFamily="@font/pretendard_regular"
-               android:gravity="center"
-               android:text="금"
-               android:textColor="@color/seletor_white_gray80"
-               android:textSize="14sp" />
-       </FrameLayout>
+            <TextView
+                android:id="@+id/tv_friday"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:duplicateParentState="true"
+                android:fontFamily="@font/pretendard_regular"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="@color/seletor_white_gray80"
+                android:textSize="14sp" />
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/fl_saturday"
@@ -274,15 +277,13 @@
 
         </FrameLayout>
 
-
-
         <ImageButton
             android:id="@+id/ib_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="34dp"
-            android:src="@drawable/ic_frame_storage"
             android:background="@color/white"
+            android:src="@drawable/ic_gray_storage"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

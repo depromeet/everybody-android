@@ -81,7 +81,6 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             UserRepo.getUserData()
         }) { data ->
-            println(data)
             onClickEvent(ClickEvent.GetUserData(data))
         }
     }

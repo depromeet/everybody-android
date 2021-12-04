@@ -1,5 +1,6 @@
 package com.example.everybody_android.di
 
+import com.example.everybody_android.api.AlarmRepo
 import com.example.everybody_android.api.AlbumRepo.AlbumApi
 import com.example.everybody_android.api.PictureRepo
 import com.example.everybody_android.api.SignRepo
@@ -67,5 +68,9 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideApiSign(): SignRepo.SignApi = provideRetrofit().create(SignRepo.SignApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiAlarm(): AlarmRepo.AlarmApi = provideRetrofit().create(AlarmRepo.AlarmApi::class.java)
 
 }
