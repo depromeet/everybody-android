@@ -104,8 +104,13 @@ dependencies {
     implementation "com.google.firebase:firebase-database:$firebase_database"
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-core:20.0.0'
 
     //coroutines
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     implementation 'com.github.applikeysolutions:cosmocalendar:1.0.4'
+
+    //TabLayout
+    implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
 }

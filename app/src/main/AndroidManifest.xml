@@ -21,6 +21,26 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.MainActivity"
+            android:screenOrientation="fullSensor" />
+
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+
+        <activity
+            android:name=".ui.picture.PictureActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.panorama.PanoramaActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.panorama.edit.PanoramaEditActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,18 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.camera.CameraActivity"
-            android:exported="true"
-            android:screenOrientation="fullSensor">
-
-        </activity>
-        <activity
-            android:name=".ui.camera.CameraActivity"
-            android:exported="true"
-            android:screenOrientation="fullSensor" />
-
-        <activity android:name=".ui.picture.PictureActivity" />
     </application>
 
 </manifest>

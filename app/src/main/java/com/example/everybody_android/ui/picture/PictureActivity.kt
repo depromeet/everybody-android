@@ -17,11 +17,13 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     override val viewModel: PictureViewModel by viewModels()
     private val folderChoiceFragment by lazy { FolderChoiceFragment() }
     private var isFolder = false
+    private var albumId: String = ""
     private lateinit var pictureFragment: PictureFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!intent.hasExtra("image")) finish()
+        albumId = intent.getStringExtra("albumId") ?: ""
         pictureFragment = PictureFragment(intent.getStringExtra("image") ?: "")
         addFragment(pictureFragment)
         addFragment(folderChoiceFragment)
@@ -37,12 +39,17 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     }
 
     fun saveComplete(map: HashMap<String, String>) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.hide(pictureFragment)
-        folderChoiceFragment.setValue(map)
-        transaction.show(folderChoiceFragment)
-        transaction.commit()
-        isFolder = true
+        if (albumId.isEmpty()) {
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.hide(pictureFragment)
+            folderChoiceFragment.setValue(map)
+            transaction.show(folderChoiceFragment)
+            transaction.commit()
+            isFolder = true
+        } else {
+            map["album_id"] = albumId
+            photoUpload(map)
+        }
     }
 
     fun photoUpload(map: Map<String, String>) {
@@ -65,7 +72,6 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                     PictureViewModel.ClickEvent.Next -> {
                         if (isFolder) folderChoiceFragment.getValue()
                         else pictureFragment.saveView()
-
                     }
                     PictureViewModel.ClickEvent.Complete -> finish()
                 }

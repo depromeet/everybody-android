@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.everybody_android.ui.panorama.edit.PanoramaEditViewModel.Event" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.panorama.edit.PanoramaEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{()->vm.onClickEvent(Event.Delete.INSTANCE)}"
+            android:src="@drawable/ic_del"
+            app:layout_constraintBottom_toBottomOf="@id/tw_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(Event.Close.INSTANCE)}"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_close"
+            app:drawableTint="#333333"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="사진 촬영" />
+
+        <TextView
+            android:id="@+id/tw_whole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onPoseType(1)}"
+            android:paddingStart="12dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="16dp"
+            android:text="전신"
+            android:textColor="@color/selector_purple_gray60"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+
+        <TextView
+            android:id="@+id/tw_upper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onPoseType(2)}"
+            android:paddingStart="12dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="16dp"
+            android:text="상체"
+            android:textColor="@color/selector_purple_gray60"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/tw_whole"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+
+        <TextView
+            android:id="@+id/tw_lower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onPoseType(3)}"
+            android:paddingStart="12dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="16dp"
+            android:text="하체"
+            android:textColor="@color/selector_purple_gray60"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/tw_upper"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_grid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_whole"
+            app:spanCount="3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
