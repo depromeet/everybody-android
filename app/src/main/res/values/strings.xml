@@ -6,4 +6,6 @@
     <string name="folder_name_hint">폴더명을 입력해주세요</string>
     <string name="select_day">기간을\n선택해주세요.</string>
     <string name="start_day">시작</string>
+    <string name="setting_profile">프로필 설정</string>
+    <string name="nickname">닉네임</string>
 </resources>

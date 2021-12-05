@@ -1,15 +1,22 @@
 package com.example.everybody_android.viewmodel
 
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.everybody_android.R
 import com.example.everybody_android.adapter.RecyclerItem
 import com.example.everybody_android.adapter.RecyclerViewAdapter
+import com.example.everybody_android.api.AlbumRepo
+import com.example.everybody_android.api.SignRepo
+import com.example.everybody_android.api.UserRepo
 import com.example.everybody_android.base.BaseViewModel
 import com.example.everybody_android.base.MutableEventFlow
 import com.example.everybody_android.base.asEventFlow
-import com.example.everybody_android.dto.MainFeedData
-import com.example.everybody_android.dto.MainFeedPictureData
+import com.example.everybody_android.dto.response.MainFeedResponse
+import com.example.everybody_android.dto.UserData
+import com.example.everybody_android.dto.request.SignInRequest
+import com.example.everybody_android.dto.request.SignUpRequest
+import com.example.everybody_android.dto.response.SignUpResponse
 import com.example.everybody_android.pref.LocalStorage
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -18,14 +25,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val localStorage: LocalStorage
-) : BaseViewModel() {
+class MainViewModel @Inject constructor() : BaseViewModel() {
 
     private var feedStatus = true
     private var recyclerStatus = true
 
-    private var testFeedData = ArrayList<MainFeedData>()
+    private var feedData = ArrayList<MainFeedResponse>()
 
     val halfFeedAdapter = RecyclerViewAdapter {
         onClickEvent(ClickEvent.PanoramaActivity)
@@ -33,6 +38,8 @@ class MainViewModel @Inject constructor(
     val fullFeedAdapter = RecyclerViewAdapter {
         onClickEvent(ClickEvent.PanoramaActivity)
     }
+
+    var noFeed = MutableLiveData(true)
 
     private val _clickEvent = MutableEventFlow<ClickEvent>()
     val clickEvent = _clickEvent.asEventFlow()
@@ -42,61 +49,60 @@ class MainViewModel @Inject constructor(
     }
 
     fun sortFeed() {
+        onClickEvent(ClickEvent.SortFeed)
         recyclerStatus = !recyclerStatus
-        if (testFeedData.size == 0) feedStatus = false
+        if (feedData.size == 0) feedStatus = false
         else {
             if (recyclerStatus) {
-                halfFeedAdapter.changeData(testFeedData.map { it.toHalfRecyclerItem() })
+                halfFeedAdapter.changeData(feedData.map { it.toHalfRecyclerItem() })
             } else {
-                fullFeedAdapter.changeData(testFeedData.map { it.toFullRecyclerItem() })
+                fullFeedAdapter.changeData(feedData.map { it.toFullRecyclerItem() })
             }
-            onClickEvent(ClickEvent.SortFeed)
         }
     }
 
-    fun testFeed() {
-        testFeedData = arrayListOf(
-            MainFeedData(
-                1, "피드이름", "YY.MM-YY.MM",
-                MainFeedPictureData(1, 1, "얼굴", "YY.MM-YY.MM", "", "", ""),
-            ),
-            MainFeedData(
-                1, "피드이름", "YY.MM-YY.MM",
-                MainFeedPictureData(1, 1, "얼굴", "YY.MM-YY.MM", "", "", "")
-            ),
-            MainFeedData(
-                1, "피드이름", "YY.MM-YY.MM",
-                MainFeedPictureData(1, 1, "얼굴", "YY.MM-YY.MM", "", "", "")
-            ),
-            MainFeedData(
-                1, "피드이름", "YY.MM-YY.MM",
-                MainFeedPictureData(1, 1, "얼굴", "YY.MM-YY.MM", "", "", "")
-            ),
-            MainFeedData(
-                1, "피드이름", "YY.MM-YY.MM",
-                MainFeedPictureData(1, 1, "얼굴", "YY.MM-YY.MM", "", "", "")
-            )
-        )
-        sortFeed()
+    fun signUp(signUpRequest: SignUpRequest) {
+        runScope({
+            SignRepo.signUp(signUpRequest)
+        }) { data ->
+            println("signup $data")
+        }
     }
 
-
-    fun token() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener(OnSuccessListener {
-            localStorage.saveToken(it)
-            println("Token $it")
-        })
-
+    fun signIn(signInRequest: SignInRequest) {
+        runScope({
+            SignRepo.signIn(signInRequest)
+        }) { data ->
+            println("signIn $data")
+        }
     }
 
-    private fun MainFeedData.toFullRecyclerItem() =
+    fun getUserData() {
+        runScope({
+            UserRepo.getUserData()
+        }) { data ->
+            onClickEvent(ClickEvent.GetUserData(data))
+        }
+    }
+
+    fun getAlbum() {
+        runScope({
+            AlbumRepo.getMainFeed()
+        }) { data ->
+            halfFeedAdapter.changeData(data.map { it.toHalfRecyclerItem() })
+            fullFeedAdapter.changeData(data.map { it.toFullRecyclerItem() })
+            if (data.isNotEmpty()) noFeed.value = false
+        }
+    }
+
+    private fun MainFeedResponse.toFullRecyclerItem() =
         RecyclerItem(
             data = this,
             variableId = BR.repo,
             layoutId = R.layout.item_full_mainfeed
         )
 
-    private fun MainFeedData.toHalfRecyclerItem() =
+    private fun MainFeedResponse.toHalfRecyclerItem() =
         RecyclerItem(
             data = this,
             variableId = BR.repo,
@@ -105,6 +111,9 @@ class MainViewModel @Inject constructor(
 
     sealed class ClickEvent {
         object SortFeed : ClickEvent()
+        data class GetFeedData(val data: ArrayList<MainFeedResponse>) : ClickEvent()
+        data class GetUserData(val data: UserData) : ClickEvent()
         object PanoramaActivity : ClickEvent()
     }
+
 }

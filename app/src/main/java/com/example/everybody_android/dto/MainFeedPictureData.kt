@@ -13,9 +13,6 @@ data class MainFeedPictureData(
     @SerializedName("body_port")
     val bodyPart : String,
 
-    @SerializedName("created_at")
-    val pictureCreated : String,
-
     @SerializedName("thumbnail_url")
     val thumbnailUrl : String,
 
@@ -23,5 +20,11 @@ data class MainFeedPictureData(
     val previewUrl : String,
 
     @SerializedName("image_url")
-    val ImageUrl : String
+    val imageUrl : String,
+
+    @SerializedName("taken_at_day")
+    val takenAtDay : String,
+
+    @SerializedName("created_at")
+    val pictureCreated : String,
 )

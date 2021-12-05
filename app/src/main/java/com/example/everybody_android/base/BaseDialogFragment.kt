@@ -22,7 +22,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
     override fun onStart() {
         super.onStart()
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val width = ViewGroup.LayoutParams.WRAP_CONTENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         dialog?.window?.setLayout(width, height)
     }

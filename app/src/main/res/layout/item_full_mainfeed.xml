@@ -7,37 +7,42 @@
 
         <variable
             name="repo"
-            type="com.example.everybody_android.dto.MainFeedData" />
+            type="com.example.everybody_android.dto.response.MainFeedResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="16dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="335dp"
-            android:layout_height="446dp"
-            android:src="@drawable/test_full_feed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            app:holder="@{@drawable/test_full_feed}"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:url='@{repo}'
+            tools:src="@drawable/test_full_feed" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="168dp"
-            android:fontFamily="@font/pretendard_semibold"
-            android:text="@{repo.feedName}"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@{repo.name}"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="title" />
 
+        <!--
         <TextView
             android:id="@+id/tv_days"
             android:layout_width="wrap_content"
@@ -52,18 +57,20 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
             tools:text="YY.MM - YY.MM" />
 
+            -->
+
         <TextView
             android:id="@+id/tv_recode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/pretendard_semibold"
-            android:text="@{repo.feedCreated}"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@{repo.description}"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tv_days"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             tools:text="DD일간의 기록" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
