@@ -72,6 +72,11 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         notifyItemInserted(items.size)
     }
 
+    fun addItem(position: Int,item: RecyclerItem) {
+        items.add(position,item)
+        notifyItemInserted(items.size)
+    }
+
     fun getItems() = items
 
     inner class BindingViewHolder(

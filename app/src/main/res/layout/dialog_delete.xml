@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.example.everybody_android.ui.dialog.delete.DeleteViewModel.Event" />
+
+        <variable
+            name="vm"
+            type="com.example.everybody_android.ui.dialog.delete.DeleteViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_radius_4"
+        android:backgroundTint="@color/white">
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3장의 사진을 삭제하시겠어요?" />
+
+        <TextView
+            android:id="@+id/tw_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="삭제를 누르시면 앨범에서 영구 삭제가 됩니다."
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+
+        <TextView
+            android:id="@+id/tw_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(Event.Cancel.INSTANCE)}"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp"
+            android:text="취소"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tw_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_content" />
+
+        <TextView
+            android:id="@+id/tw_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(Event.Delete.INSTANCE)}"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp"
+            android:text="삭제"
+            android:textColor="@color/purple"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tw_cancel"
+            app:layout_constraintTop_toBottomOf="@id/tw_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

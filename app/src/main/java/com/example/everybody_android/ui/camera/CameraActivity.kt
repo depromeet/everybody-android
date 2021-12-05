@@ -77,9 +77,10 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         R.drawable.ic_woman_upper,
         R.drawable.ic_woman_lower
     ).map { RecyclerItem(it, R.layout.item_camera_pose, BR.data) }.toMutableList()
-
+    private var albumId: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        albumId = intent.getStringExtra("albumId") ?: ""
         binding.pvFinder.post {
             setPermissionCallback(
                 arrayOf(
@@ -182,7 +183,10 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                                 Intent(
                                     this@CameraActivity,
                                     PictureActivity::class.java
-                                ).apply { putExtra("image", fileUri) })
+                                ).apply {
+                                    putExtra("image", fileUri)
+                                    if (albumId.isNotEmpty()) putExtra("albumId", albumId)
+                                })
                         }
                     }
                 })
