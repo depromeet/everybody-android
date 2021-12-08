@@ -26,11 +26,14 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
     private val upper = mutableListOf<Picture>()
     private val lower = mutableListOf<Picture>()
     private lateinit var gridAdapter: RecyclerViewAdapter
+    private var id = ""
     private var deleteCount = 0
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAlbum("10")
+        if (!intent.hasExtra("id")) return finish()
+        id = intent.getStringExtra("id") ?: ""
+        viewModel.getAlbum(id)
     }
 
     override fun init() {
@@ -39,7 +42,7 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
         gridAdapter = RecyclerViewAdapter {
             if (it is Unit) {
                 startActivity(Intent(this, CameraActivity::class.java).apply {
-                    putExtra("albumId", "10")
+                    putExtra("id", id)
                 })
             } else if (it is Item) {
                 val index = gridAdapter.getItems().indexOfFirst { data -> data.data == it }

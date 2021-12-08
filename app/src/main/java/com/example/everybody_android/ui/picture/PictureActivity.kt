@@ -23,7 +23,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!intent.hasExtra("image")) finish()
-        albumId = intent.getStringExtra("albumId") ?: ""
+        albumId = intent.getStringExtra("id") ?: ""
         pictureFragment = PictureFragment(intent.getStringExtra("image") ?: "")
         addFragment(pictureFragment)
         addFragment(folderChoiceFragment)

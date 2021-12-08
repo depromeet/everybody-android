@@ -80,7 +80,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
     private var albumId: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        albumId = intent.getStringExtra("albumId") ?: ""
+        albumId = intent.getStringExtra("id") ?: ""
         binding.pvFinder.post {
             setPermissionCallback(
                 arrayOf(
@@ -185,7 +185,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                                     PictureActivity::class.java
                                 ).apply {
                                     putExtra("image", fileUri)
-                                    if (albumId.isNotEmpty()) putExtra("albumId", albumId)
+                                    if (albumId.isNotEmpty()) putExtra("id", albumId)
                                 })
                         }
                     }

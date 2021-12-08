@@ -12,14 +12,10 @@ import com.example.everybody_android.api.UserRepo
 import com.example.everybody_android.base.BaseViewModel
 import com.example.everybody_android.base.MutableEventFlow
 import com.example.everybody_android.base.asEventFlow
-import com.example.everybody_android.dto.response.MainFeedResponse
 import com.example.everybody_android.dto.UserData
 import com.example.everybody_android.dto.request.SignInRequest
 import com.example.everybody_android.dto.request.SignUpRequest
-import com.example.everybody_android.dto.response.SignUpResponse
-import com.example.everybody_android.pref.LocalStorage
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.messaging.FirebaseMessaging
+import com.example.everybody_android.dto.response.MainFeedResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,10 +29,10 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     private var feedData = ArrayList<MainFeedResponse>()
 
     val halfFeedAdapter = RecyclerViewAdapter {
-        onClickEvent(ClickEvent.PanoramaActivity)
+        onClickEvent(ClickEvent.PanoramaActivity(it as MainFeedResponse))
     }
     val fullFeedAdapter = RecyclerViewAdapter {
-        onClickEvent(ClickEvent.PanoramaActivity)
+        onClickEvent(ClickEvent.PanoramaActivity(it as MainFeedResponse))
     }
 
     var noFeed = MutableLiveData(true)
@@ -113,7 +109,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         object SortFeed : ClickEvent()
         data class GetFeedData(val data: ArrayList<MainFeedResponse>) : ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
-        object PanoramaActivity : ClickEvent()
+        data class PanoramaActivity(val data: MainFeedResponse) : ClickEvent()
     }
 
 }

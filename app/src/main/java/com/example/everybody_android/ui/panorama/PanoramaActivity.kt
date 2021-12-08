@@ -30,11 +30,14 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val whole = mutableListOf<Picture>()
     private val upper = mutableListOf<Picture>()
     private val lower = mutableListOf<Picture>()
+    private var id: String = ""
     private lateinit var gridAdapter: RecyclerViewAdapter
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAlbum("10")
+        if (!intent.hasExtra("id")) return finish()
+        id = intent.getStringExtra("id") ?: ""
+        viewModel.getAlbum(id)
     }
 
     override fun init() {
@@ -78,7 +81,9 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             Intent(
                                 this@PanoramaActivity,
                                 PanoramaEditActivity::class.java
-                            )
+                            ).apply {
+                                putExtra("id", id)
+                            }
                         )
                     }
                     PanoramaViewModel.Event.ListType -> {
