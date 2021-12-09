@@ -5,8 +5,10 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.DisplayMetrics
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.annotation.StringRes
 import androidx.core.content.res.ResourcesCompat
@@ -55,6 +57,15 @@ fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED, block)
     }
+}
+
+fun Context.toast(@DrawableRes resId: Int){
+    val image = ImageView(applicationContext)
+    image.setImageResource(resId)
+    val toast = Toast.makeText(applicationContext,"",Toast.LENGTH_LONG)
+    toast.setGravity(Gravity.TOP, Gravity.CENTER, Gravity.TOP)
+    toast.view = image
+    toast.show()
 }
 
 

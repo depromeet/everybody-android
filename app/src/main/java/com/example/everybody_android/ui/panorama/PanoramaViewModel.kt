@@ -36,6 +36,7 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
         object Close : Event()
         object Edit : Event()
         object ListType : Event()
+        object Camera : Event()
         data class PoseType(val type: Int) : Event()
         data class Album(val albumResponse: AlbumResponse) : Event()
     }

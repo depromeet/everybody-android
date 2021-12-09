@@ -113,4 +113,7 @@ dependencies {
 
     //TabLayout
     implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
+
+    //Lottie
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

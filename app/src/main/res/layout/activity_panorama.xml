@@ -166,5 +166,46 @@
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="tab_panorama,vp_panorama" />
 
+        <TextView
+            android:id="@+id/tw_empty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="저장된 사진이 없습니다.\n지금 사진을 찍어 기록해보세요."
+            android:textColor="@color/gray_50"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/tw_camera"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_whole"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tw_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:background="@drawable/rectangle_radius_28"
+            android:backgroundTint="@color/purple"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent(Event.Camera.INSTANCE)}"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:text="사진 촬영"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_empty" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="tw_camera,tw_empty" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

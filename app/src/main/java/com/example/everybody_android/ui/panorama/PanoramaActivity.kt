@@ -18,6 +18,7 @@ import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaBinding
 import com.example.everybody_android.databinding.ItemPanoramaTabBinding
+import com.example.everybody_android.ui.camera.CameraActivity
 import com.example.everybody_android.ui.panorama.edit.PanoramaEditActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,6 +92,16 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         binding.recyclerGrid.isVisible = binding.imgListType.isSelected
                         binding.groupPanorama.isVisible = !binding.imgListType.isSelected
                     }
+                    PanoramaViewModel.Event.Camera -> {
+                        startActivity(
+                            Intent(
+                                this@PanoramaActivity,
+                                CameraActivity::class.java
+                            ).apply {
+                                putExtra("id", id)
+                            }
+                        )
+                    }
                     is PanoramaViewModel.Event.PoseType -> {
                         binding.twWhole.isSelected = it.type == 1
                         binding.twUpper.isSelected = it.type == 2
@@ -115,6 +126,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     }
 
     private fun recyclerSetting(data: List<Picture>) {
+        binding.groupEmpty.isVisible = data.isEmpty()
         gridAdapter.setItems(data.map {
             RecyclerItem(
                 PanoramaViewPagerAdapter.Item(

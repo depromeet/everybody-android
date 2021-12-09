@@ -3,15 +3,12 @@ package com.example.everybody_android.ui.panorama.edit
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.activity.viewModels
-import com.example.everybody_android.BR
-import com.example.everybody_android.R
+import com.example.everybody_android.*
 import com.example.everybody_android.adapter.RecyclerItem
 import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaEditBinding
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.typeFace
 import com.example.everybody_android.ui.camera.CameraActivity
 import com.example.everybody_android.ui.dialog.delete.DeleteDialog
 import com.example.everybody_android.ui.panorama.PanoramaItemDecoration
@@ -109,7 +106,10 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                     }
                     PanoramaEditViewModel.Event.DeleteComplete -> {
                         deleteCount--
-                        if (deleteCount == 0) finish()
+                        if (deleteCount == 0) {
+                            toast(R.drawable.ic_toast_delete)
+                            finish()
+                        }
                     }
                 }
             }

@@ -7,6 +7,7 @@ import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityPictureBinding
 import com.example.everybody_android.repeatOnStarted
+import com.example.everybody_android.ui.dialog.loading.LoadingDialog
 import com.example.everybody_android.ui.picture.folder.FolderChoiceFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -18,6 +19,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     private val folderChoiceFragment by lazy { FolderChoiceFragment() }
     private var isFolder = false
     private var albumId: String = ""
+    private val loadingDialog = LoadingDialog()
     private lateinit var pictureFragment: PictureFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +55,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     }
 
     fun photoUpload(map: Map<String, String>) {
+        loadingDialog.show(supportFragmentManager,"")
         viewModel.photoUpload(map)
     }
 
@@ -73,7 +76,10 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                         if (isFolder) folderChoiceFragment.getValue()
                         else pictureFragment.saveView()
                     }
-                    PictureViewModel.ClickEvent.Complete -> finish()
+                    PictureViewModel.ClickEvent.Complete -> {
+                        loadingDialog.dismiss()
+                        finish()
+                    }
                 }
             }
         }

@@ -15,6 +15,7 @@ import com.example.everybody_android.databinding.ActivityAlarmBinding
 import com.example.everybody_android.dto.AlarmData
 import com.example.everybody_android.dto.UserData
 import com.example.everybody_android.repeatOnStarted
+import com.example.everybody_android.toast
 import com.example.everybody_android.ui.dialog.time.TimeSettingDialog
 import com.example.everybody_android.viewmodel.AlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -154,7 +155,7 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
             binding.ibSave.setImageDrawable(resources.getDrawable(R.drawable.ic_blue_storage))
             binding.ibSave.setOnClickListener {
                 viewModel.setAlarmTime(afterData)
-                toast()
+                toast(R.drawable.ic_toast_alarm)
                 val intent = Intent(this, MyPageActivity::class.java)
                 intent.putExtra("userData", userData)
                 startActivity(intent)
@@ -171,13 +172,6 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
         }
     }
 
-    private fun toast(){
-        val image = ImageView(applicationContext)
-        image.setImageResource(R.drawable.ic_toast_alarm)
-        val toast = Toast.makeText(applicationContext,"",Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.TOP, Gravity.CENTER,Gravity.TOP)
-        toast.view = image
-        toast.show()
-    }
+
 
 }

@@ -75,6 +75,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             putExtra("id", it.data.id.toString())
                         }
                     )
+                    is MainViewModel.ClickEvent.GetFeedData -> {
+                    }
                 }
             }
         }
