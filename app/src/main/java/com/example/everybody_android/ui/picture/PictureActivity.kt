@@ -1,5 +1,6 @@
 package com.example.everybody_android.ui.picture
 
+import android.Manifest
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -55,7 +56,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     }
 
     fun photoUpload(map: Map<String, String>) {
-        loadingDialog.show(supportFragmentManager,"")
+        loadingDialog.show(supportFragmentManager, "")
         viewModel.photoUpload(map)
     }
 
@@ -74,7 +75,17 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                     }
                     PictureViewModel.ClickEvent.Next -> {
                         if (isFolder) folderChoiceFragment.getValue()
-                        else pictureFragment.saveView()
+                        else {
+                            setPermissionCallback(
+                                arrayOf(
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                )
+                            ) {
+                                pictureFragment.saveView()
+                            }
+                        }
                     }
                     PictureViewModel.ClickEvent.Complete -> {
                         loadingDialog.dismiss()

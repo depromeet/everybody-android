@@ -4,24 +4,57 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.example.everybody_android.R" />
+
         <variable
             name="data"
-            type="Object" />
+            type="com.example.everybody_android.ui.camera.CameraActivity.PoseData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="54dp"
-        android:layout_height="72dp">
+        android:layout_height="72dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rectangle_radius_4"
+        android:backgroundTint="@{data.pose ? @color/not_pose : @color/pose}">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_not_pose"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:src="@{data.image}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/vw_check"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/purple_op70"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{data.check ? View.VISIBLE : View.GONE}"
+            app:constraint_referenced_ids="img_check,vw_check" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

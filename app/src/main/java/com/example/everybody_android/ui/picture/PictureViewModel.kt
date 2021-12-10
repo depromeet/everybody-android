@@ -25,7 +25,7 @@ class PictureViewModel @Inject constructor() : BaseViewModel() {
         val map = hashMapOf<String,String>()
         map.putAll(valueMap)
         val image = map.remove("image") ?: return
-        val partMap = valueMap.mapValues { it.value.toRequestBody() }
+        val partMap = map.mapValues { it.value.toRequestBody() }
         val filePart = prepareFilePart("image", image.toUri())
         runScope({
             PictureRepo.uploadPicture(partMap, filePart)

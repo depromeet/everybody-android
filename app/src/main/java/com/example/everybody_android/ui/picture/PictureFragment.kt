@@ -3,8 +3,6 @@ package com.example.everybody_android.ui.picture
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.media.ExifInterface
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.everybody_android.R
@@ -25,9 +23,10 @@ class PictureFragment(private val image: String) :
     BaseFragment<FragmentPictureBinding, PictureFragmentViewModel>() {
     override val viewModel: PictureFragmentViewModel by viewModels()
     override val layoutId: Int = R.layout.fragment_picture
-    private val datePictureFormat = SimpleDateFormat("yyyy.MM.dd a hh:mm", Locale("en", "US"))
-    private val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "US"))
-    private val dateTextFormat = SimpleDateFormat("yyyy MMM dd kk:mm", Locale("en", "US"))
+    private val datePictureFormat = SimpleDateFormat("yyyy.MM.dd a hh:mm", Locale("en", "KR"))
+    private val serverFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale("en", "KR"))
+    private val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "KR"))
+    private val dateTextFormat = SimpleDateFormat("yyyy MMM dd kk:mm", Locale("en", "KR"))
     private var part = "whole"
 
     private fun initSetting() {
@@ -146,12 +145,11 @@ class PictureFragment(private val image: String) :
         newExif.saveAttributes()
         activity?.apply {
             if (this is PictureActivity) {
-                val date = this@PictureFragment.binding.twDate.text.toString().split(".")
+                val date = this@PictureFragment.binding.twDate.text.toString()
+                val time = this@PictureFragment.binding.twTime.text.toString()
                 val valueMap = hashMapOf(
                     "body_part" to part,
-                    "taken_at_year" to date[0],
-                    "taken_at_month" to date[1],
-                    "taken_at_day" to date[2],
+                    "taken_at " to serverFormat.format(datePictureFormat.parse("$date $time")),
                     "image" to image
                 )
                 saveComplete(valueMap)

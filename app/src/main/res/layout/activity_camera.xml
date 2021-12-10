@@ -182,10 +182,10 @@
 
         <ImageView
             android:id="@+id/img_album"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:onClick="@{()->vm.onClickEvent(ClickEvent.Album.INSTANCE)}"
-            android:src="@drawable/ic_pose"
+            android:src="@drawable/ic_album"
             app:layout_constraintBottom_toTopOf="@id/tw_album"
             app:layout_constraintEnd_toStartOf="@id/img_shutter"
             app:layout_constraintStart_toStartOf="parent"

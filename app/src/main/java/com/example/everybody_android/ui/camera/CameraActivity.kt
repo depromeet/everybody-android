@@ -1,6 +1,7 @@
 package com.example.everybody_android.ui.camera
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -18,7 +19,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.camera.core.*
 import androidx.camera.core.CameraSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -68,7 +72,17 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             }
         }
     }
-    private val postList = listOf(
+    private lateinit var adapter: RecyclerViewAdapter
+    private val poseSelectList = listOf(
+        R.drawable.ic_not_pose,
+        R.drawable.ic_pose_man_whole,
+        R.drawable.ic_pose_man_upper,
+        R.drawable.ic_pose_man_lower,
+        R.drawable.ic_pose_woman_whole,
+        R.drawable.ic_pose_woman_upper,
+        R.drawable.ic_pose_woman_lower
+    )
+    private val poseList = listOf(
         Unit,
         R.drawable.ic_man_whole,
         R.drawable.ic_man_upper,
@@ -76,8 +90,44 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         R.drawable.ic_woman_whole,
         R.drawable.ic_woman_upper,
         R.drawable.ic_woman_lower
-    ).map { RecyclerItem(it, R.layout.item_camera_pose, BR.data) }.toMutableList()
+    ).mapIndexed { index, any ->
+        RecyclerItem(
+            PoseData(
+                poseSelectList[index],
+                index > 0,
+                any,
+                index == 0
+            ), R.layout.item_camera_pose, BR.data
+        )
+    }.toMutableList()
+
+    data class PoseData(
+        @DrawableRes val image: Int,
+        val isPose: Boolean,
+        val poseImage: Any,
+        val isCheck: Boolean
+    )
+
     private var albumId: String = ""
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.apply {
+                    val fileUri =
+                        ContentUriUtil.getFilePath(this@CameraActivity, this).toString()
+                    startActivity(
+                        Intent(
+                            this@CameraActivity,
+                            PictureActivity::class.java
+                        ).apply {
+                            putExtra("image", fileUri)
+                            if (albumId.isNotEmpty()) putExtra("id", albumId)
+                        })
+                }
+            }
+        }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         albumId = intent.getStringExtra("id") ?: ""
@@ -94,15 +144,35 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                 cameraSetting()
             }
         }
-        binding.recyclerPose.adapter = RecyclerViewAdapter {
-            if (it is Unit) binding.imgPvPose.isVisible = false
-            else {
-                binding.imgPvPose.isVisible = true
-                binding.imgPvPose.setImageResource(it as @androidx.annotation.DrawableRes Int)
+        adapter = RecyclerViewAdapter {
+            if (it is PoseData) {
+                val checkIndex =
+                    adapter.getItems().indexOfFirst { data -> (data.data as PoseData).isCheck }
+                if (checkIndex > -1) {
+                    val checkItem = adapter.getItems()[checkIndex].data as PoseData
+                    adapter.changeItem(
+                        adapter.getItems()[checkIndex].copy(
+                            data = checkItem.copy(
+                                isCheck = !checkItem.isCheck
+                            )
+                        ), checkIndex
+                    )
+                }
+                val index = adapter.getItems().indexOfFirst { data -> data.data == it }
+                adapter.changeItem(
+                    adapter.getItems()[index].copy(data = it.copy(isCheck = !it.isCheck)),
+                    index
+                )
+                if (it.poseImage is Unit) binding.imgPvPose.isVisible = false
+                else {
+                    binding.imgPvPose.isVisible = true
+                    binding.imgPvPose.setImageResource(it.poseImage as @androidx.annotation.DrawableRes Int)
+                }
             }
         }.apply {
-            setItems(postList)
+            setItems(poseList)
         }
+        binding.recyclerPose.adapter = adapter
         Handler(Looper.myLooper() ?: return).postDelayed({
             binding.groupInfo.isVisible = false
         }, 3000)
@@ -121,7 +191,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
-                    CameraViewModel.ClickEvent.Album -> toast("앨범 버튼")
+                    CameraViewModel.ClickEvent.Album -> openFileDocument()
                     CameraViewModel.ClickEvent.Pose -> binding.motionCamera.transitionToEnd()
                     CameraViewModel.ClickEvent.Shutter -> clickShutter()
                     CameraViewModel.ClickEvent.Back -> finish()
@@ -266,6 +336,15 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
     override fun onDestroy() {
         super.onDestroy()
         displayManager.unregisterDisplayListener(displayListener)
+    }
+
+    private fun openFileDocument() {
+        Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+            putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*"))
+            resultLauncher.launch(this)
+        }
     }
 
     companion object {

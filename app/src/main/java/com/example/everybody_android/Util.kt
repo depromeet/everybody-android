@@ -83,6 +83,11 @@ fun folderLoadImage(view: ImageView, url: String, placeholder: Drawable) {
     )
 }
 
+@BindingAdapter("android:src")
+fun setImageResource(imageView: ImageView, resource: Int) {
+    imageView.setImageResource(resource)
+}
+
 fun prepareFilePart(key: String, fileUri: Uri): MultipartBody.Part {
     val uri = if (!fileUri.toString().contains("file")) "file://$fileUri".toUri()
     else fileUri

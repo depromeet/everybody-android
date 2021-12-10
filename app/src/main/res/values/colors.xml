@@ -24,4 +24,6 @@
     <color name="purple_op50">#807448FF</color>
     <color name="purple_op70">#B37448FF</color>
     <color name="black_333">#333333</color>
+    <color name="not_pose">#E5E1E0</color>
+    <color name="pose">#E5F0FA</color>
 </resources>
