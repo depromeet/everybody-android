@@ -149,7 +149,7 @@ class PictureFragment(private val image: String) :
                 val time = this@PictureFragment.binding.twTime.text.toString()
                 val valueMap = hashMapOf(
                     "body_part" to part,
-                    "taken_at " to serverFormat.format(datePictureFormat.parse("$date $time")),
+                    "taken_at" to serverFormat.format(datePictureFormat.parse("$date $time")),
                     "image" to image
                 )
                 saveComplete(valueMap)
