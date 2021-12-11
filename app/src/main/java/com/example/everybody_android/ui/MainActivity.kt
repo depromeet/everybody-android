@@ -6,16 +6,18 @@ import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityMainBinding
 import com.example.everybody_android.dto.UserData
+import com.example.everybody_android.dto.request.SignInRequest
+import com.example.everybody_android.dto.request.SignUpRequest
 import com.example.everybody_android.pref.LocalStorage
 import com.example.everybody_android.repeatOnStarted
 import com.example.everybody_android.ui.camera.CameraActivity
 import com.example.everybody_android.ui.panorama.PanoramaActivity
 import com.example.everybody_android.viewmodel.MainViewModel
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -32,15 +34,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
 
     override fun init() {
-        fcmToken()
-        deviceToken()
-        //viewModel.signIn(SignInRequest(localStorage.getDeviceToken(),"1234"))
         liveEvent()
-        viewModel.getAlbum()
-        viewModel.getUserData()
+        deviceToken()
+        fcmToken()
         intentCreateFolder()
         feedSort()
         onClickCamara()
+    }
+
+    private fun sign() {
+        if (localStorage.getUserId() < 0) {
+            val device = SignUpRequest.Device(
+                "ANDROID",
+                localStorage.getDeviceToken(),
+                localStorage.getFcmToken()
+            )
+            viewModel.signUp(SignUpRequest(device = device, kind = "SIMPLE", password = "1234"))
+        } else {
+            viewModel.signIn(SignInRequest(localStorage.getUserId(), "1234"))
+        }
     }
 
     private fun onClickMyPage(userData: UserData) {
@@ -77,6 +89,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     )
                     is MainViewModel.ClickEvent.GetFeedData -> {
                     }
+                    MainViewModel.ClickEvent.Sign -> {
+                        viewModel.getAlbum()
+                        viewModel.getUserData()
+                    }
                 }
             }
         }
@@ -85,7 +101,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun user(data: UserData) {
         binding.tvNickname.text = data.nickName
         binding.tvGoal.text = data.motto
-        Glide.with(this).load(data.profileImage).into(binding.ibProfile)
+        Glide.with(this).load(data.profileImage).apply(RequestOptions.circleCropTransform())
+            .into(binding.ibProfile)
     }
 
     private fun onClickCamara() {
@@ -110,10 +127,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun fcmToken() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener(OnSuccessListener {
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
             localStorage.saveFcmToken(it)
             println("Token $it")
-        })
+            sign()
+        }
     }
 
     @SuppressLint("HardwareIds")

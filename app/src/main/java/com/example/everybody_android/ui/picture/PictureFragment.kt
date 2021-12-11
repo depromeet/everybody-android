@@ -5,12 +5,10 @@ import android.graphics.Canvas
 import android.media.ExifInterface
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.R
+import com.example.everybody_android.*
 import com.example.everybody_android.base.BaseFragment
 import com.example.everybody_android.databinding.FragmentPictureBinding
-import com.example.everybody_android.imageLoad
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.typeFace
+import com.example.everybody_android.ui.camera.CameraActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.File
@@ -19,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class PictureFragment(private val image: String) :
+class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     BaseFragment<FragmentPictureBinding, PictureFragmentViewModel>() {
     override val viewModel: PictureFragmentViewModel by viewModels()
     override val layoutId: Int = R.layout.fragment_picture
@@ -138,9 +136,22 @@ class PictureFragment(private val image: String) :
         val bitmap =
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
+        var filePath = ""
         binding.clPicture.draw(canvas)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
-        val newExif = ExifInterface(image)
+        if (!isAlbum) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
+            filePath = image
+        }
+        else {
+            val photoFile = CameraActivity.createFile(
+                requireContext().getOutputDirectory(),
+                CameraActivity.FILENAME,
+                CameraActivity.PHOTO_EXTENSION
+            )
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(photoFile))
+            filePath = photoFile.toString()
+        }
+        val newExif = ExifInterface(filePath)
         newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
         newExif.saveAttributes()
         activity?.apply {

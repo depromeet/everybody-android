@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 class SharedPrefStorage(val context: Context) : LocalStorage {
 
     private val fcmTokenKey = "FcmToken"
-
     private val devicePrimaryKey = "DeviceToken"
+    private val userId = "UserId"
 
 
     override fun saveFcmToken(token: String) =
@@ -16,8 +16,7 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
             it.apply()
         }
 
-    override fun getFcmToken(): String =
-        "Bearer " + getPref(context).getString(fcmTokenKey, "")
+    override fun getFcmToken(): String = getPref(context).getString(fcmTokenKey, "").toString()
 
 
     override fun saveDeviceToken(token: String) =
@@ -26,8 +25,16 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
             it.apply()
         }
 
-    override fun getDeviceToken()  =
-        "Bearer " + getPref(context).getString(fcmTokenKey, "")
+    override fun getDeviceToken() = getPref(context).getString(fcmTokenKey, "").toString()
+
+    override fun getUserId(): Int = getPref(context).getInt(userId, -1)
+
+    override fun saveUserId(id: Int) {
+        getPref(context).edit().let {
+            it.putInt(userId, id)
+            it.apply()
+        }
+    }
 
     private fun getPref(context: Context): SharedPreferences =
         context.getSharedPreferences("pref", Context.MODE_PRIVATE)

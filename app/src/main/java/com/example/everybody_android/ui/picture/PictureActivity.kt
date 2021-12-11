@@ -21,13 +21,15 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
     private var isFolder = false
     private var albumId: String = ""
     private val loadingDialog = LoadingDialog()
+    private var isAlbum = false
     private lateinit var pictureFragment: PictureFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!intent.hasExtra("image")) finish()
         albumId = intent.getStringExtra("id") ?: ""
-        pictureFragment = PictureFragment(intent.getStringExtra("image") ?: "")
+        isAlbum = intent.getBooleanExtra("isAlbum", false)
+        pictureFragment = PictureFragment(intent.getStringExtra("image") ?: "",isAlbum)
         addFragment(pictureFragment)
         addFragment(folderChoiceFragment)
         val transaction = supportFragmentManager.beginTransaction()

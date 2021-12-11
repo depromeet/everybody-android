@@ -12,10 +12,12 @@ import com.example.everybody_android.api.UserRepo
 import com.example.everybody_android.base.BaseViewModel
 import com.example.everybody_android.base.MutableEventFlow
 import com.example.everybody_android.base.asEventFlow
+import com.example.everybody_android.di.HiltApplication
 import com.example.everybody_android.dto.UserData
 import com.example.everybody_android.dto.request.SignInRequest
 import com.example.everybody_android.dto.request.SignUpRequest
 import com.example.everybody_android.dto.response.MainFeedResponse
+import com.example.everybody_android.pref.LocalStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +29,9 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     private var recyclerStatus = true
 
     private var feedData = ArrayList<MainFeedResponse>()
+
+    @Inject
+    lateinit var localStorage: LocalStorage
 
     val halfFeedAdapter = RecyclerViewAdapter {
         onClickEvent(ClickEvent.PanoramaActivity(it as MainFeedResponse))
@@ -61,7 +66,8 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             SignRepo.signUp(signUpRequest)
         }) { data ->
-            println("signup $data")
+            localStorage.saveUserId(data.userId)
+            signIn(SignInRequest(data.userId, "1234"))
         }
     }
 
@@ -69,7 +75,8 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             SignRepo.signIn(signInRequest)
         }) { data ->
-            println("signIn $data")
+            HiltApplication.token = data.accessToken
+            onClickEvent(ClickEvent.Sign)
         }
     }
 
@@ -107,6 +114,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     sealed class ClickEvent {
         object SortFeed : ClickEvent()
+        object Sign : ClickEvent()
         data class GetFeedData(val data: ArrayList<MainFeedResponse>) : ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
         data class PanoramaActivity(val data: MainFeedResponse) : ClickEvent()

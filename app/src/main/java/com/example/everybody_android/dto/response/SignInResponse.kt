@@ -2,8 +2,7 @@ package com.example.everybody_android.dto.response
 
 import com.google.gson.annotations.SerializedName
 
-data class SignUpResponse(
-
-    @SerializedName("id")
-    val userId : Int
+data class SignInResponse(
+    @SerializedName("access_token")
+    val accessToken: String
 )

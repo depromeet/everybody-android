@@ -31,14 +31,12 @@ import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.everybody_android.BR
+import com.example.everybody_android.*
 import com.example.everybody_android.R
 import com.example.everybody_android.adapter.RecyclerItem
 import com.example.everybody_android.adapter.RecyclerViewAdapter
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityCameraBinding
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.toast
 import com.example.everybody_android.ui.picture.PictureActivity
 import com.example.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -121,6 +119,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                             PictureActivity::class.java
                         ).apply {
                             putExtra("image", fileUri)
+                            putExtra("isAlbum", true)
                             if (albumId.isNotEmpty()) putExtra("id", albumId)
                         })
                 }
@@ -176,15 +175,6 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         Handler(Looper.myLooper() ?: return).postDelayed({
             binding.groupInfo.isVisible = false
         }, 3000)
-    }
-
-    private fun getOutputDirectory(): File {
-        val appContext = applicationContext
-        val mediaDir = externalMediaDirs.firstOrNull()?.let {
-            File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
-        }
-        return if (mediaDir != null && mediaDir.exists())
-            mediaDir else appContext.filesDir
     }
 
     override fun init() {
@@ -350,13 +340,13 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
     companion object {
 
         private const val TAG = "CameraXBasic"
-        private const val FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val PHOTO_EXTENSION = ".jpg"
+        const val FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS"
+        const val PHOTO_EXTENSION = ".jpg"
         private const val ANIMATION_FAST_MILLIS = 50L
         private const val ANIMATION_SLOW_MILLIS = 100L
 
         /** Helper function used to create a timestamped file */
-        private fun createFile(baseFolder: File, format: String, extension: String) =
+        fun createFile(baseFolder: File, format: String, extension: String) =
             File(
                 baseFolder, SimpleDateFormat(format, Locale.US)
                     .format(System.currentTimeMillis()) + extension

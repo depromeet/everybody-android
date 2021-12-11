@@ -38,7 +38,7 @@ object ApiModule {
                 it.proceed(
                     it.request().newBuilder().addHeader(
                         "Authorization",
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NTIwOTIxMTAsInVzZXJfaWQiOjIwfQ.9jBo1aZ8-CWyB79FEqvtWe_yntWWpPUxmNgB0vr_uZQ"
+                        "Bearer ${HiltApplication.token}"
                     ).build()
                 )
             }
