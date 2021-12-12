@@ -1,5 +1,6 @@
 package com.example.everybody_android.ui.dialog.delete
 
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseDialogFragment
@@ -11,6 +12,12 @@ class DeleteDialog(private val count: Int, private val action: () -> Unit) :
     BaseDialogFragment<DialogDeleteBinding, DeleteViewModel>() {
     override val viewModel: DeleteViewModel by viewModels()
     override val layoutId: Int = R.layout.dialog_delete
+    override fun onStart() {
+        super.onStart()
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dialog?.window?.setLayout(width, height)
+    }
 
     override fun init() {
         super.init()

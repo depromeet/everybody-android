@@ -4,12 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.provider.Settings
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
 import com.example.everybody_android.databinding.ActivityMainBinding
+import com.example.everybody_android.di.HiltApplication.Companion.userData
 import com.example.everybody_android.dto.UserData
 import com.example.everybody_android.dto.request.SignInRequest
 import com.example.everybody_android.dto.request.SignUpRequest
@@ -31,7 +33,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     @Inject
     lateinit var localStorage: LocalStorage
-
+    private val createFolderResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                viewModel.getAlbum()
+            }
+        }
 
     override fun init() {
         liveEvent()
@@ -66,7 +73,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun intentCreateFolder() {
         binding.ibAdd.setOnClickListener {
             val intent = Intent(this, CreateFolderActivity::class.java)
-            startActivity(intent)
+            createFolderResult.launch(intent)
+        }
+        binding.ibAlbumAdd.setOnClickListener {
+            val intent = Intent(this, CreateFolderActivity::class.java)
+            createFolderResult.launch(intent)
         }
     }
 
@@ -74,8 +85,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
-                    is MainViewModel.ClickEvent.SortFeed -> feedSort()
+                    is MainViewModel.ClickEvent.SortFeed -> {
+                        binding.ibSort.isSelected = !binding.ibSort.isSelected
+                        feedSort()
+                    }
                     is MainViewModel.ClickEvent.GetUserData -> {
+                        userData = it.data
                         user(it.data)
                         onClickMyPage(it.data)
                     }
@@ -95,6 +110,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     }
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userData?.apply {
+            user(this)
         }
     }
 

@@ -13,7 +13,7 @@
             name="view"
             type="android.view.View" />
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
     </data>
 
@@ -27,11 +27,11 @@
             android:id="@+id/ib_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/test_icon"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:background="@color/white"
             android:scaleType="centerInside"
+            android:src="@drawable/test_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
             android:background="@color/white"
             android:onClick="@{() -> vm.sortFeed()}"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_grid"
+            android:src="@drawable/selector_panorama_list"
             app:layout_constraintEnd_toStartOf="@+id/ib_add"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,36 +84,19 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="천천히 그리고 꾸준히" />
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_no_feed"
-            android:visibility="@{vm.noFeed ? View.VISIBLE : View.GONE}"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_full_sort"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="334dp"
-                android:gravity="center"
-                android:text="@string/text_make_album"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="414dp"
-                android:background="@color/white"
-                android:src="@drawable/ic_frame"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_goal"
+            app:recyclerView="@{vm.fullFeedAdapter}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_half_sort"
@@ -129,19 +112,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_goal" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_full_sort"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_no_feed"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_goal"
-            app:recyclerView="@{vm.fullFeedAdapter}" />
+            android:layout_height="match_parent"
+            android:visibility="@{vm.noFeed ? View.VISIBLE : View.GONE}"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="334dp"
+                android:gravity="center"
+                android:text="@string/text_make_album"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ib_album_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="414dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_frame"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <ImageButton
             android:id="@+id/ib_camera"
@@ -149,8 +150,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/ic_camera"
             android:background="#00000000"
+            android:src="@drawable/ic_camera"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

@@ -19,6 +19,7 @@ import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaBinding
 import com.example.everybody_android.databinding.ItemPanoramaTabBinding
 import com.example.everybody_android.ui.camera.CameraActivity
+import com.example.everybody_android.ui.dialog.service.ServiceDialog
 import com.example.everybody_android.ui.panorama.edit.PanoramaEditActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -120,6 +121,10 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         viewPagerSetting(list)
                         recyclerSetting(list)
                     }
+                    PanoramaViewModel.Event.Share -> ServiceDialog().show(
+                        supportFragmentManager,
+                        ""
+                    )
                 }
             }
         }

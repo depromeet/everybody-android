@@ -11,6 +11,7 @@ import com.example.everybody_android.data.response.base.Picture
 import com.example.everybody_android.databinding.ActivityPanoramaEditBinding
 import com.example.everybody_android.ui.camera.CameraActivity
 import com.example.everybody_android.ui.dialog.delete.DeleteDialog
+import com.example.everybody_android.ui.dialog.service.ServiceDialog
 import com.example.everybody_android.ui.panorama.PanoramaItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

@@ -1,13 +1,7 @@
 package com.example.everybody_android.ui
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.media.Image
-import android.view.Gravity
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.everybody_android.R
 import com.example.everybody_android.base.BaseActivity
@@ -56,8 +50,11 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
     }
 
     private fun setTime(data: AlarmData) {
-
-        binding.tvTimeSelect.text = "${data.preferredTimeHour} : ${data.preferredTimeMinute}"
+        val h =
+            if (data.preferredTimeHour.toString().length > 1) data.preferredTimeHour.toString() else "0${data.preferredTimeHour}"
+        val m =
+            if (data.preferredTimeMinute.toString().length > 1) data.preferredTimeMinute.toString() else "0${data.preferredTimeMinute}"
+        binding.tvTimeSelect.text = "$h : $m"
 
         alarmButton()
 
@@ -76,7 +73,9 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
             val dialogFragment = TimeSettingDialog(
                 object : TimeSettingDialog.DialogListener {
                     override fun checkListener(hour: Int, minute: Int) {
-                        binding.tvTimeSelect.text = "$hour : $minute"
+                        val h = if (hour.toString().length > 1) hour.toString() else "0$hour"
+                        val m = if (minute.toString().length > 1) minute.toString() else "0$minute"
+                        binding.tvTimeSelect.text = "$h : $m"
                         afterData.preferredTimeHour = hour
                         afterData.preferredTimeMinute = minute
                         storageButton()
@@ -128,16 +127,15 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
     }
 
     private fun alarmButton() {
-        if(afterData.isActivated) binding.ibAlarm.setImageDrawable(resources.getDrawable(R.drawable.ic_alarm_blue))
+        if (afterData.isActivated) binding.ibAlarm.setImageDrawable(resources.getDrawable(R.drawable.ic_alarm_blue))
         else binding.ibAlarm.setImageDrawable(resources.getDrawable(R.drawable.ic_alarm_gray))
 
         binding.ibAlarm.setOnClickListener {
-            if (!afterData.isActivated ){
+            if (!afterData.isActivated) {
                 binding.ibAlarm.setImageDrawable(resources.getDrawable(R.drawable.ic_alarm_blue))
                 afterData.isActivated = true
                 storageButton()
-            }
-            else {
+            } else {
                 binding.ibAlarm.setImageDrawable(resources.getDrawable(R.drawable.ic_alarm_gray))
                 afterData.isActivated = false
                 storageButton()
@@ -156,22 +154,17 @@ class AlarmActivity : BaseActivity<ActivityAlarmBinding, AlarmViewModel>() {
             binding.ibSave.setOnClickListener {
                 viewModel.setAlarmTime(afterData)
                 toast(R.drawable.ic_toast_alarm)
-                val intent = Intent(this, MyPageActivity::class.java)
-                intent.putExtra("userData", userData)
-                startActivity(intent)
+                finish()
             }
         }
 
     }
 
-    private fun back(userData : UserData){
+    private fun back(userData: UserData) {
         binding.ibBack.setOnClickListener {
-            val intent = Intent(this, MyPageActivity::class.java)
-            intent.putExtra("userData",userData)
-            startActivity(intent)
+            finish()
         }
     }
-
 
 
 }

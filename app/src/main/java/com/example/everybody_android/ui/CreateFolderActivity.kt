@@ -1,6 +1,5 @@
 package com.example.everybody_android.ui
 
-import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
@@ -26,8 +25,7 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding, CreateFol
 
     private fun back() {
         binding.ibBefore.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 
@@ -53,16 +51,16 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding, CreateFol
             if (binding.etFolderName.text.toString().isNotEmpty()) {
                 viewModel.createFolder(binding.etFolderName.text.toString())
                 toast()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                setResult(RESULT_OK)
+                finish()
             }
         }
     }
 
-    private fun toast(){
+    private fun toast() {
         val image = ImageView(applicationContext)
         image.setImageResource(R.drawable.ic_toast_album)
-        val toast = Toast.makeText(applicationContext,"", Toast.LENGTH_LONG)
+        val toast = Toast.makeText(applicationContext, "", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.TOP, Gravity.CENTER, Gravity.TOP)
         toast.view = image
         toast.show()

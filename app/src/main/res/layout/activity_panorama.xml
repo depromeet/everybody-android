@@ -45,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:onClick="@{()->vm.onClickEvent(Event.Share.INSTANCE)}"
             android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintEnd_toEndOf="parent"

@@ -41,19 +41,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_complete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/white"
-            android:fontFamily="@font/pretendard_regular"
-            android:text="완료"
-            android:textColor="@color/gray_80"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/tv_push_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
