@@ -1,4 +1,4 @@
-package com.example.everybody_android.ui.picture
+package com.def.everybody_android.ui.picture
 
 object DateData {
     val month =

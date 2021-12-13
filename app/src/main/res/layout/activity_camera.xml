@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.example.everybody_android.ui.camera.CameraViewModel.ClickEvent" />
+        <import type="com.def.everybody_android.ui.camera.CameraViewModel.ClickEvent" />
 
         <variable
             name="vm"
-            type="com.example.everybody_android.ui.camera.CameraViewModel" />
+            type="com.def.everybody_android.ui.camera.CameraViewModel" />
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout

@@ -8,7 +8,7 @@
 
         <variable
             name="data"
-            type="com.example.everybody_android.ui.picture.folder.FolderChoiceViewModel.Item" />
+            type="com.def.everybody_android.ui.picture.folder.FolderChoiceViewModel.Item" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

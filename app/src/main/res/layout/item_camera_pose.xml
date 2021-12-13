@@ -6,11 +6,11 @@
 
         <import type="android.view.View" />
 
-        <import type="com.example.everybody_android.R" />
+        <import type="com.def.everybody_android.R" />
 
         <variable
             name="data"
-            type="com.example.everybody_android.ui.camera.CameraActivity.PoseData" />
+            type="com.def.everybody_android.ui.camera.CameraActivity.PoseData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.example.everybody_android.bindingadapter
+package com.def.everybody_android.bindingadapter
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
@@ -9,12 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.everybody_android.R
-import com.example.everybody_android.adapter.RecyclerViewAdapter
-import com.example.everybody_android.dto.MainFeedPicturePositionData
-import com.example.everybody_android.dto.UserData
-import com.example.everybody_android.dto.response.MainFeedResponse
+import com.def.everybody_android.R
+import com.def.everybody_android.adapter.RecyclerViewAdapter
+import com.def.everybody_android.convertDpToPx
+import com.def.everybody_android.dto.MainFeedPicturePositionData
+import com.def.everybody_android.dto.UserData
+import com.def.everybody_android.dto.response.MainFeedResponse
 
 @BindingAdapter("recyclerView")
 fun RecyclerView.setRecyclerAdapter(adapter: RecyclerViewAdapter) {
@@ -39,6 +42,7 @@ fun loadImage(imageView: ImageView, url: MainFeedResponse, placeholder: Drawable
             .error(placeholder)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .apply(RequestOptions().fitCenter())
+            .transform(CenterCrop(), RoundedCorners(imageView.context.convertDpToPx(4)))
             .into(imageView)
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.everybody_android">
+    package="com.def.everybody_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".di.HiltApplication"
+        android:name="com.def.everybody_android.di.HiltApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,37 +17,37 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".ui.AlarmActivity"
+            android:name="com.def.everybody_android.ui.AlarmActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MyPageActivity"
+            android:name="com.def.everybody_android.ui.MyPageActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.CreateFolderActivity"
+            android:name="com.def.everybody_android.ui.CreateFolderActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.def.everybody_android.ui.MainActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.camera.CameraActivity"
+            android:name="com.def.everybody_android.ui.camera.CameraActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.picture.PictureActivity"
+            android:name="com.def.everybody_android.ui.picture.PictureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.panorama.PanoramaActivity"
+            android:name="com.def.everybody_android.ui.panorama.PanoramaActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.panorama.edit.PanoramaEditActivity"
+            android:name="com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.def.everybody_android.ui.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

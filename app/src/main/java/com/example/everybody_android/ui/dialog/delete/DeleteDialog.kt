@@ -1,11 +1,11 @@
-package com.example.everybody_android.ui.dialog.delete
+package com.def.everybody_android.ui.dialog.delete
 
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseDialogFragment
-import com.example.everybody_android.databinding.DialogDeleteBinding
-import com.example.everybody_android.repeatOnStarted
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseDialogFragment
+import com.def.everybody_android.databinding.DialogDeleteBinding
+import com.def.everybody_android.repeatOnStarted
 import kotlinx.coroutines.flow.collect
 
 class DeleteDialog(private val count: Int, private val action: () -> Unit) :

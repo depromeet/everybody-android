@@ -1,4 +1,4 @@
-package com.example.everybody_android.data.response.base
+package com.def.everybody_android.data.response.base
 
 import com.google.gson.annotations.SerializedName
 

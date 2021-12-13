@@ -1,18 +1,18 @@
-package com.example.everybody_android.ui.panorama.edit
+package com.def.everybody_android.ui.panorama.edit
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.activity.viewModels
-import com.example.everybody_android.*
-import com.example.everybody_android.adapter.RecyclerItem
-import com.example.everybody_android.adapter.RecyclerViewAdapter
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.data.response.base.Picture
-import com.example.everybody_android.databinding.ActivityPanoramaEditBinding
-import com.example.everybody_android.ui.camera.CameraActivity
-import com.example.everybody_android.ui.dialog.delete.DeleteDialog
-import com.example.everybody_android.ui.dialog.service.ServiceDialog
-import com.example.everybody_android.ui.panorama.PanoramaItemDecoration
+import com.def.everybody_android.*
+import com.def.everybody_android.adapter.RecyclerItem
+import com.def.everybody_android.adapter.RecyclerViewAdapter
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.data.response.base.Picture
+import com.def.everybody_android.databinding.ActivityPanoramaEditBinding
+import com.def.everybody_android.ui.camera.CameraActivity
+import com.def.everybody_android.ui.dialog.delete.DeleteDialog
+import com.def.everybody_android.ui.dialog.service.ServiceDialog
+import com.def.everybody_android.ui.panorama.PanoramaItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

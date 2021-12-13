@@ -1,7 +1,7 @@
-package com.example.everybody_android.api
+package com.def.everybody_android.api
 
-import com.example.everybody_android.data.response.UploadPictureResponse
-import com.example.everybody_android.di.ApiModule
+import com.def.everybody_android.data.response.UploadPictureResponse
+import com.def.everybody_android.di.ApiModule
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.everybody_android.viewmodel.CreateFolderViewModel" />
+            type="com.def.everybody_android.viewmodel.CreateFolderViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

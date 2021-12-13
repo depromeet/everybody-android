@@ -1,17 +1,17 @@
-package com.example.everybody_android.ui.picture.folder
+package com.def.everybody_android.ui.picture.folder
 
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.BR
-import com.example.everybody_android.R
-import com.example.everybody_android.adapter.RecyclerItem
-import com.example.everybody_android.adapter.RecyclerViewAdapter
-import com.example.everybody_android.base.BaseFragment
-import com.example.everybody_android.databinding.FragmentFolderChoiceBinding
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.toast
-import com.example.everybody_android.ui.dialog.folder.FolderAddDialog
-import com.example.everybody_android.ui.picture.PictureActivity
+import com.def.everybody_android.BR
+import com.def.everybody_android.R
+import com.def.everybody_android.adapter.RecyclerItem
+import com.def.everybody_android.adapter.RecyclerViewAdapter
+import com.def.everybody_android.base.BaseFragment
+import com.def.everybody_android.databinding.FragmentFolderChoiceBinding
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.toast
+import com.def.everybody_android.ui.dialog.folder.FolderAddDialog
+import com.def.everybody_android.ui.picture.PictureActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -25,13 +25,17 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         viewModel.getAlbums()
         adapter = RecyclerViewAdapter {
             if (it is Unit) {
-                FolderAddDialog {  data ->
+                FolderAddDialog { data ->
                     adapter.addItem(
                         RecyclerItem(
                             FolderChoiceViewModel.Item(
                                 "",
                                 data.name ?: "",
-                                ResourcesCompat.getDrawable(resources, R.drawable.ic_add, null)!!,
+                                ResourcesCompat.getDrawable(
+                                    resources,
+                                    R.drawable.test_feed,
+                                    null
+                                )!!,
                                 false,
                                 data.id,
                                 data.description ?: ""
@@ -72,12 +76,11 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         repeatOnStarted {
             viewModel.albumsResponse.collect {
                 val item = it.map { data ->
-                    val image =
-                        if (data.pictures.upper.isNullOrEmpty()) "" else data.pictures.upper[0].imageUrl
+                    val image = data.thumbnailUrl
                     val recyclerData = FolderChoiceViewModel.Item(
                         image ?: "",
                         data.name ?: "",
-                        ResourcesCompat.getDrawable(resources, R.drawable.ic_add, null)!!,
+                        ResourcesCompat.getDrawable(resources, R.drawable.test_feed, null)!!,
                         false,
                         data.id,
                         data.description ?: ""

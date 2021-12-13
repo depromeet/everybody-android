@@ -1,4 +1,4 @@
-package com.example.everybody_android.adapter
+package com.def.everybody_android.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -1,10 +1,10 @@
-package com.example.everybody_android.api
+package com.def.everybody_android.api
 
-import com.example.everybody_android.data.response.AlbumResponse
-import com.example.everybody_android.data.response.AlbumsResponse
-import com.example.everybody_android.di.ApiModule
-import com.example.everybody_android.dto.response.CreateAlbumResponse
-import com.example.everybody_android.dto.response.MainFeedResponse
+import com.def.everybody_android.data.response.AlbumResponse
+import com.def.everybody_android.data.response.AlbumsResponse
+import com.def.everybody_android.di.ApiModule
+import com.def.everybody_android.dto.response.CreateAlbumResponse
+import com.def.everybody_android.dto.response.MainFeedResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

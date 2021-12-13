@@ -1,4 +1,4 @@
-package com.example.everybody_android.base
+package com.def.everybody_android.base
 
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

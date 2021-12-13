@@ -1,12 +1,12 @@
-package com.example.everybody_android.ui.dialog.folder
+package com.def.everybody_android.ui.dialog.folder
 
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseDialogFragment
-import com.example.everybody_android.data.response.AlbumsResponse
-import com.example.everybody_android.databinding.DialogFolderAddBinding
-import com.example.everybody_android.repeatOnStarted
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseDialogFragment
+import com.def.everybody_android.data.response.AlbumsResponse
+import com.def.everybody_android.databinding.DialogFolderAddBinding
+import com.def.everybody_android.repeatOnStarted
 import kotlinx.coroutines.flow.collect
 
 class FolderAddDialog(private val callBack: (AlbumsResponse.Album) -> Unit) :

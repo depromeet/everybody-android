@@ -1,4 +1,4 @@
-package com.example.everybody_android.remote
+package com.def.everybody_android.remote
 
 interface ApiService {
 

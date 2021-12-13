@@ -1,18 +1,20 @@
-package com.example.everybody_android.ui
+package com.def.everybody_android.ui
 
 import android.content.Intent
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.databinding.ActivityMyPageBinding
-import com.example.everybody_android.di.HiltApplication.Companion.userData
-import com.example.everybody_android.dto.UserData
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.viewmodel.MyPageViewModel
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.databinding.ActivityMyPageBinding
+import com.def.everybody_android.di.HiltApplication.Companion.userData
+import com.def.everybody_android.dto.UserData
+import com.def.everybody_android.pref.LocalStorage
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.viewmodel.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
@@ -20,16 +22,28 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
     override val layoutId = R.layout.activity_my_page
     override val viewModel: MyPageViewModel by viewModels()
 
+    @Inject
+    lateinit var localStorage: LocalStorage
+
     override fun init() {
         userData?.apply {
             onClickAlarm(this)
             profile(this)
         }
         back()
+        appStorage()
+        binding.ibStorage.isSelected = localStorage.isAppStorage()
         repeatOnStarted {
             viewModel.complete.collect {
                 finish()
             }
+        }
+    }
+
+    private fun appStorage() {
+        binding.ibStorage.setOnClickListener {
+            binding.ibStorage.isSelected = !binding.ibStorage.isSelected
+            localStorage.setAppStorage(binding.ibStorage.isSelected)
         }
     }
 

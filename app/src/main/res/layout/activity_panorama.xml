@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.example.everybody_android.ui.panorama.PanoramaViewModel.Event" />
+        <import type="com.def.everybody_android.ui.panorama.PanoramaViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.example.everybody_android.ui.panorama.PanoramaViewModel" />
+            type="com.def.everybody_android.ui.panorama.PanoramaViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

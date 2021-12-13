@@ -1,4 +1,4 @@
-package com.example.everybody_android.ui.panorama
+package com.def.everybody_android.ui.panorama
 
 import android.content.Intent
 import android.util.Log
@@ -11,16 +11,16 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.everybody_android.*
-import com.example.everybody_android.adapter.RecyclerItem
-import com.example.everybody_android.adapter.RecyclerViewAdapter
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.data.response.base.Picture
-import com.example.everybody_android.databinding.ActivityPanoramaBinding
-import com.example.everybody_android.databinding.ItemPanoramaTabBinding
-import com.example.everybody_android.ui.camera.CameraActivity
-import com.example.everybody_android.ui.dialog.service.ServiceDialog
-import com.example.everybody_android.ui.panorama.edit.PanoramaEditActivity
+import com.def.everybody_android.*
+import com.def.everybody_android.adapter.RecyclerItem
+import com.def.everybody_android.adapter.RecyclerViewAdapter
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.data.response.base.Picture
+import com.def.everybody_android.databinding.ActivityPanoramaBinding
+import com.def.everybody_android.databinding.ItemPanoramaTabBinding
+import com.def.everybody_android.ui.camera.CameraActivity
+import com.def.everybody_android.ui.dialog.service.ServiceDialog
+import com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -60,6 +60,11 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             whole.addAll(list.whole.orEmpty())
                             upper.addAll(list.upper.orEmpty())
                             lower.addAll(list.lower.orEmpty())
+                        }
+                        when(data.latestPart){
+                            "whole" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
+                            "upper" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(2))
+                            "lower" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(3))
                         }
                         when {
                             binding.twWhole.isSelected -> {

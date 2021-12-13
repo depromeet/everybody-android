@@ -1,17 +1,17 @@
-package com.example.everybody_android.ui
+package com.def.everybody_android.ui
 
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.activity.viewModels
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.databinding.ActivityAlarmBinding
-import com.example.everybody_android.dto.AlarmData
-import com.example.everybody_android.dto.UserData
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.toast
-import com.example.everybody_android.ui.dialog.time.TimeSettingDialog
-import com.example.everybody_android.viewmodel.AlarmViewModel
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.databinding.ActivityAlarmBinding
+import com.def.everybody_android.dto.AlarmData
+import com.def.everybody_android.dto.UserData
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.toast
+import com.def.everybody_android.ui.dialog.time.TimeSettingDialog
+import com.def.everybody_android.viewmodel.AlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

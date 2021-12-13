@@ -1,12 +1,12 @@
-package com.example.everybody_android.ui.dialog.service
+package com.def.everybody_android.ui.dialog.service
 
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseDialogFragment
-import com.example.everybody_android.databinding.DialogServiceNotBinding
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseDialogFragment
+import com.def.everybody_android.databinding.DialogServiceNotBinding
 
-class ServiceDialog() : BaseDialogFragment<DialogServiceNotBinding, ServiceViewModel>() {
+class ServiceDialog : BaseDialogFragment<DialogServiceNotBinding, ServiceViewModel>() {
     override val viewModel: ServiceViewModel by viewModels()
     override val layoutId: Int = R.layout.dialog_service_not
     override fun onStart() {

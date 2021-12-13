@@ -10,12 +10,21 @@ plugins {
 android {
     compileSdk 31
 
+    signingConfigs {
+        key {
+            storeFile file('..\\key.jks')
+            storePassword 'everybody1'
+            keyAlias = 'EveryBody'
+            keyPassword 'everybody1'
+        }
+    }
+
     defaultConfig {
-        applicationId "com.example.everybody_android"
+        applicationId "com.def.everybody_android"
         minSdk 21
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "0.9.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -24,10 +33,12 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.key
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.key
         }
     }
     compileOptions {

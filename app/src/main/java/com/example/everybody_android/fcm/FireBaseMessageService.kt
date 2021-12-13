@@ -1,4 +1,4 @@
-package com.example.everybody_android.fcm
+package com.def.everybody_android.fcm
 
 import com.google.firebase.messaging.FirebaseMessagingService
 

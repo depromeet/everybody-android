@@ -1,15 +1,15 @@
-package com.example.everybody_android.ui.picture
+package com.def.everybody_android.ui.picture
 
 import android.Manifest
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.databinding.ActivityPictureBinding
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.ui.dialog.loading.LoadingDialog
-import com.example.everybody_android.ui.picture.folder.FolderChoiceFragment
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.databinding.ActivityPictureBinding
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.ui.dialog.loading.LoadingDialog
+import com.def.everybody_android.ui.picture.folder.FolderChoiceFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

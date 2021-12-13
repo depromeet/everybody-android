@@ -1,9 +1,9 @@
-package com.example.everybody_android.ui.dialog.loading
+package com.def.everybody_android.ui.dialog.loading
 
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseDialogFragment
-import com.example.everybody_android.databinding.DialogLoadingBinding
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseDialogFragment
+import com.def.everybody_android.databinding.DialogLoadingBinding
 
 class LoadingDialog :
     BaseDialogFragment<DialogLoadingBinding, LoadingViewModel>() {

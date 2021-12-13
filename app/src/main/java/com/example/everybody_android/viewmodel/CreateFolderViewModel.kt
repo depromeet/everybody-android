@@ -1,10 +1,10 @@
-package com.example.everybody_android.viewmodel
+package com.def.everybody_android.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.example.everybody_android.api.AlbumRepo
-import com.example.everybody_android.base.BaseViewModel
-import com.example.everybody_android.base.MutableEventFlow
-import com.example.everybody_android.base.asEventFlow
+import com.def.everybody_android.api.AlbumRepo
+import com.def.everybody_android.base.BaseViewModel
+import com.def.everybody_android.base.MutableEventFlow
+import com.def.everybody_android.base.asEventFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

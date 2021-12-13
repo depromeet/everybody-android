@@ -1,4 +1,4 @@
-package com.example.everybody_android
+package com.def.everybody_android
 
 import android.content.Context
 import android.graphics.Typeface

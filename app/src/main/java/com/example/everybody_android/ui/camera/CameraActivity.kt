@@ -1,4 +1,4 @@
-package com.example.everybody_android.ui.camera
+package com.def.everybody_android.ui.camera
 
 import android.Manifest
 import android.app.Activity
@@ -31,14 +31,15 @@ import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.everybody_android.*
-import com.example.everybody_android.R
-import com.example.everybody_android.adapter.RecyclerItem
-import com.example.everybody_android.adapter.RecyclerViewAdapter
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.databinding.ActivityCameraBinding
-import com.example.everybody_android.ui.picture.PictureActivity
-import com.example.everybody_android.viewmodel.ContentUriUtil
+import com.def.everybody_android.*
+import com.def.everybody_android.R
+import com.def.everybody_android.adapter.RecyclerItem
+import com.def.everybody_android.adapter.RecyclerViewAdapter
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.databinding.ActivityCameraBinding
+import com.def.everybody_android.pref.LocalStorage
+import com.def.everybody_android.ui.picture.PictureActivity
+import com.def.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.File
@@ -46,6 +47,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
@@ -59,6 +61,9 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
     private val displayManager by lazy {
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
+
+    @Inject
+    lateinit var localStorage: LocalStorage
     private lateinit var cameraExecutor: ExecutorService
     private val displayListener = object : DisplayManager.DisplayListener {
         override fun onDisplayAdded(displayId: Int) = Unit
@@ -204,7 +209,11 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
 
     private fun clickShutter() {
         imageCapture?.let { imageCapture ->
-            val photoFile = createFile(getOutputDirectory(), FILENAME, PHOTO_EXTENSION)
+            val photoFile = createFile(
+                if (localStorage.isAppStorage()) cacheDir else getOutputDirectory(),
+                FILENAME,
+                PHOTO_EXTENSION
+            )
             val metadata = ImageCapture.Metadata().apply {
                 isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
             }
@@ -235,10 +244,12 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                             this@CameraActivity,
                             arrayOf(savedUri.toFile().absolutePath),
                             arrayOf(mimeType)
-                        ) { _, uri ->
-                            val fileUri =
-                                ContentUriUtil.getFilePath(this@CameraActivity, uri).toString()
-
+                        ) { path, uri ->
+                            val fileUri = if (uri != null) ContentUriUtil.getFilePath(
+                                this@CameraActivity,
+                                uri
+                            ).toString()
+                            else path
                             startActivity(
                                 Intent(
                                     this@CameraActivity,

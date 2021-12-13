@@ -1,12 +1,12 @@
-package com.example.everybody_android.ui.picture
+package com.def.everybody_android.ui.picture
 
 import androidx.core.net.toUri
 import androidx.lifecycle.viewModelScope
-import com.example.everybody_android.api.PictureRepo
-import com.example.everybody_android.base.BaseViewModel
-import com.example.everybody_android.base.MutableEventFlow
-import com.example.everybody_android.base.asEventFlow
-import com.example.everybody_android.prepareFilePart
+import com.def.everybody_android.api.PictureRepo
+import com.def.everybody_android.base.BaseViewModel
+import com.def.everybody_android.base.MutableEventFlow
+import com.def.everybody_android.base.asEventFlow
+import com.def.everybody_android.prepareFilePart
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody.Companion.toRequestBody

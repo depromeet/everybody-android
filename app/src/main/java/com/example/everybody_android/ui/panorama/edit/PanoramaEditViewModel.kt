@@ -1,12 +1,12 @@
-package com.example.everybody_android.ui.panorama.edit
+package com.def.everybody_android.ui.panorama.edit
 
 import androidx.lifecycle.viewModelScope
-import com.example.everybody_android.api.AlbumRepo
-import com.example.everybody_android.api.PictureRepo
-import com.example.everybody_android.base.BaseViewModel
-import com.example.everybody_android.base.MutableEventFlow
-import com.example.everybody_android.base.asEventFlow
-import com.example.everybody_android.data.response.AlbumResponse
+import com.def.everybody_android.api.AlbumRepo
+import com.def.everybody_android.api.PictureRepo
+import com.def.everybody_android.base.BaseViewModel
+import com.def.everybody_android.base.MutableEventFlow
+import com.def.everybody_android.base.asEventFlow
+import com.def.everybody_android.data.response.AlbumResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

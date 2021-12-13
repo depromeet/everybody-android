@@ -1,7 +1,7 @@
-package com.example.everybody_android.data.response
+package com.def.everybody_android.data.response
 
 
-import com.example.everybody_android.data.response.base.Picture
+import com.def.everybody_android.data.response.base.Picture
 import com.google.gson.annotations.SerializedName
 
 data class AlbumResponse(
@@ -16,7 +16,9 @@ data class AlbumResponse(
     @SerializedName("description")
     val description: String? = null, // 1일 간의 기록
     @SerializedName("pictures")
-    val pictures: Pictures? = null
+    val pictures: Pictures? = null,
+    @SerializedName("latest_part")
+    val latestPart: String? = null
 ) {
     data class Pictures(
         @SerializedName("lower")

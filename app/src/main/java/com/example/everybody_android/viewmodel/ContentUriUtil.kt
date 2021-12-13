@@ -1,4 +1,4 @@
-package com.example.everybody_android.viewmodel
+package com.def.everybody_android.viewmodel
 
 import android.content.ContentUris
 import android.content.Context

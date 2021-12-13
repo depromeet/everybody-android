@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.example.everybody_android.ui.dialog.folder.FolderAddViewModel.Event" />
+        <import type="com.def.everybody_android.ui.dialog.folder.FolderAddViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.example.everybody_android.ui.dialog.folder.FolderAddViewModel" />
+            type="com.def.everybody_android.ui.dialog.folder.FolderAddViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

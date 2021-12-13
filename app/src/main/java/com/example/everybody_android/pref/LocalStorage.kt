@@ -1,4 +1,4 @@
-package com.example.everybody_android.pref
+package com.def.everybody_android.pref
 
 interface LocalStorage {
 
@@ -13,4 +13,8 @@ interface LocalStorage {
     fun getUserId(): Int
 
     fun saveUserId(id: Int)
+
+    fun isAppStorage(): Boolean
+
+    fun setAppStorage(isStorage: Boolean)
 }

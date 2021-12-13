@@ -1,4 +1,4 @@
-package com.example.everybody_android.base
+package com.def.everybody_android.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

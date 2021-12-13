@@ -1,14 +1,14 @@
-package com.example.everybody_android.ui
+package com.def.everybody_android.ui
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.Toast
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.databinding.ActivityCreateFolderBinding
-import com.example.everybody_android.viewmodel.CreateFolderViewModel
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.databinding.ActivityCreateFolderBinding
+import com.def.everybody_android.viewmodel.CreateFolderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

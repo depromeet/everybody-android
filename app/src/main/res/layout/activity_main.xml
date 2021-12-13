@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.example.everybody_android.viewmodel.MainViewModel" />
+            type="com.def.everybody_android.viewmodel.MainViewModel" />
 
         <variable
             name="view"

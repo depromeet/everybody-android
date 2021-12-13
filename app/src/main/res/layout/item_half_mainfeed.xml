@@ -7,7 +7,7 @@
 
         <variable
             name="repo"
-            type="com.example.everybody_android.dto.response.MainFeedResponse" />
+            type="com.def.everybody_android.dto.response.MainFeedResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

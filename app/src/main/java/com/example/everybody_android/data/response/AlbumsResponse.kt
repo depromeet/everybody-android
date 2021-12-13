@@ -1,7 +1,7 @@
-package com.example.everybody_android.data.response
+package com.def.everybody_android.data.response
 
 
-import com.example.everybody_android.data.response.base.Picture
+import com.def.everybody_android.data.response.base.Picture
 import com.google.gson.annotations.SerializedName
 
 class AlbumsResponse : ArrayList<AlbumsResponse.Album>() {
@@ -15,7 +15,11 @@ class AlbumsResponse : ArrayList<AlbumsResponse.Album>() {
         @SerializedName("pictures")
         val pictures: Pictures,
         @SerializedName("description")
-        val description: String? = null // 11일 간의 기록
+        val description: String? = null, // 11일 간의 기록
+        @SerializedName("thumbnail_url")
+        val thumbnailUrl: String? = null,
+        @SerializedName("latest_part")
+        val latestPart: String? = null
     ) {
         data class Pictures(
             @SerializedName("upper")

@@ -1,20 +1,22 @@
-package com.example.everybody_android.ui.picture
+package com.def.everybody_android.ui.picture
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.media.ExifInterface
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.example.everybody_android.*
-import com.example.everybody_android.base.BaseFragment
-import com.example.everybody_android.databinding.FragmentPictureBinding
-import com.example.everybody_android.ui.camera.CameraActivity
+import com.def.everybody_android.*
+import com.def.everybody_android.base.BaseFragment
+import com.def.everybody_android.databinding.FragmentPictureBinding
+import com.def.everybody_android.pref.LocalStorage
+import com.def.everybody_android.ui.camera.CameraActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PictureFragment(private val image: String, private val isAlbum: Boolean) :
@@ -26,6 +28,9 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     private val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "KR"))
     private val dateTextFormat = SimpleDateFormat("yyyy MMM dd kk:mm", Locale("en", "KR"))
     private var part = "whole"
+
+    @Inject
+    lateinit var localStorage: LocalStorage
 
     private fun initSetting() {
         setPictureTime()
@@ -141,10 +146,9 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         if (!isAlbum) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
             filePath = image
-        }
-        else {
+        } else {
             val photoFile = CameraActivity.createFile(
-                requireContext().getOutputDirectory(),
+                if (localStorage.isAppStorage()) requireContext().cacheDir else requireContext().getOutputDirectory(),
                 CameraActivity.FILENAME,
                 CameraActivity.PHOTO_EXTENSION
             )

@@ -1,6 +1,6 @@
-package com.example.everybody_android.ui.dialog.loading
+package com.def.everybody_android.ui.dialog.loading
 
-import com.example.everybody_android.base.BaseViewModel
+import com.def.everybody_android.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,11 +1,11 @@
-package com.example.everybody_android.ui.dialog.folder
+package com.def.everybody_android.ui.dialog.folder
 
 import androidx.lifecycle.viewModelScope
-import com.example.everybody_android.api.AlbumRepo
-import com.example.everybody_android.base.BaseViewModel
-import com.example.everybody_android.base.MutableEventFlow
-import com.example.everybody_android.base.asEventFlow
-import com.example.everybody_android.data.response.AlbumsResponse
+import com.def.everybody_android.api.AlbumRepo
+import com.def.everybody_android.base.BaseViewModel
+import com.def.everybody_android.base.MutableEventFlow
+import com.def.everybody_android.base.asEventFlow
+import com.def.everybody_android.data.response.AlbumsResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

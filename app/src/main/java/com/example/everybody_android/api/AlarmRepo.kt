@@ -1,7 +1,7 @@
-package com.example.everybody_android.api
+package com.def.everybody_android.api
 
-import com.example.everybody_android.di.ApiModule
-import com.example.everybody_android.dto.AlarmData
+import com.def.everybody_android.di.ApiModule
+import com.def.everybody_android.dto.AlarmData
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT

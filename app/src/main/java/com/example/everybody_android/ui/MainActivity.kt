@@ -1,4 +1,4 @@
-package com.example.everybody_android.ui
+package com.def.everybody_android.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,18 +8,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.everybody_android.R
-import com.example.everybody_android.base.BaseActivity
-import com.example.everybody_android.databinding.ActivityMainBinding
-import com.example.everybody_android.di.HiltApplication.Companion.userData
-import com.example.everybody_android.dto.UserData
-import com.example.everybody_android.dto.request.SignInRequest
-import com.example.everybody_android.dto.request.SignUpRequest
-import com.example.everybody_android.pref.LocalStorage
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.ui.camera.CameraActivity
-import com.example.everybody_android.ui.panorama.PanoramaActivity
-import com.example.everybody_android.viewmodel.MainViewModel
+import com.def.everybody_android.R
+import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.databinding.ActivityMainBinding
+import com.def.everybody_android.di.HiltApplication.Companion.userData
+import com.def.everybody_android.dto.UserData
+import com.def.everybody_android.dto.request.SignInRequest
+import com.def.everybody_android.dto.request.SignUpRequest
+import com.def.everybody_android.pref.LocalStorage
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.ui.camera.CameraActivity
+import com.def.everybody_android.ui.panorama.PanoramaActivity
+import com.def.everybody_android.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

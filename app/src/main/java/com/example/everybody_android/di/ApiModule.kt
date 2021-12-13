@@ -1,10 +1,10 @@
-package com.example.everybody_android.di
+package com.def.everybody_android.di
 
-import com.example.everybody_android.api.AlarmRepo
-import com.example.everybody_android.api.AlbumRepo.AlbumApi
-import com.example.everybody_android.api.PictureRepo
-import com.example.everybody_android.api.SignRepo
-import com.example.everybody_android.api.UserRepo
+import com.def.everybody_android.api.AlarmRepo
+import com.def.everybody_android.api.AlbumRepo.AlbumApi
+import com.def.everybody_android.api.PictureRepo
+import com.def.everybody_android.api.SignRepo
+import com.def.everybody_android.api.UserRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

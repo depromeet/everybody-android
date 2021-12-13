@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.example.everybody_android.ui.picture.PictureFragmentViewModel.ClickEvent" />
+        <import type="com.def.everybody_android.ui.picture.PictureFragmentViewModel.ClickEvent" />
 
         <variable
             name="vm"
-            type="com.example.everybody_android.ui.picture.PictureFragmentViewModel" />
+            type="com.def.everybody_android.ui.picture.PictureFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

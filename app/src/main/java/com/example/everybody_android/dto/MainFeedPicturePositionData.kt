@@ -1,4 +1,4 @@
-package com.example.everybody_android.dto
+package com.def.everybody_android.dto
 
 data class MainFeedPicturePositionData(
     val lower : List<MainFeedPictureData>?,

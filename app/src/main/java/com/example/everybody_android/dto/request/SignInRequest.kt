@@ -1,4 +1,4 @@
-package com.example.everybody_android.dto.request
+package com.def.everybody_android.dto.request
 
 import com.google.gson.annotations.SerializedName
 

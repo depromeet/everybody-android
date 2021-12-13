@@ -1,6 +1,6 @@
-package com.example.everybody_android.dto.response
+package com.def.everybody_android.dto.response
 
-import com.example.everybody_android.dto.MainFeedPicturePositionData
+import com.def.everybody_android.dto.MainFeedPicturePositionData
 import com.google.gson.annotations.SerializedName
 
 data class MainFeedResponse(

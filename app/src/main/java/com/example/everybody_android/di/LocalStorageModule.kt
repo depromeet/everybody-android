@@ -1,8 +1,8 @@
-package com.example.everybody_android.di
+package com.def.everybody_android.di
 
 import android.content.Context
-import com.example.everybody_android.pref.LocalStorage
-import com.example.everybody_android.pref.SharedPrefStorage
+import com.def.everybody_android.pref.LocalStorage
+import com.def.everybody_android.pref.SharedPrefStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

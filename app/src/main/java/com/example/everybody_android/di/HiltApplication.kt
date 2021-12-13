@@ -1,7 +1,7 @@
-package com.example.everybody_android.di
+package com.def.everybody_android.di
 
 import android.app.Application
-import com.example.everybody_android.dto.UserData
+import com.def.everybody_android.dto.UserData
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

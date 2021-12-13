@@ -5,7 +5,7 @@
 
         <variable
             name="data"
-            type="com.example.everybody_android.ui.panorama.PanoramaViewPagerAdapter.Item" />
+            type="com.def.everybody_android.ui.panorama.PanoramaViewPagerAdapter.Item" />
     </data>
 
 

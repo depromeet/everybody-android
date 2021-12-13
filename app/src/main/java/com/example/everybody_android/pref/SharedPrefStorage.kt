@@ -1,4 +1,4 @@
-package com.example.everybody_android.pref
+package com.def.everybody_android.pref
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,6 +8,7 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     private val fcmTokenKey = "FcmToken"
     private val devicePrimaryKey = "DeviceToken"
     private val userId = "UserId"
+    private val storage = "Storage"
 
 
     override fun saveFcmToken(token: String) =
@@ -32,6 +33,15 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     override fun saveUserId(id: Int) {
         getPref(context).edit().let {
             it.putInt(userId, id)
+            it.apply()
+        }
+    }
+
+    override fun isAppStorage(): Boolean = getPref(context).getBoolean(storage, false)
+
+    override fun setAppStorage(isStorage: Boolean) {
+        getPref(context).edit().let {
+            it.putBoolean(storage, isStorage)
             it.apply()
         }
     }

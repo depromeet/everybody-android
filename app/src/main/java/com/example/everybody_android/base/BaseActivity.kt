@@ -1,4 +1,4 @@
-package com.example.everybody_android.base
+package com.def.everybody_android.base
 
 import android.os.Bundle
 import android.widget.Toast
@@ -6,9 +6,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.everybody_android.BR
-import com.example.everybody_android.repeatOnStarted
-import com.example.everybody_android.toast
+import com.def.everybody_android.BR
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.toast
 import kotlinx.coroutines.flow.collect
 
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {

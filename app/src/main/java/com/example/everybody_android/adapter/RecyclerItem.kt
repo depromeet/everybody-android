@@ -1,4 +1,4 @@
-package com.example.everybody_android.adapter
+package com.def.everybody_android.adapter
 
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
