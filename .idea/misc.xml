@@ -36,6 +36,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_28.xml" value="0.565625" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_strok_2.xml" value="0.5697916666666667" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_stroke_2.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_8.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_right_radius_5.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_title_edit.xml" value="0.5697916666666667" />
@@ -69,7 +70,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_camera.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_grid.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_grid_edit.xml" value="0.5536458333333333" />
-        <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_list.xml" value="0.5470809792843692" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_list.xml" value="0.4714285714285714" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_tab.xml" value="1.0" />
         <entry key="..\:/work/everybody-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.5697916666666667" />

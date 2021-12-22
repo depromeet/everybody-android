@@ -144,28 +144,29 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@id/tab_panorama"
+            app:layout_constraintBottom_toTopOf="@id/recycler_panorama"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tw_whole" />
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tab_panorama"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_panorama"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:pstsIndicatorHeight="0dp"
-            app:pstsPaddingMiddle="true"
-            app:pstsScrollOffset="60dp" />
+            tools:listitem="@layout/item_panorama_tab" />
+
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_panorama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="tab_panorama,vp_panorama" />
+            app:constraint_referenced_ids="recycler_panorama,vp_panorama" />
 
         <TextView
             android:id="@+id/tw_empty"

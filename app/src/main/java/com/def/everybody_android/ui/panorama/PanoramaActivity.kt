@@ -1,29 +1,28 @@
 package com.def.everybody_android.ui.panorama
 
+import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.ImageView
-import android.widget.TextView
+import android.graphics.Point
+import android.graphics.drawable.Drawable
+import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.core.view.get
 import androidx.core.view.isVisible
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.*
+import androidx.viewpager.widget.ViewPager
 import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityPanoramaBinding
-import com.def.everybody_android.databinding.ItemPanoramaTabBinding
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.service.ServiceDialog
 import com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity
-import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+
 
 @AndroidEntryPoint
 class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel>() {
@@ -34,6 +33,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val lower = mutableListOf<Picture>()
     private var id: String = ""
     private lateinit var gridAdapter: RecyclerViewAdapter
+    private lateinit var panoramaAdapter: RecyclerViewAdapter
 
     override fun onResume() {
         super.onResume()
@@ -45,9 +45,11 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     override fun init() {
         super.init()
         gridAdapter = RecyclerViewAdapter { }
+        panoramaAdapter = RecyclerViewAdapter { }
         binding.recyclerGrid.addItemDecoration(PanoramaItemDecoration())
         binding.recyclerGrid.adapter = gridAdapter
         viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
+        settingPanorama()
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
@@ -61,7 +63,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             upper.addAll(list.upper.orEmpty())
                             lower.addAll(list.lower.orEmpty())
                         }
-                        when(data.latestPart){
+                        when (data.latestPart) {
                             "whole" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
                             "upper" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(2))
                             "lower" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(3))
@@ -135,6 +137,74 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
         }
     }
 
+    private fun settingPanorama() {
+        binding.recyclerPanorama.adapter = panoramaAdapter
+        binding.recyclerPanorama.addItemDecoration(OffsetItemDecoration(this))
+        binding.recyclerPanorama.itemAnimator?.apply {
+            (this as SimpleItemAnimator).supportsChangeAnimations = false
+        }
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.recyclerPanorama)
+        binding.recyclerPanorama.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            var currentPosition = RecyclerView.NO_POSITION
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (recyclerView.layoutManager != null) {
+                    val view = snapHelper.findSnapView(recyclerView.layoutManager)!!
+                    val position = recyclerView.layoutManager!!.getPosition(view)
+                    if (currentPosition != position) {
+                        currentPosition = position
+                        val index =
+                            panoramaAdapter.getItems().indexOfFirst { (it.data as Item).isEnable }
+                        if (index > -1) {
+                            val item = panoramaAdapter.getItems()[index]
+                            panoramaAdapter.changeItem(
+                                item.copy(
+                                    data = (item.data as Item).copy(
+                                        isEnable = false
+                                    )
+                                ), index
+                            )
+                        }
+                        val item = panoramaAdapter.getItems()[position]
+                        panoramaAdapter.changeItem(
+                            item.copy(
+                                data = (item.data as Item).copy(
+                                    isEnable = true
+                                )
+                            ), position
+                        )
+                        binding.vpPanorama.currentItem = position
+                    }
+                }
+            }
+        })
+        binding.vpPanorama.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+//                (binding.recyclerPanorama.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position,(screenWidth/2)+convertDpToPx(7))
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+
+        })
+    }
+
+    private val screenWidth: Int
+        get() {
+            val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display = wm.defaultDisplay
+            val size = Point()
+            display.getSize(size)
+            return size.x
+        }
+
     private fun recyclerSetting(data: List<Picture>) {
         binding.groupEmpty.isVisible = data.isEmpty()
         gridAdapter.setItems(data.map {
@@ -150,7 +220,22 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private fun viewPagerSetting(data: List<Picture>) {
         binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(data) }
         binding.vpPanorama.offscreenPageLimit = data.size
-        binding.tabPanorama.setViewPager(binding.vpPanorama)
+        panoramaAdapter.setItems(data.mapIndexed { index, picture ->
+            RecyclerItem(
+                Item(
+                    picture.imageUrl ?: "",
+                    this.getDrawable(R.drawable.test_feed)!!,
+                    index == 0,
+                    (index + 1).toString()
+                ), R.layout.item_panorama_tab, BR.data
+            )
+        })
     }
 
+    data class Item(
+        val imageUrl: String,
+        val holder: Drawable,
+        val isEnable: Boolean,
+        val count: String
+    )
 }

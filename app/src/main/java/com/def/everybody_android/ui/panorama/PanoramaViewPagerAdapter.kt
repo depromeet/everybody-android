@@ -19,7 +19,7 @@ import com.def.everybody_android.databinding.ItemPanoramaListBinding
 import com.def.everybody_android.databinding.ItemPanoramaTabBinding
 import com.def.everybody_android.imageLoad
 
-class PanoramaViewPagerAdapter : PagerAdapter(), PagerSlidingTabStrip.CustomTabProvider {
+class PanoramaViewPagerAdapter : PagerAdapter(){
 
     private val items = mutableListOf<Picture>()
     private val layout = mutableListOf<ItemPanoramaListBinding>()
@@ -59,38 +59,6 @@ class PanoramaViewPagerAdapter : PagerAdapter(), PagerSlidingTabStrip.CustomTabP
         items.clear()
         items.addAll(item)
         notifyDataSetChanged()
-    }
-
-    override fun getCustomTabView(parent: ViewGroup?, position: Int): View {
-        return parent?.let {
-            val bind = ItemPanoramaTabBinding.inflate(LayoutInflater.from(it.context))
-            val picture = items[position]
-            bind.imgTab.imageLoad(
-                picture.imageUrl ?: "",
-                RequestOptions().transform(
-                    CenterCrop(),
-                    RoundedCorners(it.context.convertDpToPx(4))
-                ).diskCacheStrategy(DiskCacheStrategy.ALL)
-            )
-            bind.twCount.text = (position + 1).toString()
-            bind.imgTab.isSelected = position == 0
-            bind.twCount.isSelected = position == 0
-            bind.root
-        } ?: return View(parent?.context)
-    }
-
-    override fun tabSelected(tab: View?) {
-        val imgTab = tab?.findViewById<ImageView>(R.id.img_tab)
-        val twCount = tab?.findViewById<TextView>(R.id.tw_count)
-        imgTab?.isSelected = true
-        twCount?.isSelected = true
-    }
-
-    override fun tabUnselected(tab: View?) {
-        val imgTab = tab?.findViewById<ImageView>(R.id.img_tab)
-        val twCount = tab?.findViewById<TextView>(R.id.tw_count)
-        imgTab?.isSelected = false
-        twCount?.isSelected = false
     }
 
 }
