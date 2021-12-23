@@ -138,6 +138,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     }
 
     private fun settingPanorama() {
+        var currentPosition = RecyclerView.NO_POSITION
         binding.recyclerPanorama.adapter = panoramaAdapter
         binding.recyclerPanorama.addItemDecoration(OffsetItemDecoration(this))
         binding.recyclerPanorama.itemAnimator?.apply {
@@ -145,14 +146,55 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
         }
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.recyclerPanorama)
-        binding.recyclerPanorama.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            var currentPosition = RecyclerView.NO_POSITION
+        val vpListener = object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                (binding.recyclerPanorama.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                    position,
+                    (screenWidth / 2) + convertDpToPx(12)
+                )
+                if (currentPosition != position) {
+                    currentPosition = position
+                    val index =
+                        panoramaAdapter.getItems().indexOfFirst { (it.data as Item).isEnable }
+                    if (index > -1) {
+                        val item = panoramaAdapter.getItems()[index]
+                        panoramaAdapter.changeItem(
+                            item.copy(
+                                data = (item.data as Item).copy(
+                                    isEnable = false
+                                )
+                            ), index
+                        )
+                    }
+                    val item = panoramaAdapter.getItems()[position]
+                    panoramaAdapter.changeItem(
+                        item.copy(
+                            data = (item.data as Item).copy(
+                                isEnable = true
+                            )
+                        ), position
+                    )
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+
+        }
+        val recyclerListener = object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (recyclerView.layoutManager != null) {
                     val view = snapHelper.findSnapView(recyclerView.layoutManager)!!
                     val position = recyclerView.layoutManager!!.getPosition(view)
                     if (currentPosition != position) {
+                        binding.vpPanorama.removeOnPageChangeListener(vpListener)
                         currentPosition = position
                         val index =
                             panoramaAdapter.getItems().indexOfFirst { (it.data as Item).isEnable }
@@ -174,26 +216,14 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                                 )
                             ), position
                         )
-                        binding.vpPanorama.currentItem = position
+                        binding.vpPanorama.setCurrentItem(position, false)
+                        binding.vpPanorama.addOnPageChangeListener(vpListener)
                     }
                 }
             }
-        })
-        binding.vpPanorama.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-//                (binding.recyclerPanorama.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position,(screenWidth/2)+convertDpToPx(7))
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {}
-
-        })
+        }
+        binding.recyclerPanorama.addOnScrollListener(recyclerListener)
+        binding.vpPanorama.addOnPageChangeListener(vpListener)
     }
 
     private val screenWidth: Int
