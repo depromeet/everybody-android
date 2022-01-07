@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.def.everybody_android.ui.panorama.PanoramaActivity.Item" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="52dp"
+        android:layout_height="90dp">
+
+        <ImageView
+            android:id="@+id/img_del"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:background="@drawable/seletor_oval_day"
+            android:backgroundTint="@color/purple_op50"
+            android:padding="5dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageView
+            imageUrl="@{data.imageUrl}"
+            placeholder="@{data.holder}"
+            android:layout_width="48dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rectangle_radius_4_stroke_2"
+            android:padding="2dp"
+            app:layout_constraintBottom_toTopOf="@id/tw_count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/img_del"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/tw_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:enabled="@{data.enable}"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{data.count}"
+            android:textColor="@color/gray_10"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="17장 중 5번" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

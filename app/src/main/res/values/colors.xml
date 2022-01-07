@@ -20,6 +20,7 @@
     <color name="gray_80">#353A3F</color>
     <color name="gray_90">#222529</color>
     <color name="purple">#7448FF</color>
+    <color name="purple_op90">#E67448FF</color>
     <color name="purple_op80">#CC7448FF</color>
     <color name="purple_op50">#807448FF</color>
     <color name="purple_op70">#B37448FF</color>

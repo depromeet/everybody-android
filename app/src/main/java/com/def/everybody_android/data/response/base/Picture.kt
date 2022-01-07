@@ -1,5 +1,7 @@
 package com.def.everybody_android.data.response.base
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class Picture(
@@ -25,4 +27,47 @@ data class Picture(
     val takenAtDay: Int? = null, // 1
     @SerializedName("created_at")
     val createdAt: String? = null // 2021-11-02T14:12:18+09:00
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id)
+        parcel.writeValue(albumId)
+        parcel.writeString(bodyPart)
+        parcel.writeString(thumbnailUrl)
+        parcel.writeString(previewUrl)
+        parcel.writeString(imageUrl)
+        parcel.writeString(key)
+        parcel.writeValue(takenAtYear)
+        parcel.writeValue(takenAtMonth)
+        parcel.writeValue(takenAtDay)
+        parcel.writeString(createdAt)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Picture> {
+        override fun createFromParcel(parcel: Parcel): Picture {
+            return Picture(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Picture?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
