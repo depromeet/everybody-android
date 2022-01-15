@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.panorama.PanoramaViewModel.Event" />
+        <import type="com.def.everybody_android.ui.panorama.download.DownloadViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.def.everybody_android.ui.panorama.PanoramaViewModel" />
+            type="com.def.everybody_android.ui.panorama.download.DownloadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +43,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="사진 촬영" />
+
+        <ImageView
+            android:id="@+id/img_downolad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{()->vm.onClickEvent(Event.Download.INSTANCE)}"
+            android:src="@drawable/ic_share"
+            app:layout_constraintBottom_toBottomOf="@id/tw_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_panorama"

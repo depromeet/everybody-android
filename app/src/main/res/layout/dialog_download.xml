@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.def.everybody_android.ui.panorama.download.loading.DownloadViewModel.Event" />
+
+        <variable
+            name="vm"
+            type="com.def.everybody_android.ui.panorama.download.loading.DownloadViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_radius_4"
+        android:backgroundTint="@color/white"
+        android:paddingTop="0dp"
+        android:paddingBottom="32dp">
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="55dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="비디오 저장 완료!" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="true" />
+
+        <ImageView
+            android:id="@+id/img_complete"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/seletor_oval_day"
+            android:backgroundTint="@color/purple"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_folder_check"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/animation_view"
+            app:layout_constraintEnd_toEndOf="@id/animation_view"
+            app:layout_constraintStart_toStartOf="@id/animation_view"
+            app:layout_constraintTop_toTopOf="@id/animation_view" />
+
+        <TextView
+            android:id="@+id/tw_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="55dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="@string/str_download"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/animation_view" />
+
+        <TextView
+            android:id="@+id/tw_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onClickEvent(Event.Confirm.INSTANCE)}"
+            android:text="@string/str_cancel"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

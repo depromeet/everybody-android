@@ -5,10 +5,10 @@ import com.def.everybody_android.data.response.AlbumsResponse
 import com.def.everybody_android.di.ApiModule
 import com.def.everybody_android.dto.response.CreateAlbumResponse
 import com.def.everybody_android.dto.response.MainFeedResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.http.*
 
 class AlbumRepo {
 
@@ -26,7 +26,11 @@ class AlbumRepo {
         suspend fun getMainFeed(): List<MainFeedResponse>
 
         @POST("/albums")
-        suspend fun createAlbums(@Body name: Map<String, String>) : CreateAlbumResponse
+        suspend fun createAlbums(@Body name: Map<String, String>): CreateAlbumResponse
+
+        @Streaming
+        @POST("/videos/download")
+        suspend fun downloadAlbums(@Body map: HashMap<String, Any>): Response<ResponseBody>
     }
 
     companion object {
@@ -39,11 +43,14 @@ class AlbumRepo {
         suspend fun createAlbum(map: Map<String, String>): AlbumsResponse.Album =
             ApiModule.provideApiAlbum().createAlbum(map)
 
-        suspend fun getMainFeed() : List<MainFeedResponse> =
+        suspend fun getMainFeed(): List<MainFeedResponse> =
             ApiModule.provideApiAlbum().getMainFeed()
 
-        suspend fun createAlbums(name : Map<String, String>) : CreateAlbumResponse =
+        suspend fun createAlbums(name: Map<String, String>): CreateAlbumResponse =
             ApiModule.provideApiAlbum().createAlbums(name)
+
+        suspend fun downloadAlbums(map: HashMap<String, Any>): Response<ResponseBody> =
+            ApiModule.provideApiAlbum().downloadAlbums(map)
     }
 
 }

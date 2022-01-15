@@ -19,6 +19,7 @@ import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityPanoramaBinding
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.service.ServiceDialog
+import com.def.everybody_android.ui.panorama.download.DownloadActivity
 import com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -128,10 +129,20 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         viewPagerSetting(list)
                         recyclerSetting(list)
                     }
-                    PanoramaViewModel.Event.Share -> ServiceDialog().show(
-                        supportFragmentManager,
-                        ""
-                    )
+                    PanoramaViewModel.Event.Share -> {
+                        val img = when {
+                            binding.twWhole.isSelected -> whole
+                            binding.twUpper.isSelected -> upper
+                            else -> lower
+                        }
+                        if (img.isEmpty()) {
+                            toast("비어있는 사진첩입니다.")
+                            return@collect
+                        }
+                        startActivity(Intent(this@PanoramaActivity, DownloadActivity::class.java).apply {
+                            putExtra("image", img.toTypedArray())
+                        })
+                    }
                 }
             }
         }
@@ -191,7 +202,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (recyclerView.layoutManager != null) {
-                    val view = snapHelper.findSnapView(recyclerView.layoutManager)!!
+                    val view = snapHelper.findSnapView(recyclerView.layoutManager) ?: return
                     val position = recyclerView.layoutManager!!.getPosition(view)
                     if (currentPosition != position) {
                         binding.vpPanorama.removeOnPageChangeListener(vpListener)
@@ -200,22 +211,26 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             panoramaAdapter.getItems().indexOfFirst { (it.data as Item).isEnable }
                         if (index > -1) {
                             val item = panoramaAdapter.getItems()[index]
+                            recyclerView.post {
+                                panoramaAdapter.changeItem(
+                                    item.copy(
+                                        data = (item.data as Item).copy(
+                                            isEnable = false
+                                        )
+                                    ), index
+                                )
+                            }
+                        }
+                        val item = panoramaAdapter.getItems()[position]
+                        recyclerView.post {
                             panoramaAdapter.changeItem(
                                 item.copy(
                                     data = (item.data as Item).copy(
-                                        isEnable = false
+                                        isEnable = true
                                     )
-                                ), index
+                                ), position
                             )
                         }
-                        val item = panoramaAdapter.getItems()[position]
-                        panoramaAdapter.changeItem(
-                            item.copy(
-                                data = (item.data as Item).copy(
-                                    isEnable = true
-                                )
-                            ), position
-                        )
                         binding.vpPanorama.setCurrentItem(position, false)
                         binding.vpPanorama.addOnPageChangeListener(vpListener)
                     }

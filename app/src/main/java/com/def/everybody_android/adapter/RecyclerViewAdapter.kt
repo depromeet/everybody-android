@@ -37,7 +37,7 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         getItem(position).bind(holder.binding)
         holder.binding.executePendingBindings()
     }
-    
+
     @SuppressLint("NotifyDataSetChanged")
     fun clearData() {
         this.items.clear()
@@ -62,6 +62,14 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         notifyDataSetChanged()
     }
 
+    fun deleteItem(item: RecyclerItem) {
+        val index = items.indexOf(item)
+        if (index > -1) {
+            items[index] = item
+            notifyItemChanged(index)
+        }
+    }
+
     fun changeItem(item: RecyclerItem, position: Int) {
         items[position] = item
         notifyItemChanged(position)
@@ -72,8 +80,8 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         notifyItemInserted(items.size)
     }
 
-    fun addItem(position: Int,item: RecyclerItem) {
-        items.add(position,item)
+    fun addItem(position: Int, item: RecyclerItem) {
+        items.add(position, item)
         notifyItemInserted(items.size)
     }
 

@@ -38,10 +38,12 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_strok_2.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_stroke_2.xml" value="0.5697916666666667" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_stroke_2_black.xml" value="0.26927083333333335" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_8.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_right_radius_5.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_title_edit.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/selector_alarm.xml" value="0.5697916666666667" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/selector_download_tab.xml" value="0.26927083333333335" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/selector_grid.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/selector_panorama_list.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/sh.xml" value="0.5697916666666667" />
@@ -55,6 +57,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_picture.xml" value="0.2" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_splash.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_delete.xml" value="0.5536458333333333" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_download.xml" value="0.4221105527638191" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_add.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_loading.xml" value="0.2578125" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_loding.xml" value="0.32760416666666664" />
