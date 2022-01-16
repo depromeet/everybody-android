@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.dialog.folder.FolderAddViewModel.Event" />
+        <import type="com.def.everybody_android.ui.dialog.album.edit.FolderEditViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.def.everybody_android.ui.dialog.folder.FolderAddViewModel" />
+            type="com.def.everybody_android.ui.dialog.album.edit.FolderEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="폴더명을 입력해주세요."
+            android:text="앨범 이름을 수정해주세요."
             android:textColor="@color/gray_90"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

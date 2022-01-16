@@ -40,6 +40,7 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
         if (!intent.hasExtra("image")) return finish()
         imageList.addAll(intent.getParcelableArrayExtra("image")?.map { it as Picture }.orEmpty())
         if (imageList.isEmpty()) return finish()
+        binding.twTitle.text = intent.getStringExtra("title")
         adapter = RecyclerViewAdapter { }
         binding.recyclerPanorama.adapter = adapter
         adapter.setItems(imageList.mapIndexed { index, picture ->

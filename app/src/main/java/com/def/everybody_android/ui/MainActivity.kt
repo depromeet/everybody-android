@@ -33,12 +33,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     @Inject
     lateinit var localStorage: LocalStorage
-    private val createFolderResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                viewModel.getAlbum()
-            }
-        }
 
     override fun init() {
         liveEvent()
@@ -73,11 +67,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun intentCreateFolder() {
         binding.ibAdd.setOnClickListener {
             val intent = Intent(this, CreateFolderActivity::class.java)
-            createFolderResult.launch(intent)
+            startActivity(intent)
         }
         binding.ibAlbumAdd.setOnClickListener {
             val intent = Intent(this, CreateFolderActivity::class.java)
-            createFolderResult.launch(intent)
+            startActivity(intent)
         }
     }
 
@@ -117,6 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         super.onResume()
         userData?.apply {
             user(this)
+            viewModel.getAlbum()
         }
     }
 

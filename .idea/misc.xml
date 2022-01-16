@@ -25,20 +25,24 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_lower_body.xml" value="0.3463541666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_man_lower.xml" value="0.565625" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_man_whole.xml" value="0.565625" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_option.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_pose.xml" value="0.565625" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_pose_woman_lower.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_shutter.xml" value="0.4861111111111111" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_shutter_normal.xml" value="0.3463541666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_switch.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_toast_alarm.xml" value="0.565625" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_toast_delete.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/ic_whole_body.xml" value="0.3463541666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_left_radius_5.xml" value="0.5697916666666667" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_10.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_12.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_28.xml" value="0.565625" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_strok_2.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_stroke_2.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_stroke_2_black.xml" value="0.26927083333333335" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_4_stroke_2_more.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_radius_8.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_right_radius_5.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/rectangle_title_edit.xml" value="0.5697916666666667" />
@@ -52,13 +56,16 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_download.xml" value="0.440536013400335" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_main.xml" value="0.490036231884058" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_my_page.xml" value="0.5536458333333333" />
-        <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_panorama.xml" value="0.3079710144927536" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_panorama.xml" value="0.67" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_panorama_edit.xml" value="0.5461393596986818" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_picture.xml" value="0.2" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_splash.xml" value="0.5536458333333333" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog__folderdelete.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_delete.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_download.xml" value="0.4221105527638191" />
-        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_add.xml" value="0.5536458333333333" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_add.xml" value="0.4154103852596315" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_delete.xml" value="0.4154103852596315" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_edit.xml" value="0.4601113172541744" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_loading.xml" value="0.2578125" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_loding.xml" value="0.32760416666666664" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_selete_time.xml" value="0.5536458333333333" />
@@ -78,6 +85,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_grid_edit.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_list.xml" value="0.4714285714285714" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_panorama_tab.xml" value="1.0" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/view_top_toast.xml" value="0.16" />
         <entry key="..\:/work/everybody-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/xml/scene_camera.xml" value="0.5536458333333333" />

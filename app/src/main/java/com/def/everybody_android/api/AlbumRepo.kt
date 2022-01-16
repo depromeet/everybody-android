@@ -6,7 +6,6 @@ import com.def.everybody_android.di.ApiModule
 import com.def.everybody_android.dto.response.CreateAlbumResponse
 import com.def.everybody_android.dto.response.MainFeedResponse
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -18,6 +17,12 @@ class AlbumRepo {
 
         @POST("/albums")
         suspend fun createAlbum(@Body map: Map<String, String>): AlbumsResponse.Album
+
+        @PUT("/albums/{id}")
+        suspend fun editAlbum(@Path("id") id: String, @Body map: Map<String, String>): Response<ResponseBody>
+
+        @DELETE("/albums/{id}")
+        suspend fun deleteAlbum(@Path("id") id: String): Response<ResponseBody>
 
         @GET("/albums/{id}")
         suspend fun getAlbum(@Path("id") id: String): AlbumResponse
@@ -42,6 +47,12 @@ class AlbumRepo {
 
         suspend fun createAlbum(map: Map<String, String>): AlbumsResponse.Album =
             ApiModule.provideApiAlbum().createAlbum(map)
+
+        suspend fun editAlbum(id: String, map: Map<String, String>): Response<ResponseBody> =
+            ApiModule.provideApiAlbum().editAlbum(id, map)
+
+        suspend fun deleteAlbum(id: String): Response<ResponseBody> =
+            ApiModule.provideApiAlbum().deleteAlbum(id)
 
         suspend fun getMainFeed(): List<MainFeedResponse> =
             ApiModule.provideApiAlbum().getMainFeed()

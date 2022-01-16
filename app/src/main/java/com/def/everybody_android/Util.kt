@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.DisplayMetrics
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -24,6 +25,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.def.everybody_android.databinding.ViewTopToastBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -67,10 +69,10 @@ fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
     }
 }
 
-fun Context.toast(@DrawableRes resId: Int){
+fun Context.toast(@DrawableRes resId: Int) {
     val image = ImageView(applicationContext)
     image.setImageResource(resId)
-    val toast = Toast.makeText(applicationContext,"",Toast.LENGTH_LONG)
+    val toast = Toast.makeText(applicationContext, "", Toast.LENGTH_LONG)
     toast.setGravity(Gravity.TOP, Gravity.CENTER, Gravity.TOP)
     toast.view = image
     toast.show()
@@ -79,6 +81,15 @@ fun Context.toast(@DrawableRes resId: Int){
 
 fun Context.convertDpToPx(dp: Int): Int {
     return (dp * (resources.displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
+}
+
+fun Context.topToast(message: String) {
+    val view = ViewTopToastBinding.inflate(LayoutInflater.from(this), null, false)
+    view.setVariable(BR.content, message)
+    val toast = Toast(applicationContext)
+    toast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 0)
+    toast.view = view.root
+    toast.show()
 }
 
 @BindingAdapter("imageUrl", "placeholder")

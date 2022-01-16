@@ -6,19 +6,19 @@ import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.core.view.get
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.*
 import androidx.viewpager.widget.ViewPager
 import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
+import com.def.everybody_android.data.response.AlbumResponse
 import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityPanoramaBinding
 import com.def.everybody_android.ui.camera.CameraActivity
-import com.def.everybody_android.ui.dialog.service.ServiceDialog
+import com.def.everybody_android.ui.dialog.album.delete.FolderDeleteDialog
+import com.def.everybody_android.ui.dialog.album.edit.FolderEditDialog
 import com.def.everybody_android.ui.panorama.download.DownloadActivity
 import com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +33,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val upper = mutableListOf<Picture>()
     private val lower = mutableListOf<Picture>()
     private var id: String = ""
+    private var albumData: AlbumResponse? = null
     private lateinit var gridAdapter: RecyclerViewAdapter
     private lateinit var panoramaAdapter: RecyclerViewAdapter
 
@@ -56,6 +57,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                 when (it) {
                     is PanoramaViewModel.Event.Album -> {
                         val data = it.albumResponse
+                        albumData = data
                         data.pictures?.also { list ->
                             whole.clear()
                             upper.clear()
@@ -129,6 +131,19 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         viewPagerSetting(list)
                         recyclerSetting(list)
                     }
+                    PanoramaViewModel.Event.More -> binding.clMore.isVisible = !binding.clMore.isVisible
+                    PanoramaViewModel.Event.AlbumDelete -> FolderDeleteDialog {
+                        viewModel.deleteAlbum(id)
+                    }.show(supportFragmentManager, "")
+                    PanoramaViewModel.Event.AlbumEdit -> {
+                        albumData?.apply {
+                            FolderEditDialog(this) {
+                                binding.twTitle.text = it
+                                albumData = albumData?.copy(name = it)
+                                topToast("앨범이름이 수정되었습니다.")
+                            }.show(supportFragmentManager, "")
+                        }
+                    }
                     PanoramaViewModel.Event.Share -> {
                         val img = when {
                             binding.twWhole.isSelected -> whole
@@ -141,7 +156,12 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         }
                         startActivity(Intent(this@PanoramaActivity, DownloadActivity::class.java).apply {
                             putExtra("image", img.toTypedArray())
+                            putExtra("title", binding.twTitle.text.toString())
                         })
+                    }
+                    PanoramaViewModel.Event.DeleteComplete -> {
+                        topToast("앨범이 삭제되었습니다.")
+                        finish()
                     }
                 }
             }

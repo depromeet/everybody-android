@@ -32,11 +32,23 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
+    fun deleteAlbum(id:String){
+        runScope({
+            AlbumRepo.deleteAlbum(id)
+        }) {
+            if(it.code() == 204) viewModelScope.launch { _event.emit(Event.DeleteComplete) }
+        }
+    }
+
     sealed class Event {
         object Close : Event()
         object Edit : Event()
         object ListType : Event()
         object Camera : Event()
+        object More : Event()
+        object AlbumDelete : Event()
+        object AlbumEdit : Event()
+        object DeleteComplete:Event()
         object Share : Event()
         data class PoseType(val type: Int) : Event()
         data class Album(val albumResponse: AlbumResponse) : Event()
