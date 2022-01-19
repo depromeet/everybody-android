@@ -34,11 +34,11 @@
 
         <ImageView
             android:id="@+id/img_del"
+            selected="@{data.enable}"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/seletor_oval_day"
             android:backgroundTint="@color/selector_purple_black_op"
-            android:enabled="@{data.enable}"
             android:onClick="@{()->data.viewModel.onDeleteClick(data)}"
             android:padding="5dp"
             android:src="@drawable/ic_close"

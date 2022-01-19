@@ -37,6 +37,7 @@ class DownloadViewModel @Inject constructor() : BaseViewModel() {
     sealed class Event {
         object Close : Event()
         object Download : Event()
+        object Refresh : Event()
         data class DownloadFile(val body: ResponseBody) : Event()
         data class Delete(val item: DownloadActivity.Item) : Event()
     }

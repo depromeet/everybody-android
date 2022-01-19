@@ -65,8 +65,8 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
     fun deleteItem(item: RecyclerItem) {
         val index = items.indexOf(item)
         if (index > -1) {
-            items[index] = item
-            notifyItemChanged(index)
+            items.removeAt(index)
+            notifyItemRemoved(index)
         }
     }
 

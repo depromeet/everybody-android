@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityDownloadBinding
+import com.def.everybody_android.ui.dialog.message.MessageDialog
 import com.def.everybody_android.ui.panorama.PanoramaViewPagerAdapter
 import com.def.everybody_android.ui.panorama.download.loading.DownloadDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -168,8 +171,22 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
             viewModel.event.collect {
                 when (it) {
                     is DownloadViewModel.Event.Delete -> {
-                        adapter.deleteItem(adapter.getItems().find { item -> item.data == it.item }
-                            ?: return@collect)
+                        if (adapter.itemCount <= 2) return@collect topToast("사진이 최소 2장이상 필요해요.")
+                        val recyclerList = adapter.getItems().filter { item -> item.data != it.item }.mapIndexed { index, recyclerItem ->
+                            recyclerItem.copy(data = (recyclerItem.data as Item).copy(isEnable = index == 0, count = (index + 1).toString()))
+                        }
+                        adapter.setItems(recyclerList)
+                        val list = imageList.filter { image ->
+                            adapter.getItems().find { (it.data as Item).key == image.key } != null
+                        }
+                        binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(list) }
+                        binding.vpPanorama.offscreenPageLimit = list.size
+                        binding.vpPanorama.setCurrentItem(0, false)
+                        (binding.recyclerPanorama.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                            0,
+                            (screenWidth / 2) + convertDpToPx(12)
+                        )
+                        binding.imgRefresh.isInvisible = false
                     }
                     DownloadViewModel.Event.Close -> finish()
                     DownloadViewModel.Event.Download -> {
@@ -180,6 +197,31 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                         runOnUiThread {
                             writeResponseBodyToDisk(it.body)
                         }
+                    }
+                    DownloadViewModel.Event.Refresh -> {
+                        MessageDialog(true) {
+                            adapter.setItems(imageList.mapIndexed { index, picture ->
+                                RecyclerItem(
+                                    Item(
+                                        picture.key ?: "",
+                                        picture.imageUrl ?: "",
+                                        this@DownloadActivity.getDrawable(R.drawable.test_feed)!!,
+                                        (index + 1).toString(),
+                                        index == 0,
+                                        viewModel
+                                    ), R.layout.item_download_tab, BR.data
+                                )
+                            })
+                            binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(imageList) }
+                            binding.vpPanorama.offscreenPageLimit = imageList.size
+                            binding.vpPanorama.setCurrentItem(0, false)
+                            binding.imgRefresh.isInvisible = true
+                            (binding.recyclerPanorama.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                                0,
+                                (screenWidth / 2) + convertDpToPx(12)
+                            )
+                        }.setMessage("삭제한 사진을 모두 복구하시겠어요?", "확인을 누르면 기존에 편집한 모든 사진이 복구됩니다.").show(supportFragmentManager, "")
+
                     }
                 }
             }

@@ -102,6 +102,11 @@ fun folderLoadImage(view: ImageView, url: String, placeholder: Drawable) {
     )
 }
 
+@BindingAdapter("selected")
+fun setSelected(view: ImageView, isSelected: Boolean) {
+    view.isSelected = isSelected
+}
+
 @BindingAdapter("android:src")
 fun setImageResource(imageView: ImageView, resource: Int) {
     imageView.setImageResource(resource)

@@ -154,6 +154,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             toast("비어있는 사진첩입니다.")
                             return@collect
                         }
+                        if (img.size <= 2) return@collect topToast("사진이 최소 2장이상 필요해요.")
                         startActivity(Intent(this@PanoramaActivity, DownloadActivity::class.java).apply {
                             putExtra("image", img.toTypedArray())
                             putExtra("title", binding.twTitle.text.toString())
