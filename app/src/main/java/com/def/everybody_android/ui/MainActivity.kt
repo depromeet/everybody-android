@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.provider.Settings
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -18,6 +17,7 @@ import com.def.everybody_android.dto.request.SignUpRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.ui.camera.CameraActivity
+import com.def.everybody_android.ui.dialog.feedback.FeedBackDialog
 import com.def.everybody_android.ui.panorama.PanoramaActivity
 import com.def.everybody_android.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
@@ -102,6 +102,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         viewModel.getAlbum()
                         viewModel.getUserData()
                     }
+                    MainViewModel.ClickEvent.FeedBack -> FeedBackDialog().show(supportFragmentManager, "")
                 }
             }
         }

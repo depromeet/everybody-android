@@ -51,6 +51,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/selector_grid.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/selector_panorama_list.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/seletor_oval_day.xml" value="0.5697916666666667" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/drawable/seletor_oval_number.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/drawable/sh.xml" value="0.5697916666666667" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_alarm.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/activity_camera.xml" value="0.33" />
@@ -64,6 +65,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog__folderdelete.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_delete.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_download.xml" value="0.4221105527638191" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_feedback.xml" value="0.39028475711892796" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_add.xml" value="0.4154103852596315" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_delete.xml" value="0.4154103852596315" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/dialog_folder_edit.xml" value="0.4601113172541744" />
@@ -76,6 +78,7 @@
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/include_grid.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/include_picture_part.xml" value="0.25" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/include_picture_time.xml" value="0.67" />
+        <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_bottom_feedback.xml" value="0.39028475711892796" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_camera_pose.xml" value="0.5536458333333333" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_download_tab.xml" value="0.9" />
         <entry key="..\:/work/everybody-android/app/src/main/res/layout/item_folder_add.xml" value="0.31927083333333334" />

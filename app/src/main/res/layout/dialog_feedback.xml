@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.def.everybody_android.ui.dialog.feedback.FeedBackViewModel.Event" />
+
+        <variable
+            name="vm"
+            type="com.def.everybody_android.ui.dialog.feedback.FeedBackViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_radius_4"
+        android:backgroundTint="@color/white"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <ImageView
+            android:id="@+id/img_mailbox"
+            android:layout_width="48dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_mailbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center_horizontal"
+            android:text="솔직한 의견을 들려 주세요!"
+            android:textColor="@color/gray_90"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_mailbox" />
+
+        <TextView
+            android:id="@+id/tw_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center_horizontal"
+            android:text="의견을 보내주시면 서비스 개선에 반영할게요."
+            android:textColor="@color/gray_90"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+
+        <EditText
+            android:id="@+id/et_feedback"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rectangle_radius_4_stroke_2_black"
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:minLines="4"
+            android:onTextChanged="@{vm::onContentChange}"
+            android:paddingStart="16dp"
+            android:paddingTop="13dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_content" />
+
+        <TextView
+            android:id="@+id/tw_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="얼마나 만족하시나요?"
+            android:textColor="@color/gray_90"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_feedback" />
+
+
+        <TextView
+            android:id="@+id/tw_number_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/seletor_oval_number"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onNumberClick(1)}"
+            android:text="1"
+            android:textColor="@color/selector_black_white"
+            app:layout_constraintEnd_toStartOf="@id/tw_number_2"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_number" />
+
+        <TextView
+            android:id="@+id/tw_number_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/seletor_oval_number"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onNumberClick(2)}"
+            android:text="2"
+            android:textColor="@color/selector_black_white"
+            app:layout_constraintEnd_toStartOf="@id/tw_number_3"
+            app:layout_constraintStart_toEndOf="@id/tw_number_1"
+            app:layout_constraintTop_toTopOf="@id/tw_number_1" />
+
+        <TextView
+            android:id="@+id/tw_number_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/seletor_oval_number"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onNumberClick(3)}"
+            android:text="3"
+            android:textColor="@color/selector_black_white"
+            app:layout_constraintEnd_toStartOf="@id/tw_number_4"
+            app:layout_constraintStart_toEndOf="@id/tw_number_2"
+            app:layout_constraintTop_toTopOf="@id/tw_number_1" />
+
+        <TextView
+            android:id="@+id/tw_number_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/seletor_oval_number"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onNumberClick(4)}"
+            android:text="4"
+            android:textColor="@color/selector_black_white"
+            app:layout_constraintEnd_toStartOf="@id/tw_number_5"
+            app:layout_constraintStart_toEndOf="@id/tw_number_3"
+            app:layout_constraintTop_toTopOf="@id/tw_number_1" />
+
+        <TextView
+            android:id="@+id/tw_number_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/seletor_oval_number"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:onClick="@{()->vm.onNumberClick(5)}"
+            android:text="5"
+            android:textColor="@color/selector_black_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tw_number_4"
+            app:layout_constraintTop_toTopOf="@id/tw_number_1" />
+
+        <TextView
+            android:id="@+id/tw_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onClickEvent(Event.Cancel.INSTANCE)}"
+            android:text="취소"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tw_complete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_number_1" />
+
+        <TextView
+            android:id="@+id/tw_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{()->vm.onFeedBack()}"
+            android:text="피드백 보내기"
+            android:textColor="@color/purple"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tw_cancel"
+            app:layout_constraintTop_toBottomOf="@id/tw_number_1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

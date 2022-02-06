@@ -1,6 +1,5 @@
 package com.def.everybody_android.bindingadapter
 
-import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -12,11 +11,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.def.everybody_android.R
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.convertDpToPx
-import com.def.everybody_android.dto.MainFeedPicturePositionData
-import com.def.everybody_android.dto.UserData
 import com.def.everybody_android.dto.response.MainFeedResponse
 
 @BindingAdapter("recyclerView")
@@ -25,17 +21,25 @@ fun RecyclerView.setRecyclerAdapter(adapter: RecyclerViewAdapter) {
     layoutManager = LinearLayoutManager(context)
 }
 
-@BindingAdapter("halfRecyclerView",)
-fun RecyclerView.setHalfRecyclerAdapter(adapter : RecyclerViewAdapter){
+@BindingAdapter("halfRecyclerView")
+fun RecyclerView.setHalfRecyclerAdapter(adapter: RecyclerViewAdapter) {
     this.adapter = adapter
-    layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
+    layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false).apply {
+        spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (position) {
+                    (adapter.itemCount - 1) -> 2
+                    else -> 1
+                }
+            }
+        }
+    }
 }
 
-@BindingAdapter("url","holder")
-fun loadImage(imageView: ImageView, url: MainFeedResponse, placeholder: Drawable){
-    if(url.thumbnailUrl.isNullOrEmpty()) imageView.setImageDrawable(placeholder)
-
-    else{
+@BindingAdapter("url", "holder")
+fun loadImage(imageView: ImageView, url: MainFeedResponse, placeholder: Drawable) {
+    if (url.thumbnailUrl.isNullOrEmpty()) imageView.setImageDrawable(placeholder)
+    else {
         Glide.with(imageView.context)
             .load(url.thumbnailUrl)
             .placeholder(placeholder)
@@ -47,12 +51,11 @@ fun loadImage(imageView: ImageView, url: MainFeedResponse, placeholder: Drawable
     }
 }
 
-@BindingAdapter("feedUrl","defaultImage")
-fun feedImage(imageView: ImageView, url: String, placeholder: Drawable){
+@BindingAdapter("feedUrl", "defaultImage")
+fun feedImage(imageView: ImageView, url: String, placeholder: Drawable) {
     println("urlurl $url")
-    if(url.isEmpty()) imageView.setImageDrawable(placeholder)
-
-    else{
+    if (url.isEmpty()) imageView.setImageDrawable(placeholder)
+    else {
         Glide.with(imageView.context)
             .load(url)
             .placeholder(placeholder)

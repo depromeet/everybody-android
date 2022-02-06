@@ -34,10 +34,12 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     lateinit var localStorage: LocalStorage
 
     val halfFeedAdapter = RecyclerViewAdapter {
-        onClickEvent(ClickEvent.PanoramaActivity(it as MainFeedResponse))
+        if (it is MainFeedResponse) onClickEvent(ClickEvent.PanoramaActivity(it))
+        else onClickEvent(ClickEvent.FeedBack)
     }
     val fullFeedAdapter = RecyclerViewAdapter {
-        onClickEvent(ClickEvent.PanoramaActivity(it as MainFeedResponse))
+        if (it is MainFeedResponse) onClickEvent(ClickEvent.PanoramaActivity(it))
+        else onClickEvent(ClickEvent.FeedBack)
     }
 
     var noFeed = MutableLiveData(true)
@@ -92,11 +94,21 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             AlbumRepo.getMainFeed()
         }) { data ->
-            halfFeedAdapter.changeData(data.map { it.toHalfRecyclerItem() })
-            fullFeedAdapter.changeData(data.map { it.toFullRecyclerItem() })
+            val halfList = data.map { it.toHalfRecyclerItem() }.toMutableList()
+            halfList.add(getBottomRecyclerItem())
+            val fullList = data.map { it.toFullRecyclerItem() }.toMutableList()
+            fullList.add(getBottomRecyclerItem())
+            halfFeedAdapter.changeData(halfList)
+            fullFeedAdapter.changeData(fullList)
             if (data.isNotEmpty()) noFeed.value = false
         }
     }
+
+    private fun getBottomRecyclerItem() = RecyclerItem(
+        data = "",
+        variableId = BR.repo,
+        layoutId = R.layout.item_bottom_feedback
+    )
 
     private fun MainFeedResponse.toFullRecyclerItem() =
         RecyclerItem(
@@ -115,6 +127,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     sealed class ClickEvent {
         object SortFeed : ClickEvent()
         object Sign : ClickEvent()
+        object FeedBack : ClickEvent()
         data class GetFeedData(val data: ArrayList<MainFeedResponse>) : ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
         data class PanoramaActivity(val data: MainFeedResponse) : ClickEvent()
