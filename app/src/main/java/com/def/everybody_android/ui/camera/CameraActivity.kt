@@ -163,14 +163,16 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                     )
                 }
                 val index = adapter.getItems().indexOfFirst { data -> data.data == it }
-                adapter.changeItem(
-                    adapter.getItems()[index].copy(data = it.copy(isCheck = !it.isCheck)),
-                    index
-                )
-                if (it.poseImage is Unit) binding.imgPvPose.isVisible = false
-                else {
-                    binding.imgPvPose.isVisible = true
-                    binding.imgPvPose.setImageResource(it.poseImage as @androidx.annotation.DrawableRes Int)
+                if (index > -1) {
+                    adapter.changeItem(
+                        adapter.getItems()[index].copy(data = it.copy(isCheck = !it.isCheck)),
+                        index
+                    )
+                    if (it.poseImage is Unit) binding.imgPvPose.isVisible = false
+                    else {
+                        binding.imgPvPose.isVisible = true
+                        binding.imgPvPose.setImageResource(it.poseImage as @DrawableRes Int)
+                    }
                 }
             }
         }.apply {

@@ -210,6 +210,39 @@
             android:background="@color/gray_10"
             app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
+        <ImageView
+            android:id="@+id/img_kakao"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/ic_kakao"
+            app:layout_constraintEnd_toStartOf="@id/img_google"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_storage_bottom" />
 
+        <ImageView
+            android:id="@+id/img_google"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_kakao"
+            app:layout_constraintTop_toTopOf="@id/img_kakao" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="SNS계정을 연동하면 다른 기기에서\n로그인하고 사진을 연동할 수 있어요."
+            android:textColor="@color/gray_60"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_kakao" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
