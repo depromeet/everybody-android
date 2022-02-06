@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.def.everybody_android.viewmodel.MyPageViewModel.Event" />
+
         <variable
             name="vm"
             type="com.def.everybody_android.viewmodel.MyPageViewModel" />
@@ -24,6 +26,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@color/white"
+            android:onClick="@{()->vm.onClickEvent(Event.Finish.INSTANCE)}"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -143,6 +146,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{()->vm.onClickEvent(Event.Alarm.INSTANCE)}"
             android:text="알림 설정"
             android:textColor="@color/gray_80"
             android:textSize="16sp"
@@ -156,6 +160,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
+            android:onClick="@{()->vm.onClickEvent(Event.Alarm.INSTANCE)}"
             android:src="@drawable/ic_forword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_motto_bottom" />
@@ -216,6 +221,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="42dp"
             android:layout_marginEnd="32dp"
+            android:onClick="@{()->vm.onClickEvent(Event.Kakao.INSTANCE)}"
             android:src="@drawable/ic_kakao"
             app:layout_constraintEnd_toStartOf="@id/img_google"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -226,6 +232,7 @@
             android:id="@+id/img_google"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:onClick="@{()->vm.onClickEvent(Event.Google.INSTANCE)}"
             android:src="@drawable/ic_google"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_kakao"

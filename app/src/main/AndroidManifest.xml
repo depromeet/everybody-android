@@ -23,7 +23,13 @@
         <activity
             android:name="com.def.everybody_android.ui.MyPageActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao4cfb36b0d3bc2648d919b567153397ad" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.def.everybody_android.ui.CreateFolderActivity"
             android:exported="true"
@@ -31,7 +37,14 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.def.everybody_android.ui.MainActivity"
-            android:screenOrientation="portrait" />
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao4cfb36b0d3bc2648d919b567153397ad" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.def.everybody_android.ui.camera.CameraActivity"

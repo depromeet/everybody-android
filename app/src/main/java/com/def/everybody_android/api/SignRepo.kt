@@ -20,6 +20,9 @@ class SignRepo {
         suspend fun signIn(
             @Body signInRequest: SignInRequest
         ): SignInResponse
+
+        @POST("/oauth/login")
+        suspend fun oauthLogin(@Body map: Map<String, String>): SignInResponse
     }
 
     companion object {
@@ -28,5 +31,8 @@ class SignRepo {
 
         suspend fun signIn(signInRequest: SignInRequest): SignInResponse =
             ApiModule.provideApiSign().signIn(signInRequest)
+
+        suspend fun oauthLogin(map: Map<String, String>): SignInResponse =
+            ApiModule.provideApiSign().oauthLogin(map)
     }
 }

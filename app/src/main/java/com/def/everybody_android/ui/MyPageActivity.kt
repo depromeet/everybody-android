@@ -11,7 +11,9 @@ import com.def.everybody_android.di.HiltApplication.Companion.userData
 import com.def.everybody_android.dto.UserData
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.toast
 import com.def.everybody_android.viewmodel.MyPageViewModel
+import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -27,15 +29,37 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
 
     override fun init() {
         userData?.apply {
-            onClickAlarm(this)
             profile(this)
         }
-        back()
         appStorage()
         binding.ibStorage.isSelected = localStorage.isAppStorage()
         repeatOnStarted {
-            viewModel.complete.collect {
-                finish()
+            viewModel.clickEvent.collect {
+                when (it) {
+                    MyPageViewModel.Event.Alarm -> {
+                        val intent = Intent(this@MyPageActivity, AlarmActivity::class.java)
+                        intent.putExtra("userData", userData)
+                        startActivity(intent)
+                    }
+                    MyPageViewModel.Event.Complete, MyPageViewModel.Event.Finish -> finish()
+                    MyPageViewModel.Event.Google -> TODO()
+                    MyPageViewModel.Event.Kakao -> {
+                        UserApiClient.instance.loginWithKakaoTalk(this@MyPageActivity) { token, error ->
+                            if (error != null) {
+                                toast("로그인 실패")
+                            } else if (token != null) {
+                                viewModel.login(
+                                    mapOf(
+                                        "uesr_id" to localStorage.getUserId().toString(),
+                                        "password" to "1234",
+                                        "kind" to "KAKAO",
+                                        "token" to token.accessToken
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -67,25 +91,4 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
             )
         }
     }
-
-    fun back() {
-        binding.ibBack.setOnClickListener {
-            finish()
-        }
-    }
-
-    private fun onClickAlarm(userData: UserData) {
-        binding.ibSettingAlarm.setOnClickListener {
-            val intent = Intent(this, AlarmActivity::class.java)
-            intent.putExtra("userData", userData)
-            startActivity(intent)
-        }
-        binding.tvAlarm.setOnClickListener {
-            val intent = Intent(this, AlarmActivity::class.java)
-            intent.putExtra("userData", userData)
-            startActivity(intent)
-        }
-    }
-
-
 }

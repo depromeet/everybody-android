@@ -127,4 +127,7 @@ dependencies {
 
     //Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //KAKAO
+    implementation "com.kakao.sdk:v2-user:$kakaoVersion"
 }

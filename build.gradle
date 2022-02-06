@@ -24,6 +24,7 @@ buildscript {
     ext.firebase_database = '20.0.2'
     ext.numberpicker_version = '2.4.13'
     ext.lottieVersion = '4.2.2'
+    ext.kakaoVersion = '2.8.5'
 
     repositories {
         google()
