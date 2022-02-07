@@ -16,15 +16,11 @@ import com.def.everybody_android.dto.request.SignInRequest
 import com.def.everybody_android.dto.request.SignUpRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
-import com.def.everybody_android.toast
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.feedback.FeedBackDialog
 import com.def.everybody_android.ui.panorama.PanoramaActivity
 import com.def.everybody_android.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
-import com.kakao.sdk.auth.AuthApiClient
-import com.kakao.sdk.common.model.KakaoSdkError
-import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -153,41 +149,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             localStorage.saveFcmToken(it)
             println("Token $it")
-
-            if (AuthApiClient.instance.hasToken()) {
-                UserApiClient.instance.accessTokenInfo { _, error ->
-                    if (error != null) {
-                        UserApiClient.instance.loginWithKakaoTalk(this) { token, error2 ->
-                            if (error2 != null) {
-                                sign()
-                            } else if (token != null) {
-                                viewModel.login(
-                                    mapOf(
-                                        "uesr_id" to localStorage.getUserId().toString(),
-                                        "password" to "1234",
-                                        "kind" to "KAKAO",
-                                        "token" to token.accessToken
-                                    )
-                                )
-                            }
-                        }
-                    }
-                    else {
-                        AuthApiClient.instance.tokenManagerProvider.manager.getToken()?.accessToken?.apply {
-                            viewModel.login(
-                                mapOf(
-                                    "uesr_id" to localStorage.getUserId().toString(),
-                                    "password" to "1234",
-                                    "kind" to "KAKAO",
-                                    "token" to this
-                                )
-                            )
-                        } ?: sign()
-                    }
-                }
-            } else {
-                sign()
-            }
+            sign()
         }
     }
 

@@ -22,7 +22,7 @@ class SignRepo {
         ): SignInResponse
 
         @POST("/oauth/login")
-        suspend fun oauthLogin(@Body map: Map<String, String>): SignInResponse
+        suspend fun oauthLogin(@Body map: HashMap<String, Any>): SignInResponse
     }
 
     companion object {
@@ -32,7 +32,7 @@ class SignRepo {
         suspend fun signIn(signInRequest: SignInRequest): SignInResponse =
             ApiModule.provideApiSign().signIn(signInRequest)
 
-        suspend fun oauthLogin(map: Map<String, String>): SignInResponse =
+        suspend fun oauthLogin(map: HashMap<String, Any>): SignInResponse =
             ApiModule.provideApiSign().oauthLogin(map)
     }
 }

@@ -146,3 +146,4 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio
 .idea/codeStyles/codeStyleConfig.xml
 .idea/codeStyles/Project.xml
+app/release/app-release.zip

@@ -49,8 +49,8 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                                 toast("로그인 실패")
                             } else if (token != null) {
                                 viewModel.login(
-                                    mapOf(
-                                        "uesr_id" to localStorage.getUserId().toString(),
+                                    hashMapOf(
+                                        "user_id" to localStorage.getUserId(),
                                         "password" to "1234",
                                         "kind" to "KAKAO",
                                         "token" to token.accessToken

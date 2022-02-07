@@ -34,7 +34,7 @@ class MyPageViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
-    fun login(map: Map<String, String>) {
+    fun login(map: HashMap<String, Any>) {
         runScope({
             SignRepo.oauthLogin(map)
         }) { data ->

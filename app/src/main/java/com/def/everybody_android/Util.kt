@@ -23,6 +23,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.databinding.ViewTopToastBinding
@@ -99,6 +100,15 @@ fun folderLoadImage(view: ImageView, url: String, placeholder: Drawable) {
         url,
         RequestOptions().transform(CenterCrop(), RoundedCorners(view.context.convertDpToPx(4)))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+    )
+}
+
+@BindingAdapter("imagePanoramaUrl", "placeholderPanorama")
+fun panoramaLoadImage(view: ImageView, url: String, placeholder: Drawable) {
+    if (url.isEmpty()) view.setImageDrawable(placeholder)
+    else view.imageLoad(
+        url,
+        RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
     )
 }
 

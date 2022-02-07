@@ -223,6 +223,7 @@
             android:layout_marginEnd="32dp"
             android:onClick="@{()->vm.onClickEvent(Event.Kakao.INSTANCE)}"
             android:src="@drawable/ic_kakao"
+            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/img_google"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -234,6 +235,7 @@
             android:layout_height="48dp"
             android:onClick="@{()->vm.onClickEvent(Event.Google.INSTANCE)}"
             android:src="@drawable/ic_google"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_kakao"
             app:layout_constraintTop_toTopOf="@id/img_kakao" />
@@ -247,6 +249,7 @@
             android:text="SNS계정을 연동하면 다른 기기에서\n로그인하고 사진을 연동할 수 있어요."
             android:textColor="@color/gray_60"
             android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

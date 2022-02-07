@@ -73,10 +73,10 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
-    fun login(map:Map<String,String>){
+    fun login(map: HashMap<String, Any>) {
         runScope({
             SignRepo.oauthLogin(map)
-        }) { data->
+        }) { data ->
             HiltApplication.token = data.accessToken
             onClickEvent(ClickEvent.Sign)
         }
