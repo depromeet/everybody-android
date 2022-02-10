@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Environment
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -52,6 +53,14 @@ fun Context.typeFace(@FontRes id: Int): Typeface? {
 fun Context.getOutputDirectory(): File {
     val mediaDir = externalMediaDirs.firstOrNull()?.let {
         File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+    }
+    return if (mediaDir != null && mediaDir.exists())
+        mediaDir else filesDir
+}
+
+fun Context.getOutputDcimDirectory(): File {
+    val mediaDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).let {
+        File(it, "Camera").apply { mkdirs() }
     }
     return if (mediaDir != null && mediaDir.exists())
         mediaDir else filesDir

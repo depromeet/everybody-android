@@ -29,6 +29,8 @@ import okhttp3.ResponseBody
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.media.MediaScannerConnection
+import android.net.Uri
 
 
 @AndroidEntryPoint
@@ -238,9 +240,9 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
     )
 
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
+        val futureStudioIconFile =
+            File(getOutputDirectory(), SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis()) + ".mp4")
         return try {
-            val futureStudioIconFile =
-                File(getOutputDirectory(), SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.US).format(System.currentTimeMillis()) + ".mp4")
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null
             try {
@@ -267,7 +269,11 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
             } finally {
                 inputStream?.close()
                 outputStream?.close()
-                downloadDialog.onComplete()
+                MediaScannerConnection.scanFile(
+                    applicationContext, arrayOf(futureStudioIconFile.path),  // 추가할 파일의 경로
+                    null
+                )  // Mime type
+                { _, _ -> runOnUiThread { downloadDialog.onComplete() } }
             }
         } catch (e: IOException) {
             e.printStackTrace()
