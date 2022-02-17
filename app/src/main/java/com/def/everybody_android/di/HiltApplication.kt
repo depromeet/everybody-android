@@ -6,6 +6,7 @@ import com.def.everybody_android.dto.UserData
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.HiltAndroidApp
+import io.realm.Realm
 
 @HiltAndroidApp
 class HiltApplication : Application() {
@@ -16,6 +17,6 @@ class HiltApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        KakaoSdk.init(this, "4cfb36b0d3bc2648d919b567153397ad")
+        Realm.init(this)
     }
 }

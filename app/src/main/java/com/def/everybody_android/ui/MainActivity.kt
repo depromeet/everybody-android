@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.R
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityMainBinding
+import com.def.everybody_android.db.Album
 import com.def.everybody_android.di.HiltApplication.Companion.userData
 import com.def.everybody_android.dto.UserData
 import com.def.everybody_android.dto.request.SignInRequest
@@ -23,6 +24,7 @@ import com.def.everybody_android.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,6 +36,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     @Inject
     lateinit var localStorage: LocalStorage
 
+
+    private fun realmTest() {
+        val results = realm.where(Album::class.java).findAll()
+        if (results.isEmpty()) { // 앨범이 하나도 없을경우
+            realm.executeTransaction {
+                with(it.createObject(Album::class.java, 1)) {
+                    name = "눈바디"
+                    feedCreated = Date()
+                }
+            }
+        } else {
+
+        }
+    }
 
     override fun init() {
         liveEvent()
@@ -149,7 +165,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             localStorage.saveFcmToken(it)
             println("Token $it")
-            sign()
+//            sign()
         }
     }
 
