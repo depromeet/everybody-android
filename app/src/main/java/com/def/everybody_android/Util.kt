@@ -28,6 +28,9 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.databinding.ViewTopToastBinding
+import com.def.everybody_android.db.Album
+import com.def.everybody_android.dto.Feed
+import com.def.everybody_android.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -100,6 +103,21 @@ fun Context.topToast(message: String) {
     toast.setGravity(Gravity.TOP or Gravity.FILL_HORIZONTAL, 0, 0)
     toast.view = view.root
     toast.show()
+}
+
+fun List<Album>.toFeeds(): List<Feed> {
+    return this.map { it.toFeed() }
+}
+
+fun Album.toFeed(): Feed {
+    val diffDays = (System.currentTimeMillis() - this.feedCreated.time) / (1000 * 24 * 60 * 60)
+    return Feed(
+        this.id,
+        this.name,
+        this.feedCreated,
+        "${diffDays}일간의 기록",
+        this.feedPictureDataList
+    )
 }
 
 @BindingAdapter("imageUrl", "placeholder")

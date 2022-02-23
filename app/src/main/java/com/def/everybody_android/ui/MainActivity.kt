@@ -10,11 +10,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.R
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityMainBinding
-import com.def.everybody_android.db.Album
+import com.def.everybody_android.db.UserData
 import com.def.everybody_android.di.HiltApplication.Companion.userData
-import com.def.everybody_android.dto.UserData
-import com.def.everybody_android.dto.request.SignInRequest
-import com.def.everybody_android.dto.request.SignUpRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.ui.camera.CameraActivity
@@ -37,20 +34,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     lateinit var localStorage: LocalStorage
 
 
-    private fun realmTest() {
-        val results = realm.where(Album::class.java).findAll()
-        if (results.isEmpty()) { // 앨범이 하나도 없을경우
-            realm.executeTransaction {
-                with(it.createObject(Album::class.java, 1)) {
-                    name = "눈바디"
-                    feedCreated = Date()
-                }
-            }
-        } else {
-
-        }
-    }
-
     override fun init() {
         liveEvent()
         deviceToken()
@@ -58,19 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         intentCreateFolder()
         feedSort()
         onClickCamara()
-    }
-
-    private fun sign() {
-        if (localStorage.getUserId() < 0) {
-            val device = SignUpRequest.Device(
-                "ANDROID",
-                localStorage.getDeviceToken(),
-                localStorage.getFcmToken()
-            )
-            viewModel.signUp(SignUpRequest(device = device, kind = "SIMPLE", password = "1234"))
-        } else {
-            viewModel.signIn(SignInRequest(localStorage.getUserId(), "1234"))
-        }
+        viewModel.settingFeedList()
     }
 
     private fun onClickMyPage(userData: UserData) {
@@ -113,12 +84,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             putExtra("id", it.data.id.toString())
                         }
                     )
-                    is MainViewModel.ClickEvent.GetFeedData -> {
-                    }
-                    MainViewModel.ClickEvent.Sign -> {
-                        viewModel.getAlbum()
-                        viewModel.getUserData()
-                    }
                     MainViewModel.ClickEvent.FeedBack -> FeedBackDialog().show(supportFragmentManager, "")
                 }
             }
@@ -127,10 +92,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        userData?.apply {
-            user(this)
-            viewModel.getAlbum()
-        }
+        viewModel.settingFeedList()
     }
 
     private fun user(data: UserData) {
@@ -165,7 +127,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             localStorage.saveFcmToken(it)
             println("Token $it")
-//            sign()
         }
     }
 

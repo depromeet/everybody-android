@@ -42,7 +42,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@color/white"
-            android:onClick="@{() -> vm.sortFeed()}"
+            android:onClick="@{() -> vm.onSortFeedClick()}"
             android:scaleType="centerInside"
             android:src="@drawable/selector_panorama_list"
             app:layout_constraintEnd_toStartOf="@+id/ib_add"

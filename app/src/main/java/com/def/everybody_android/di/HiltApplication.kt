@@ -1,10 +1,7 @@
 package com.def.everybody_android.di
 
 import android.app.Application
-import android.util.Log
-import com.def.everybody_android.dto.UserData
-import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.common.util.Utility
+import com.def.everybody_android.db.UserData
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 
