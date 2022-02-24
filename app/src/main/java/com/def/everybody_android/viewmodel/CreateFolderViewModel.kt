@@ -1,12 +1,14 @@
 package com.def.everybody_android.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.def.everybody_android.api.AlbumRepo
 import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
+import com.def.everybody_android.db.Album
+import com.def.everybody_android.nextId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,11 +21,12 @@ class CreateFolderViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _clickEvent.emit(event) }
     }
 
-    fun createFolder(name : String){
-        runScope({
-            AlbumRepo.createAlbums(mapOf("name" to name))
-        }){
-            data -> println(data)
+    fun createFolder(name: String) {
+        realm.executeTransaction {
+            with(it.createObject(Album::class.java, it.nextId())) {
+                this.name = name
+                feedCreated = Date()
+            }
         }
     }
 }

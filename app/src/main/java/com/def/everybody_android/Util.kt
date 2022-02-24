@@ -31,6 +31,7 @@ import com.def.everybody_android.databinding.ViewTopToastBinding
 import com.def.everybody_android.db.Album
 import com.def.everybody_android.dto.Feed
 import com.def.everybody_android.ui.MainActivity
+import io.realm.Realm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -118,6 +119,12 @@ fun Album.toFeed(): Feed {
         "${diffDays}일간의 기록",
         this.feedPictureDataList
     )
+}
+
+fun Realm.nextId():Int{
+    val currentIdNum = where(Album::class.java).max("id")
+    return if (currentIdNum == null) 1
+    else currentIdNum.toInt() + 1
 }
 
 @BindingAdapter("imageUrl", "placeholder")

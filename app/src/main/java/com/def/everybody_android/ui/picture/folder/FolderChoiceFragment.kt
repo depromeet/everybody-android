@@ -22,28 +22,11 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
     private lateinit var adapter: RecyclerViewAdapter
 
     override fun init() {
-        viewModel.getAlbums()
+        viewModel.getFeeds()
         adapter = RecyclerViewAdapter {
             if (it is Unit) {
-                FolderAddDialog { data ->
-                    adapter.addItem(
-                        RecyclerItem(
-                            FolderChoiceViewModel.Item(
-                                "",
-                                data.name ?: "",
-                                ResourcesCompat.getDrawable(
-                                    resources,
-                                    R.drawable.test_feed,
-                                    null
-                                )!!,
-                                false,
-                                data.id,
-                                data.description ?: ""
-                            ),
-                            R.layout.item_folder_choice,
-                            BR.data
-                        )
-                    )
+                FolderAddDialog {
+                    viewModel.getFeeds()
                 }.show(childFragmentManager, "")
             } else if (it is FolderChoiceViewModel.Item) {
                 val checkIndex = adapter.getItems()
@@ -74,16 +57,16 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         binding.recyclerFolder.addItemDecoration(FolderItemDecoration())
         binding.recyclerFolder.adapter = adapter
         repeatOnStarted {
-            viewModel.albumsResponse.collect {
+            viewModel.feedsResponse.collect {
                 val item = it.map { data ->
-                    val image = data.thumbnailUrl
+                    val image = data.feedPicture.first().imagePath
                     val recyclerData = FolderChoiceViewModel.Item(
-                        image ?: "",
-                        data.name ?: "",
+                        data.id,
+                        image,
+                        data.name,
                         ResourcesCompat.getDrawable(resources, R.drawable.test_feed, null)!!,
                         false,
-                        data.id,
-                        data.description ?: ""
+                        data.description
                     )
                     RecyclerItem(
                         recyclerData,

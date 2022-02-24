@@ -4,6 +4,7 @@ import android.app.Application
 import com.def.everybody_android.db.UserData
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
+import io.realm.RealmConfiguration
 
 @HiltAndroidApp
 class HiltApplication : Application() {
@@ -15,5 +16,10 @@ class HiltApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
+        val config: RealmConfiguration = RealmConfiguration.Builder()
+            .allowWritesOnUiThread(true) // UI Thread에서도 realm에 접근할 수 있도록 한다.
+            .build()
+
+        Realm.setDefaultConfiguration(config)
     }
 }

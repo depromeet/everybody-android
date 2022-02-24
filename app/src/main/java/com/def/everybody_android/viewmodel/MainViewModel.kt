@@ -63,6 +63,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun settingFeedList() {
+        feedData.clear()
         feedData.addAll(getFeeds())
         val halfList = feedData.map { it.toHalfRecyclerItem() }.toMutableList()
         halfList.add(getBottomRecyclerItem())
@@ -114,6 +115,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     sealed class ClickEvent {
         object SortFeed : ClickEvent()
         object FeedBack : ClickEvent()
+        object Created : ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
         data class PanoramaActivity(val data: Feed) : ClickEvent()
     }

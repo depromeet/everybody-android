@@ -1,9 +1,11 @@
 package com.def.everybody_android.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.provider.Settings
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -32,13 +34,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     @Inject
     lateinit var localStorage: LocalStorage
-
+    private val createForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.settingFeedList()
+        }
+    }
 
     override fun init() {
         liveEvent()
         deviceToken()
         fcmToken()
-        intentCreateFolder()
         feedSort()
         onClickCamara()
         viewModel.settingFeedList()
@@ -48,17 +53,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         binding.ibProfile.setOnClickListener {
             val intent = Intent(this, MyPageActivity::class.java)
             intent.putExtra("userData", userData)
-            startActivity(intent)
-        }
-    }
-
-    private fun intentCreateFolder() {
-        binding.ibAdd.setOnClickListener {
-            val intent = Intent(this, CreateFolderActivity::class.java)
-            startActivity(intent)
-        }
-        binding.ibAlbumAdd.setOnClickListener {
-            val intent = Intent(this, CreateFolderActivity::class.java)
             startActivity(intent)
         }
     }
@@ -85,14 +79,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         }
                     )
                     MainViewModel.ClickEvent.FeedBack -> FeedBackDialog().show(supportFragmentManager, "")
+                    MainViewModel.ClickEvent.Created -> createForResult.launch(Intent(this@MainActivity, CreateFolderActivity::class.java))
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.settingFeedList()
     }
 
     private fun user(data: UserData) {
