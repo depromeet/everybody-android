@@ -143,9 +143,9 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         val canvas = Canvas(bitmap)
         var filePath = ""
         binding.clPicture.draw(canvas)
-        if (!isAlbum) {
+        filePath = if (!isAlbum) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
-            filePath = image
+            image
         } else {
             val photoFile = CameraActivity.createFile(
                 if (localStorage.isAppStorage()) requireContext().cacheDir else requireContext().getOutputDirectory(),
@@ -153,7 +153,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                 CameraActivity.PHOTO_EXTENSION
             )
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(photoFile))
-            filePath = photoFile.toString()
+            photoFile.toString()
         }
         val newExif = ExifInterface(filePath)
         newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")

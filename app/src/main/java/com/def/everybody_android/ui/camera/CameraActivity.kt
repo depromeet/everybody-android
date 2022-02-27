@@ -247,10 +247,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                             arrayOf(savedUri.toFile().absolutePath),
                             arrayOf(mimeType)
                         ) { path, uri ->
-                            val fileUri = if (uri != null) ContentUriUtil.getFilePath(
-                                this@CameraActivity,
-                                uri
-                            ).toString()
+                            val fileUri = if (uri != null) ContentUriUtil.getFilePath(this@CameraActivity, uri).toString()
                             else path
                             startActivity(
                                 Intent(

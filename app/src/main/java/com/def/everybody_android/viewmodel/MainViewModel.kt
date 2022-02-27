@@ -6,12 +6,17 @@ import androidx.lifecycle.viewModelScope
 import com.def.everybody_android.R
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
+import com.def.everybody_android.api.SignRepo
+import com.def.everybody_android.api.UserRepo
 import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
 import com.def.everybody_android.db.Album
-import com.def.everybody_android.db.UserData
+import com.def.everybody_android.di.HiltApplication
 import com.def.everybody_android.dto.Feed
+import com.def.everybody_android.dto.UserData
+import com.def.everybody_android.dto.request.SignInRequest
+import com.def.everybody_android.dto.request.SignUpRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.toFeed
 import com.def.everybody_android.toFeeds
@@ -47,6 +52,41 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     fun onClickEvent(event: ClickEvent) {
         viewModelScope.launch { _clickEvent.emit(event) }
+    }
+
+    fun signUp(signUpRequest: SignUpRequest) {
+        runScope({
+            SignRepo.signUp(signUpRequest)
+        }) { data ->
+            localStorage.saveUserId(data.userId)
+            signIn(SignInRequest(data.userId, "1234"))
+        }
+    }
+
+    fun login(map: HashMap<String, Any>) {
+        runScope({
+            SignRepo.oauthLogin(map)
+        }) { data ->
+            HiltApplication.token = data.accessToken
+            onClickEvent(ClickEvent.Sign)
+        }
+    }
+
+    fun signIn(signInRequest: SignInRequest) {
+        runScope({
+            SignRepo.signIn(signInRequest)
+        }) { data ->
+            HiltApplication.token = data.accessToken
+            onClickEvent(ClickEvent.Sign)
+        }
+    }
+
+    fun getUserData() {
+        runScope({
+            UserRepo.getUserData()
+        }) { data ->
+            onClickEvent(ClickEvent.GetUserData(data))
+        }
     }
 
     fun onSortFeedClick() {
@@ -116,6 +156,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         object SortFeed : ClickEvent()
         object FeedBack : ClickEvent()
         object Created : ClickEvent()
+        object Sign : ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
         data class PanoramaActivity(val data: Feed) : ClickEvent()
     }

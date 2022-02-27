@@ -1,7 +1,7 @@
 package com.def.everybody_android.di
 
 import android.app.Application
-import com.def.everybody_android.db.UserData
+import com.def.everybody_android.dto.UserData
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration

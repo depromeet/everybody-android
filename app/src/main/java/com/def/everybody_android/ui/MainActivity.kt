@@ -12,8 +12,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.R
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityMainBinding
-import com.def.everybody_android.db.UserData
 import com.def.everybody_android.di.HiltApplication.Companion.userData
+import com.def.everybody_android.dto.UserData
+import com.def.everybody_android.dto.request.SignInRequest
+import com.def.everybody_android.dto.request.SignUpRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.ui.camera.CameraActivity
@@ -47,6 +49,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         feedSort()
         onClickCamara()
         viewModel.settingFeedList()
+    }
+
+    private fun sign() {
+        if (localStorage.getUserId() < 0) {
+            val device = SignUpRequest.Device(
+                "ANDROID",
+                localStorage.getDeviceToken(),
+                localStorage.getFcmToken()
+            )
+            viewModel.signUp(SignUpRequest(device = device, kind = "SIMPLE", password = "1234"))
+        } else {
+            viewModel.signIn(SignInRequest(localStorage.getUserId(), "1234"))
+        }
     }
 
     private fun onClickMyPage(userData: UserData) {
@@ -117,6 +132,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             localStorage.saveFcmToken(it)
             println("Token $it")
+            sign()
         }
     }
 

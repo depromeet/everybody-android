@@ -7,8 +7,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.R
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityMyPageBinding
-import com.def.everybody_android.db.UserData
 import com.def.everybody_android.di.HiltApplication.Companion.userData
+import com.def.everybody_android.dto.UserData
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.toast
