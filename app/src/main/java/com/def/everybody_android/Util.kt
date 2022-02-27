@@ -29,6 +29,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.databinding.ViewTopToastBinding
 import com.def.everybody_android.db.Album
+import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.dto.Feed
 import com.def.everybody_android.ui.MainActivity
 import io.realm.Realm
@@ -54,20 +55,10 @@ fun Context.typeFace(@FontRes id: Int): Typeface? {
     return ResourcesCompat.getFont(this, id)
 }
 
-fun Context.getOutputDirectory(): File {
-    val mediaDir = externalMediaDirs.firstOrNull()?.let {
-        File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
-    }
-    return if (mediaDir != null && mediaDir.exists())
-        mediaDir else filesDir
-}
-
-fun Context.getOutputDcimDirectory(): File {
-    val mediaDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).let {
-        File(it, "Camera").apply { mkdirs() }
-    }
-    return if (mediaDir != null && mediaDir.exists())
-        mediaDir else filesDir
+fun Context.getAppSpecificAlbumStorageDir(): File {
+    val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "noonbody")
+    if (file.exists()) file.mkdirs()
+    return file
 }
 
 fun ImageView.imageLoad(
@@ -121,10 +112,20 @@ fun Album.toFeed(): Feed {
     )
 }
 
-fun Realm.nextId():Int{
+fun Realm.nextAlbumId(): Int {
     val currentIdNum = where(Album::class.java).max("id")
     return if (currentIdNum == null) 1
     else currentIdNum.toInt() + 1
+}
+
+fun Realm.nextPictureId(): Int {
+    val currentIdNum = where(MainFeedPictureData::class.java).max("id")
+    return if (currentIdNum == null) 1
+    else currentIdNum.toInt() + 1
+}
+
+fun isExternalStorageWritable(): Boolean {
+    return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 }
 
 @BindingAdapter("imageUrl", "placeholder")

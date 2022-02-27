@@ -211,11 +211,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
 
     private fun clickShutter() {
         imageCapture?.let { imageCapture ->
-            val photoFile = createFile(
-                if (localStorage.isAppStorage()) cacheDir else getOutputDirectory(),
-                FILENAME,
-                PHOTO_EXTENSION
-            )
+            val photoFile = createFile(filesDir, FILENAME, PHOTO_EXTENSION)
             val metadata = ImageCapture.Metadata().apply {
                 isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
             }
@@ -233,15 +229,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                     override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                         val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                         Log.d(TAG, "Photo capture succeeded: $savedUri")
-
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                            sendBroadcast(
-                                Intent(Camera.ACTION_NEW_PICTURE, savedUri)
-                            )
-                        }
-
-                        val mimeType = MimeTypeMap.getSingleton()
-                            .getMimeTypeFromExtension(savedUri.toFile().extension)
+                        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(savedUri.toFile().extension)
                         MediaScannerConnection.scanFile(
                             this@CameraActivity,
                             arrayOf(savedUri.toFile().absolutePath),
@@ -250,11 +238,11 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                             val fileUri = if (uri != null) ContentUriUtil.getFilePath(this@CameraActivity, uri).toString()
                             else path
                             startActivity(
-                                Intent(
-                                    this@CameraActivity,
-                                    PictureActivity::class.java
-                                ).apply {
-                                    putExtra("image", fileUri)
+                                Intent(this@CameraActivity, PictureActivity::class.java).apply {
+                                    putExtra(
+                                        "image",
+                                        fileUri
+                                    )
                                     if (albumId.isNotEmpty()) putExtra("id", albumId)
                                 })
                         }

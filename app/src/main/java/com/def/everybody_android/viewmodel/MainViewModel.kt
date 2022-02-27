@@ -12,6 +12,7 @@ import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
 import com.def.everybody_android.db.Album
+import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.di.HiltApplication
 import com.def.everybody_android.dto.Feed
 import com.def.everybody_android.dto.UserData
@@ -116,11 +117,20 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     private fun getFeeds(): List<Feed> {
         val results = realm.where(Album::class.java).findAll()
+
         return if (results.isEmpty()) { // 앨범이 하나도 없을경우
             firstAddAlbum()
             val album = realm.where(Album::class.java).findFirst()
             listOf(album?.toFeed() ?: return listOf())
-        } else results.toFeeds()
+        } else {
+            val albums = mutableListOf<Album>()
+            results.forEach {
+                it.feedPictureDataList = realm.where(MainFeedPictureData::class.java).containsValue("id",it.id).findAll() ?: listOf()
+                albums.add(it.copy())
+
+            }
+            results.toFeeds()
+        }
     }
 
     private fun firstAddAlbum() {

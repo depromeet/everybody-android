@@ -44,12 +44,12 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
                             )
                         ), checkIndex
                     )
-                    viewModel.valueMap["album_id"] = ""
+                    viewModel.valueMap["albumId"] = ""
                 }
                 val index = adapter.getItems().indexOfFirst { data -> data.data == it }
                 if (index > -1) {
                     val data = adapter.getItems()[index]
-                    viewModel.valueMap["album_id"] = it.id.toString()
+                    viewModel.valueMap["albumId"] = it.id.toString()
                     adapter.changeItem(data.copy(data = it.copy(isCheck = !it.isCheck)), index)
                 }
             }
@@ -82,7 +82,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
 
     fun getValue() {
         val map = viewModel.valueMap
-        if (map.containsKey("album_id")) {
+        if (map.containsKey("albumId")) {
             activity?.apply {
                 if (this is PictureActivity) {
                     photoUpload(map)

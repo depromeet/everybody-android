@@ -52,7 +52,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
             transaction.commit()
             isFolder = true
         } else {
-            map["album_id"] = albumId
+            map["albumId"] = albumId
             photoUpload(map)
         }
     }

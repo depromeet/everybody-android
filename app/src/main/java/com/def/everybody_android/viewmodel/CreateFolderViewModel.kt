@@ -5,7 +5,7 @@ import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
 import com.def.everybody_android.db.Album
-import com.def.everybody_android.nextId
+import com.def.everybody_android.nextAlbumId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
@@ -23,7 +23,7 @@ class CreateFolderViewModel @Inject constructor() : BaseViewModel() {
 
     fun createFolder(name: String) {
         realm.executeTransaction {
-            with(it.createObject(Album::class.java, it.nextId())) {
+            with(it.createObject(Album::class.java, it.nextAlbumId())) {
                 this.name = name
                 feedCreated = Date()
             }

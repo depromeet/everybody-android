@@ -1,8 +1,12 @@
 package com.def.everybody_android.ui.picture
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.hardware.Camera
 import android.media.ExifInterface
+import android.os.Build
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.def.everybody_android.*
@@ -141,30 +145,25 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         val bitmap =
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-        var filePath = ""
         binding.clPicture.draw(canvas)
-        filePath = if (!isAlbum) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
-            image
-        } else {
-            val photoFile = CameraActivity.createFile(
-                if (localStorage.isAppStorage()) requireContext().cacheDir else requireContext().getOutputDirectory(),
+        if(localStorage.isAppStorage()){
+            val photoFile = CameraActivity.createFile(requireContext().getAppSpecificAlbumStorageDir(),
                 CameraActivity.FILENAME,
                 CameraActivity.PHOTO_EXTENSION
             )
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(photoFile))
-            photoFile.toString()
         }
-        val newExif = ExifInterface(filePath)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            requireContext().sendBroadcast(Intent(Camera.ACTION_NEW_PICTURE, image.toUri()))
+        }
+        val newExif = ExifInterface(image)
         newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
         newExif.saveAttributes()
         activity?.apply {
             if (this is PictureActivity) {
-                val date = this@PictureFragment.binding.twDate.text.toString()
-                val time = this@PictureFragment.binding.twTime.text.toString()
                 val valueMap = hashMapOf(
-                    "body_part" to part,
-                    "taken_at" to serverFormat.format(datePictureFormat.parse("$date $time")),
+                    "bodyPart" to part,
                     "image" to image
                 )
                 saveComplete(valueMap)
