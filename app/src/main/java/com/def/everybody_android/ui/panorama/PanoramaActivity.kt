@@ -16,6 +16,8 @@ import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.data.response.AlbumResponse
 import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityPanoramaBinding
+import com.def.everybody_android.db.MainFeedPictureData
+import com.def.everybody_android.dto.Feed
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.album.delete.FolderDeleteDialog
 import com.def.everybody_android.ui.dialog.album.edit.FolderEditDialog
@@ -29,11 +31,11 @@ import kotlinx.coroutines.flow.collect
 class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel>() {
     override val layoutId: Int = R.layout.activity_panorama
     override val viewModel: PanoramaViewModel by viewModels()
-    private val whole = mutableListOf<Picture>()
-    private val upper = mutableListOf<Picture>()
-    private val lower = mutableListOf<Picture>()
+    private val whole = mutableListOf<MainFeedPictureData>()
+    private val upper = mutableListOf<MainFeedPictureData>()
+    private val lower = mutableListOf<MainFeedPictureData>()
     private var id: String = ""
-    private var albumData: AlbumResponse? = null
+    private var albumData: Feed? = null
     private lateinit var gridAdapter: RecyclerViewAdapter
     private lateinit var panoramaAdapter: RecyclerViewAdapter
 
@@ -56,16 +58,14 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
             viewModel.event.collect {
                 when (it) {
                     is PanoramaViewModel.Event.Album -> {
-                        val data = it.albumResponse
+                        val data = it.album.toFeed()
                         albumData = data
-                        data.pictures?.also { list ->
-                            whole.clear()
-                            upper.clear()
-                            lower.clear()
-                            whole.addAll(list.whole.orEmpty())
-                            upper.addAll(list.upper.orEmpty())
-                            lower.addAll(list.lower.orEmpty())
-                        }
+                        whole.clear()
+                        upper.clear()
+                        lower.clear()
+                        whole.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "whole" })
+                        upper.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "upper" })
+                        lower.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "lower" })
                         when (data.latestPart) {
                             "whole" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
                             "upper" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(2))

@@ -68,6 +68,13 @@ fun ImageView.imageLoad(
     Glide.with(context).load(file).apply(requestOptions).into(this)
 }
 
+fun ImageView.imageLoad(
+    file: File,
+    requestOptions: RequestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+) {
+    Glide.with(context).load(file).apply(requestOptions).into(this)
+}
+
 fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED, block)
@@ -108,6 +115,8 @@ fun Album.toFeed(): Feed {
         this.name,
         this.feedCreated,
         "${diffDays}일간의 기록",
+        this.feedPictureDataList[0]?.imagePath ?: "",
+        R.drawable.test_feed,
         this.feedPictureDataList
     )
 }
@@ -129,20 +138,20 @@ fun isExternalStorageWritable(): Boolean {
 }
 
 @BindingAdapter("imageUrl", "placeholder")
-fun folderLoadImage(view: ImageView, url: String, placeholder: Drawable) {
-    if (url.isEmpty()) view.setImageDrawable(placeholder)
+fun folderLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int) {
+    if (url.isEmpty()) view.setImageResource(placeholder)
     else view.imageLoad(
-        url,
+        File(url),
         RequestOptions().transform(CenterCrop(), RoundedCorners(view.context.convertDpToPx(4)))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
     )
 }
 
 @BindingAdapter("imagePanoramaUrl", "placeholderPanorama")
-fun panoramaLoadImage(view: ImageView, url: String, placeholder: Drawable) {
-    if (url.isEmpty()) view.setImageDrawable(placeholder)
+fun panoramaLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int) {
+    if (url.isEmpty()) view.setImageResource(placeholder)
     else view.imageLoad(
-        url,
+        File(url),
         RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
     )
 }

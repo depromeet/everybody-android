@@ -17,6 +17,7 @@ class HiltApplication : Application() {
         super.onCreate()
         Realm.init(this)
         val config: RealmConfiguration = RealmConfiguration.Builder()
+            .deleteRealmIfMigrationNeeded()
             .allowWritesOnUiThread(true) // UI Thread에서도 realm에 접근할 수 있도록 한다.
             .build()
 

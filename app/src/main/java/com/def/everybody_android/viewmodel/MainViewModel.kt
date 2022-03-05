@@ -117,20 +117,11 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     private fun getFeeds(): List<Feed> {
         val results = realm.where(Album::class.java).findAll()
-
         return if (results.isEmpty()) { // 앨범이 하나도 없을경우
             firstAddAlbum()
             val album = realm.where(Album::class.java).findFirst()
             listOf(album?.toFeed() ?: return listOf())
-        } else {
-            val albums = mutableListOf<Album>()
-            results.forEach {
-                it.feedPictureDataList = realm.where(MainFeedPictureData::class.java).containsValue("id",it.id).findAll() ?: listOf()
-                albums.add(it.copy())
-
-            }
-            results.toFeeds()
-        }
+        } else results.toFeeds()
     }
 
     private fun firstAddAlbum() {

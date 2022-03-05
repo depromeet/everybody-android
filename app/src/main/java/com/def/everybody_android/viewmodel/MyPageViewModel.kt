@@ -27,10 +27,10 @@ class MyPageViewModel @Inject constructor() : BaseViewModel() {
             UserRepo.putUserData(mapOf)
         }) {
 
-            userData = userData?.apply {
-                nickName = mapOf["nickname"].toString()
+            userData = userData?.copy(
+                nickName = mapOf["nickname"].toString(),
                 motto = mapOf["motto"].toString()
-            }
+            )
             viewModelScope.launch { _clickEvent.emit(Event.Complete) }
         }
     }

@@ -1,11 +1,10 @@
 package com.def.everybody_android.ui.panorama
 
 import androidx.lifecycle.viewModelScope
-import com.def.everybody_android.api.AlbumRepo
 import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
-import com.def.everybody_android.data.response.AlbumResponse
+import com.def.everybody_android.db.Album
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,19 +24,13 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun getAlbum(id: String) {
-        runScope({
-            AlbumRepo.getAlbum(id)
-        }) {
-            viewModelScope.launch { _event.emit(Event.Album(it)) }
+        realm.where(Album::class.java).containsValue("id", id).findFirst()?.apply {
+            viewModelScope.launch { _event.emit(Event.Album(this@apply)) }
         }
     }
 
-    fun deleteAlbum(id:String){
-        runScope({
-            AlbumRepo.deleteAlbum(id)
-        }) {
-            if(it.code() == 204) viewModelScope.launch { _event.emit(Event.DeleteComplete) }
-        }
+    fun deleteAlbum(id: String) {
+        viewModelScope.launch { _event.emit(Event.DeleteComplete) }
     }
 
     sealed class Event {
@@ -48,10 +41,10 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
         object More : Event()
         object AlbumDelete : Event()
         object AlbumEdit : Event()
-        object DeleteComplete:Event()
+        object DeleteComplete : Event()
         object Share : Event()
         data class PoseType(val type: Int) : Event()
-        data class Album(val albumResponse: AlbumResponse) : Event()
+        data class Album(val album: com.def.everybody_android.db.Album) : Event()
     }
 
 }

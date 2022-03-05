@@ -20,6 +20,8 @@
             android:id="@+id/img_folder"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            imageUrl="@{data.imageUrl}"
+            placeholder="@{data.holder}"
             android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"

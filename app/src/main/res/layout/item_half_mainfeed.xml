@@ -20,6 +20,8 @@
             android:layout_width="162dp"
             android:layout_height="162dp"
             android:scaleType="centerCrop"
+            imageUrl="@{repo.image}"
+            placeholder="@{repo.placeHolder}"
             android:layout_marginStart="11dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

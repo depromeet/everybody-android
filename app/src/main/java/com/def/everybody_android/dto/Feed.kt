@@ -8,5 +8,7 @@ data class Feed(
     val name: String,
     val feedCreated: Date,
     val description: String,
+    val image: String,
+    val placeHolder: Int,
     val feedPicture: List<MainFeedPictureData>
 )

@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
+import com.def.everybody_android.db.Album
 import com.def.everybody_android.db.MainFeedPictureData
-import com.def.everybody_android.nextPictureId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
@@ -21,12 +21,21 @@ class PictureViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun photoUpload(valueMap: Map<String, String>) {
-        realm.executeTransaction {
-            with(it.createObject(MainFeedPictureData::class.java, it.nextPictureId())) {
-                albumId = valueMap["albumId"]?.toLong() ?: -1
-                bodyPart = valueMap["bodyPart"].toString()
-                imagePath = valueMap["image"].toString()
-                pictureCreated = Date()
+        val albumId = valueMap["albumId"]?.toLong() ?: -1
+        val bodyPart = valueMap["bodyPart"].toString()
+        val imagePath = valueMap["image"].toString()
+        val results = realm.where(Album::class.java).containsValue("id", albumId).findFirst()
+        results?.apply {
+            realm.executeTransaction {
+                feedPictureDataList.add(
+                    MainFeedPictureData().apply {
+                        this.albumId = albumId
+                        this.bodyPart = bodyPart
+                        this.imagePath = imagePath
+                        this.pictureCreated = Date()
+                    }
+                )
+                realm.copyToRealm(this)
             }
         }
         viewModelScope.launch { _clickEvent.emit(ClickEvent.Complete) }

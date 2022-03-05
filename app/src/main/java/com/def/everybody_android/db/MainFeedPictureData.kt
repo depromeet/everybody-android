@@ -7,8 +7,6 @@ import java.util.*
 
 open class MainFeedPictureData : RealmObject() {
 
-    @PrimaryKey
-    var pictureId: Long = -1
     var albumId: Long = -1
     lateinit var bodyPart: String
     lateinit var imagePath: String
