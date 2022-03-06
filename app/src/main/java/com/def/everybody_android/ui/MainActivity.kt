@@ -95,6 +95,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     )
                     MainViewModel.ClickEvent.FeedBack -> FeedBackDialog().show(supportFragmentManager, "")
                     MainViewModel.ClickEvent.Created -> createForResult.launch(Intent(this@MainActivity, CreateFolderActivity::class.java))
+                    MainViewModel.ClickEvent.Sign -> viewModel.getUserData()
                 }
             }
         }

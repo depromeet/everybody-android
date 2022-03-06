@@ -236,7 +236,7 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
 
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
         val futureStudioIconFile =
-            File(getAppSpecificAlbumStorageDir(), SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis()) + ".mp4")
+            File(getOutputDirectory(), SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis()) + ".mp4")
         return try {
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null

@@ -55,10 +55,12 @@ fun Context.typeFace(@FontRes id: Int): Typeface? {
     return ResourcesCompat.getFont(this, id)
 }
 
-fun Context.getAppSpecificAlbumStorageDir(): File {
-    val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "noonbody")
-    if (file.exists()) file.mkdirs()
-    return file
+fun Context.getOutputDirectory(): File {
+    val mediaDir = externalMediaDirs.firstOrNull()?.let {
+        File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+    }
+    return if (mediaDir != null && mediaDir.exists())
+        mediaDir else filesDir
 }
 
 fun ImageView.imageLoad(
