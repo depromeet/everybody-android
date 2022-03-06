@@ -32,6 +32,8 @@
 
         <ImageView
             android:id="@+id/img_del"
+            imageUrl="@{data.imageUrl}"
+            placeholder="@{data.holder}"
             selected="@{data.enable}"
             android:layout_width="18dp"
             android:layout_height="18dp"

@@ -1,6 +1,5 @@
 package com.def.everybody_android.ui.picture.folder
 
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import com.def.everybody_android.BR
 import com.def.everybody_android.R

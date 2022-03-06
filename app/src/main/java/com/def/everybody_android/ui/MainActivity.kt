@@ -90,7 +90,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             this@MainActivity,
                             PanoramaActivity::class.java
                         ).apply {
-                            putExtra("id", it.data.id.toString())
+                            putExtra("id", it.data.id)
                         }
                     )
                     MainViewModel.ClickEvent.FeedBack -> FeedBackDialog().show(supportFragmentManager, "")

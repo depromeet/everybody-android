@@ -23,13 +23,13 @@ class PanoramaViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _event.emit(Event.PoseType(type)) }
     }
 
-    fun getAlbum(id: String) {
+    fun getAlbum(id: Long) {
         realm.where(Album::class.java).containsValue("id", id).findFirst()?.apply {
             viewModelScope.launch { _event.emit(Event.Album(this@apply)) }
         }
     }
 
-    fun deleteAlbum(id: String) {
+    fun deleteAlbum(id: Long) {
         viewModelScope.launch { _event.emit(Event.DeleteComplete) }
     }
 

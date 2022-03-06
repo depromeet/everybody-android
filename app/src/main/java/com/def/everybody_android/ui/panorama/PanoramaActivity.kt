@@ -3,9 +3,9 @@ package com.def.everybody_android.ui.panorama
 import android.content.Context
 import android.content.Intent
 import android.graphics.Point
-import android.graphics.drawable.Drawable
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.annotation.DrawableRes
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.*
 import androidx.viewpager.widget.ViewPager
@@ -13,8 +13,6 @@ import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
-import com.def.everybody_android.data.response.AlbumResponse
-import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityPanoramaBinding
 import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.dto.Feed
@@ -34,7 +32,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     private val whole = mutableListOf<MainFeedPictureData>()
     private val upper = mutableListOf<MainFeedPictureData>()
     private val lower = mutableListOf<MainFeedPictureData>()
-    private var id: String = ""
+    private var id: Long = -1
     private var albumData: Feed? = null
     private lateinit var gridAdapter: RecyclerViewAdapter
     private lateinit var panoramaAdapter: RecyclerViewAdapter
@@ -42,7 +40,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
     override fun onResume() {
         super.onResume()
         if (!intent.hasExtra("id")) return finish()
-        id = intent.getStringExtra("id") ?: ""
+        id = intent.getLongExtra("id", -1)
         viewModel.getAlbum(id)
     }
 
@@ -66,7 +64,13 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         whole.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "whole" })
                         upper.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "upper" })
                         lower.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "lower" })
-                        when (data.latestPart) {
+                        val latestPart = when {
+                            whole.isNotEmpty() -> "whole"
+                            upper.isNotEmpty() -> "upper"
+                            lower.isNotEmpty() -> "lower"
+                            else -> "whole"
+                        }
+                        when (latestPart) {
                             "whole" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
                             "upper" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(2))
                             "lower" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(3))
@@ -109,7 +113,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                                 this@PanoramaActivity,
                                 CameraActivity::class.java
                             ).apply {
-                                putExtra("id", id)
+                                putExtra("id", id.toString())
                             }
                         )
                     }
@@ -271,26 +275,26 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
             return size.x
         }
 
-    private fun recyclerSetting(data: List<Picture>) {
+    private fun recyclerSetting(data: List<MainFeedPictureData>) {
         binding.groupEmpty.isVisible = data.isEmpty()
         gridAdapter.setItems(data.map {
             RecyclerItem(
                 PanoramaViewPagerAdapter.Item(
-                    it.imageUrl ?: "",
-                    this.getDrawable(R.drawable.test_feed)!!
+                    it.imagePath,
+                    R.drawable.test_feed
                 ), R.layout.item_panorama_grid, BR.data
             )
         })
     }
 
-    private fun viewPagerSetting(data: List<Picture>) {
+    private fun viewPagerSetting(data: List<MainFeedPictureData>) {
         binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(data) }
         binding.vpPanorama.offscreenPageLimit = data.size
         panoramaAdapter.setItems(data.mapIndexed { index, picture ->
             RecyclerItem(
                 Item(
-                    picture.imageUrl ?: "",
-                    this.getDrawable(R.drawable.test_feed)!!,
+                    picture.imagePath,
+                    R.drawable.test_feed,
                     index == 0,
                     (index + 1).toString()
                 ), R.layout.item_panorama_tab, BR.data
@@ -300,7 +304,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
 
     data class Item(
         val imageUrl: String,
-        val holder: Drawable,
+        @DrawableRes val holder: Int,
         val isEnable: Boolean,
         val count: String
     )
