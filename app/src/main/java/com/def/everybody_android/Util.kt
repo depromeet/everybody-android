@@ -117,7 +117,7 @@ fun Album.toFeed(): Feed {
         this.name,
         this.feedCreated,
         "${diffDays}일간의 기록",
-        this.feedPictureDataList[0]?.imagePath ?: "",
+        if (this.feedPictureDataList.isEmpty()) "" else this.feedPictureDataList[0]?.imagePath ?: "",
         R.drawable.test_feed,
         this.feedPictureDataList
     )
