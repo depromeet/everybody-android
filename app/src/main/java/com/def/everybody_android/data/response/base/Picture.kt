@@ -10,7 +10,7 @@ data class Picture(
     @SerializedName("album_id")
     val albumId: Int? = null, // 10
     @SerializedName("body_part")
-    val bodyPart: String? = null, // upper
+    val bodyPart: String, // upper
     @SerializedName("thumbnail_url")
     val thumbnailUrl: String? = null, // https://d1kmcfw2fqy7s4.cloudfront.net/20/image/48/366934a4-e98a-439a-9fed-b339d55d04eb?Expires=1636726975&Signature=lQ7mR6Va9xhc3BrR6gsXWIZiFUZ1XxqNEnFhzKFluiXjnl4J0jILssSexA3dWjH8Alj6XTvpB0wuAjdUvKbmn0Nf6sfcOO5rhxFlOyxp9l21JEjMJZ5-wR-ANoVK4~kMo-hcDX5KCBEO0BdV8vJjeTXb2FYGeC-kbETV~gW2ThkhgtuJc1QQhy2cqA-UqBBXJ8kh8RlLZq1aaZBIHsmBFod1E7BQc66BHrLrSNfsr1tGewSr9pi~e-fmwc1wdPQktOGk1b6o5by0svt9jmoow9BO1nAkQRw3JEuTdWJ24i3TL7SQWzpT95rGG~rQkx6L5r6CFwrMMOcJ8U7-AQdCYg__&Key-Pair-Id=APKAJQ7ER27KOWZFQB3A
     @SerializedName("preview_url")
@@ -31,7 +31,7 @@ data class Picture(
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString(),
+        parcel.readString() ?: "",
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),

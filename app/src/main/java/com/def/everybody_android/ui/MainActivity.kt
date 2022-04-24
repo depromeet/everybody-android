@@ -20,6 +20,8 @@ import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.feedback.FeedBackDialog
+import com.def.everybody_android.ui.dialog.loading.LoadingDialog
+import com.def.everybody_android.ui.dialog.migrations.MigrationsDialog
 import com.def.everybody_android.ui.panorama.PanoramaActivity
 import com.def.everybody_android.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
@@ -84,6 +86,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                         userData = it.data
                         user(it.data)
                         onClickMyPage(it.data)
+                        viewModel.getAlbum(this@MainActivity, MigrationsDialog())
                     }
                     is MainViewModel.ClickEvent.PanoramaActivity -> startActivity(
                         Intent(

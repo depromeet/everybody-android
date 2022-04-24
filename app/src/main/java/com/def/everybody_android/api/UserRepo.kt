@@ -19,6 +19,9 @@ class UserRepo {
 
         @POST("/feedbacks")
         suspend fun feedBack(@Body map: HashMap<String, Any>): Response<Unit>
+
+        @PUT("/users/me/download-completed")
+        suspend fun migrationCompleted(): Response<Unit>
     }
 
     companion object {
@@ -30,6 +33,8 @@ class UserRepo {
 
         suspend fun feedBack(map: HashMap<String, Any>): Response<Unit> =
             ApiModule.provideApiUser().feedBack(map)
+        
+        suspend fun migrationCompleted(): Response<Unit> = ApiModule.provideApiUser().migrationCompleted()
     }
 
 

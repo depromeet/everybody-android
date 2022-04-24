@@ -12,7 +12,7 @@ open class BaseViewModel : ViewModel() {
 
     private val _toast = MutableEventFlow<String>()
     val toast = _toast.asEventFlow()
-    val realm = Realm.getDefaultInstance()
+    val realm: Realm = Realm.getDefaultInstance()
     protected fun setToast(msg: String) {
         viewModelScope.launch { _toast.emit(msg) }
     }
