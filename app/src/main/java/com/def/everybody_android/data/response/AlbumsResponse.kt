@@ -9,9 +9,9 @@ class AlbumsResponse : ArrayList<AlbumsResponse.Album>() {
         @SerializedName("id")
         val id: Int, // 10
         @SerializedName("name")
-        val name: String? = null, // 아요미의 두 번째 앨범!
+        val name: String, // 아요미의 두 번째 앨범!
         @SerializedName("created_at")
-        val createdAt: String? = null, // 2021-11-02T13:54:29+09:00
+        val createdAt: String, // 2021-11-02T13:54:29+09:00
         @SerializedName("pictures")
         val pictures: Pictures,
         @SerializedName("description")

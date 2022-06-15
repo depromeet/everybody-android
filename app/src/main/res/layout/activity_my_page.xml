@@ -54,6 +54,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:text="완료"
             android:textColor="@color/gray_80"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,6 +63,7 @@
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:layout_marginTop="43dp"
+            android:src="@drawable/test_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,8 +89,10 @@
             android:layout_marginStart="51dp"
             android:layout_marginTop="75dp"
             android:background="@android:color/transparent"
+            android:enabled="false"
             android:fontFamily="@font/pretendard_regular"
             android:hint="닉네임을 입력해주세요"
+            android:text="눈바디"
             android:textColor="@color/gray_80"
             android:textColorHint="@color/black"
             android:textSize="16sp"
@@ -123,8 +127,9 @@
             android:layout_marginStart="51dp"
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
+            android:enabled="false"
             android:fontFamily="@font/pretendard_regular"
-            android:hint="천천히 그리고 꾸준히(디폴트)"
+            android:text="천천히 그리고 꾸준히"
             android:textColor="@color/gray_80"
             android:textColorHint="@color/black"
             android:textSize="16sp"
@@ -172,6 +177,13 @@
             android:layout_marginTop="16dp"
             android:background="@color/gray_10"
             app:layout_constraintTop_toBottomOf="@+id/tv_alarm" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="ib_setting_alarm,tv_alarm,view_alarm_bottom" />
 
         <TextView
             android:id="@+id/tv_storage"

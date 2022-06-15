@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.hardware.Camera
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
 import android.net.Uri
@@ -15,22 +14,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
 import android.webkit.MimeTypeMap
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.camera.core.*
-import androidx.camera.core.CameraSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.def.everybody_android.*
 import com.def.everybody_android.R
 import com.def.everybody_android.adapter.RecyclerItem
@@ -211,11 +203,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
 
     private fun clickShutter() {
         imageCapture?.let { imageCapture ->
-            val photoFile = createFile(
-                if (localStorage.isAppStorage()) cacheDir else getOutputDirectory(),
-                FILENAME,
-                PHOTO_EXTENSION
-            )
+            val photoFile = createFile(filesDir, FILENAME, PHOTO_EXTENSION)
             val metadata = ImageCapture.Metadata().apply {
                 isReversedHorizontal = lensFacing == CameraSelector.LENS_FACING_FRONT
             }
@@ -233,31 +221,20 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                     override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                         val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
                         Log.d(TAG, "Photo capture succeeded: $savedUri")
-
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                            sendBroadcast(
-                                Intent(Camera.ACTION_NEW_PICTURE, savedUri)
-                            )
-                        }
-
-                        val mimeType = MimeTypeMap.getSingleton()
-                            .getMimeTypeFromExtension(savedUri.toFile().extension)
+                        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(savedUri.toFile().extension)
                         MediaScannerConnection.scanFile(
                             this@CameraActivity,
                             arrayOf(savedUri.toFile().absolutePath),
                             arrayOf(mimeType)
                         ) { path, uri ->
-                            val fileUri = if (uri != null) ContentUriUtil.getFilePath(
-                                this@CameraActivity,
-                                uri
-                            ).toString()
+                            val fileUri = if (uri != null) ContentUriUtil.getFilePath(this@CameraActivity, uri).toString()
                             else path
                             startActivity(
-                                Intent(
-                                    this@CameraActivity,
-                                    PictureActivity::class.java
-                                ).apply {
-                                    putExtra("image", fileUri)
+                                Intent(this@CameraActivity, PictureActivity::class.java).apply {
+                                    putExtra(
+                                        "image",
+                                        fileUri
+                                    )
                                     if (albumId.isNotEmpty()) putExtra("id", albumId)
                                 })
                         }

@@ -1,13 +1,14 @@
 package com.def.everybody_android.ui.dialog.folder
 
 import androidx.lifecycle.viewModelScope
-import com.def.everybody_android.api.AlbumRepo
 import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
-import com.def.everybody_android.data.response.AlbumsResponse
+import com.def.everybody_android.db.Album
+import com.def.everybody_android.nextAlbumId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,8 +16,6 @@ class FolderAddViewModel @Inject constructor() : BaseViewModel() {
 
     private val _event = MutableEventFlow<Event>()
     val event = _event.asEventFlow()
-    private val _createAlbum = MutableEventFlow<AlbumsResponse.Album>()
-    val createAlbum = _createAlbum.asEventFlow()
     private var folderName = ""
 
     fun onClickEvent(event: Event) {
@@ -28,10 +27,11 @@ class FolderAddViewModel @Inject constructor() : BaseViewModel() {
             setToast("폴더명을 입력해주세요.")
             return
         }
-        runScope({
-            AlbumRepo.createAlbum(mapOf("name" to folderName))
-        }) {
-            viewModelScope.launch { _event.emit(Event.Album(it)) }
+        realm.executeTransaction {
+            with(it.createObject(Album::class.java, it.nextAlbumId())) {
+                this.name = folderName
+                feedCreated = Date()
+            }
         }
     }
 
@@ -43,7 +43,6 @@ class FolderAddViewModel @Inject constructor() : BaseViewModel() {
     sealed class Event {
         object Cancel : Event()
         object Complete : Event()
-        data class Album(val album: AlbumsResponse.Album) : Event()
     }
 
 }

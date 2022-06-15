@@ -2,13 +2,13 @@ package com.def.everybody_android.ui.panorama.download
 
 import android.content.Context
 import android.graphics.Point
-import android.graphics.drawable.Drawable
+import android.media.MediaScannerConnection
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.annotation.DrawableRes
 import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -18,8 +18,8 @@ import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
-import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityDownloadBinding
+import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.ui.dialog.message.MessageDialog
 import com.def.everybody_android.ui.panorama.PanoramaViewPagerAdapter
 import com.def.everybody_android.ui.panorama.download.loading.DownloadDialog
@@ -29,8 +29,6 @@ import okhttp3.ResponseBody
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
-import android.media.MediaScannerConnection
-import android.net.Uri
 
 
 @AndroidEntryPoint
@@ -38,22 +36,21 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
     override val layoutId: Int = R.layout.activity_download
     override val viewModel: DownloadViewModel by viewModels()
     private lateinit var adapter: RecyclerViewAdapter
-    private val imageList = mutableListOf<Picture>()
+    private val imageList = mutableListOf<MainFeedPictureData>()
     private val downloadDialog = DownloadDialog()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!intent.hasExtra("image")) return finish()
-        imageList.addAll(intent.getParcelableArrayExtra("image")?.map { it as Picture }.orEmpty())
+        imageList.addAll(intent.getParcelableArrayExtra("image")?.map { it as MainFeedPictureData }.orEmpty())
         if (imageList.isEmpty()) return finish()
         binding.twTitle.text = intent.getStringExtra("title")
         adapter = RecyclerViewAdapter { }
         binding.recyclerPanorama.adapter = adapter
-        adapter.setItems(imageList.mapIndexed { index, picture ->
+        adapter.setItems(imageList.mapIndexed { index, MainFeedPictureData ->
             RecyclerItem(
                 Item(
-                    picture.key ?: "",
-                    picture.imageUrl ?: "",
-                    this.getDrawable(R.drawable.test_feed)!!,
+                    MainFeedPictureData.imagePath,
+                    R.drawable.test_feed,
                     (index + 1).toString(),
                     index == 0,
                     viewModel
@@ -179,7 +176,7 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                         }
                         adapter.setItems(recyclerList)
                         val list = imageList.filter { image ->
-                            adapter.getItems().find { (it.data as Item).key == image.key } != null
+                            adapter.getItems().find { (it.data as Item).imageUrl == image.imagePath } != null
                         }
                         binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(list) }
                         binding.vpPanorama.offscreenPageLimit = list.size
@@ -192,8 +189,9 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                     }
                     DownloadViewModel.Event.Close -> finish()
                     DownloadViewModel.Event.Download -> {
-                        downloadDialog.show(supportFragmentManager, "")
-                        viewModel.onDownloadClick(adapter.getItems().map { (it.data as Item).key })
+                        MessageDialog(true){}.setMessage("다운로드","다운로드기능은 추후 업데이트됩니다.").show(supportFragmentManager, "")
+//                        downloadDialog.show(supportFragmentManager, "")
+//                        viewModel.onDownloadClick(adapter.getItems().map { (it.data as Item).imageUrl })
                     }
                     is DownloadViewModel.Event.DownloadFile -> {
                         runOnUiThread {
@@ -202,12 +200,11 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                     }
                     DownloadViewModel.Event.Refresh -> {
                         MessageDialog(true) {
-                            adapter.setItems(imageList.mapIndexed { index, picture ->
+                            adapter.setItems(imageList.mapIndexed { index, MainFeedPictureData ->
                                 RecyclerItem(
                                     Item(
-                                        picture.key ?: "",
-                                        picture.imageUrl ?: "",
-                                        this@DownloadActivity.getDrawable(R.drawable.test_feed)!!,
+                                        MainFeedPictureData.imagePath,
+                                        R.drawable.test_feed,
                                         (index + 1).toString(),
                                         index == 0,
                                         viewModel
@@ -231,9 +228,8 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
     }
 
     data class Item(
-        val key: String,
         val imageUrl: String,
-        val holder: Drawable,
+        @DrawableRes val holder: Int,
         val count: String,
         val isEnable: Boolean,
         val viewModel: DownloadViewModel

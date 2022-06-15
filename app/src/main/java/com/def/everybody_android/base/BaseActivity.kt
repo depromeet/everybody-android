@@ -9,6 +9,7 @@ import androidx.databinding.ViewDataBinding
 import com.def.everybody_android.BR
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.toast
+import io.realm.Realm
 import kotlinx.coroutines.flow.collect
 
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
@@ -16,6 +17,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     abstract val layoutId: Int
     abstract val viewModel: R
+    val realm = Realm.getDefaultInstance()
     private var permissionAction = {}
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
@@ -29,7 +31,6 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
             permissionAction.invoke()
             permissionAction = {}
         }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

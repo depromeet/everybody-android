@@ -2,6 +2,7 @@ package com.def.everybody_android.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.realm.Realm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,7 +12,7 @@ open class BaseViewModel : ViewModel() {
 
     private val _toast = MutableEventFlow<String>()
     val toast = _toast.asEventFlow()
-
+    val realm: Realm = Realm.getDefaultInstance()
     protected fun setToast(msg: String) {
         viewModelScope.launch { _toast.emit(msg) }
     }

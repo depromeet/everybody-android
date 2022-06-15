@@ -26,6 +26,7 @@ class MyPageViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             UserRepo.putUserData(mapOf)
         }) {
+
             userData = userData?.copy(
                 nickName = mapOf["nickname"].toString(),
                 motto = mapOf["motto"].toString()

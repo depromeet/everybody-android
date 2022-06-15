@@ -28,6 +28,11 @@ import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.databinding.ViewTopToastBinding
+import com.def.everybody_android.db.Album
+import com.def.everybody_android.db.MainFeedPictureData
+import com.def.everybody_android.dto.Feed
+import com.def.everybody_android.ui.MainActivity
+import io.realm.Realm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -58,16 +63,15 @@ fun Context.getOutputDirectory(): File {
         mediaDir else filesDir
 }
 
-fun Context.getOutputDcimDirectory(): File {
-    val mediaDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).let {
-        File(it, "Camera").apply { mkdirs() }
-    }
-    return if (mediaDir != null && mediaDir.exists())
-        mediaDir else filesDir
+fun ImageView.imageLoad(
+    file: String,
+    requestOptions: RequestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+) {
+    Glide.with(context).load(file).apply(requestOptions).into(this)
 }
 
 fun ImageView.imageLoad(
-    file: String,
+    file: File,
     requestOptions: RequestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
 ) {
     Glide.with(context).load(file).apply(requestOptions).into(this)
@@ -102,21 +106,54 @@ fun Context.topToast(message: String) {
     toast.show()
 }
 
+fun List<Album>.toFeeds(): List<Feed> {
+    return this.map { it.toFeed() }
+}
+
+fun Album.toFeed(): Feed {
+    val diffDays = (System.currentTimeMillis() - this.feedCreated.time) / (1000 * 24 * 60 * 60)
+    return Feed(
+        this.id,
+        this.name,
+        this.feedCreated,
+        "${diffDays}일간의 기록",
+        if (this.feedPictureDataList.isEmpty()) "" else this.feedPictureDataList[0]?.imagePath ?: "",
+        R.drawable.test_feed,
+        this.feedPictureDataList
+    )
+}
+
+fun Realm.nextAlbumId(): Int {
+    val currentIdNum = where(Album::class.java).max("id")
+    return if (currentIdNum == null) 1
+    else currentIdNum.toInt() + 1
+}
+
+fun Realm.nextPictureId(): Int {
+    val currentIdNum = where(MainFeedPictureData::class.java).max("id")
+    return if (currentIdNum == null) 1
+    else currentIdNum.toInt() + 1
+}
+
+fun isExternalStorageWritable(): Boolean {
+    return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+}
+
 @BindingAdapter("imageUrl", "placeholder")
-fun folderLoadImage(view: ImageView, url: String, placeholder: Drawable) {
-    if (url.isEmpty()) view.setImageDrawable(placeholder)
+fun folderLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int) {
+    if (url.isEmpty()) view.setImageResource(placeholder)
     else view.imageLoad(
-        url,
+        File(url),
         RequestOptions().transform(CenterCrop(), RoundedCorners(view.context.convertDpToPx(4)))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
     )
 }
 
 @BindingAdapter("imagePanoramaUrl", "placeholderPanorama")
-fun panoramaLoadImage(view: ImageView, url: String, placeholder: Drawable) {
-    if (url.isEmpty()) view.setImageDrawable(placeholder)
+fun panoramaLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int) {
+    if (url.isEmpty()) view.setImageResource(placeholder)
     else view.imageLoad(
-        url,
+        File(url),
         RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
     )
 }

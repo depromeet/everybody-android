@@ -21,7 +21,7 @@ class FeedBackViewModel @Inject constructor() : BaseViewModel() {
 
     fun onFeedBack() {
         runScope({
-            UserRepo.feedBack(hashMapOf("content" to content, "star_rate" to number))
+            UserRepo.feedBack(hashMapOf("title" to "안드로이드 피드백", "content" to content, "star_rate" to number))
         }) {
             viewModelScope.launch { _event.emit(Event.FeedBack) }
         }

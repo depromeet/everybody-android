@@ -20,6 +20,7 @@
         <ImageView
             imageUrl="@{data.imageUrl}"
             placeholder="@{data.holder}"
+            selected="@{data.enable}"
             android:layout_width="48dp"
             android:layout_height="64dp"
             android:layout_marginTop="4dp"
@@ -34,7 +35,6 @@
 
         <ImageView
             android:id="@+id/img_del"
-            selected="@{data.enable}"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/seletor_oval_day"

@@ -6,8 +6,11 @@ import com.def.everybody_android.base.BaseViewModel
 import com.def.everybody_android.base.MutableEventFlow
 import com.def.everybody_android.base.asEventFlow
 import com.def.everybody_android.data.response.AlbumsResponse
+import com.def.everybody_android.db.Album
+import com.def.everybody_android.db.MainFeedPictureData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,15 +24,18 @@ class FolderEditViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _event.emit(event) }
     }
 
-    fun editAlbums(id: String) {
+    fun editAlbums(id: Long) {
         if (folderName.isEmpty()) {
             setToast("폴더명을 입력해주세요.")
             return
         }
-        runScope({
-            AlbumRepo.editAlbum(id, mapOf("name" to folderName))
-        }) {
-            if(it.code() == 200) viewModelScope.launch { _event.emit(Event.Album(folderName)) }
+        val results = realm.where(Album::class.java).containsValue("id", id).findFirst()
+        results?.apply {
+            realm.executeTransaction {
+                this.name = folderName
+                realm.copyToRealm(this)
+                viewModelScope.launch { _event.emit(Event.Album(folderName)) }
+            }
         }
     }
 

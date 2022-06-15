@@ -7,7 +7,7 @@
 
         <variable
             name="repo"
-            type="com.def.everybody_android.dto.response.MainFeedResponse" />
+            type="com.def.everybody_android.dto.Feed" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,9 +19,9 @@
             android:id="@+id/iv_feed_half"
             android:layout_width="162dp"
             android:layout_height="162dp"
-            app:url='@{repo}'
-            app:holder="@{@drawable/test_feed}"
             android:scaleType="centerCrop"
+            imageUrl="@{repo.image}"
+            placeholder="@{repo.placeHolder}"
             android:layout_marginStart="11dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -14,10 +14,10 @@
         android:layout_height="match_parent">
 
         <ImageView
+            imageUrl="@{data.imageUrl}"
+            placeholder="@{data.holder}"
             android:id="@+id/img"
             android:scaleType="fitXY"
-            imagePanoramaUrl="@{data.imageUrl}"
-            placeholderPanorama="@{data.holder}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

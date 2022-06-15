@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "com.def.everybody_android",
-  "variantName": "release",
+  "variantName": "debug",
   "elements": [
     {
       "type": "SINGLE",
@@ -13,7 +13,7 @@
       "attributes": [],
       "versionCode": 4,
       "versionName": "0.9.3",
-      "outputFile": "app-release.apk"
+      "outputFile": "app-debug.apk"
     }
   ],
   "elementType": "File"

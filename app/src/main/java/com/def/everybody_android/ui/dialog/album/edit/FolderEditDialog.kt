@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.def.everybody_android.R
 import com.def.everybody_android.base.BaseDialogFragment
-import com.def.everybody_android.data.response.AlbumResponse
 import com.def.everybody_android.databinding.DialogFolderEditBinding
+import com.def.everybody_android.dto.Feed
 import com.def.everybody_android.repeatOnStarted
 import kotlinx.coroutines.flow.collect
 
-class FolderEditDialog(private val album: AlbumResponse, private val callBack: (String) -> Unit) :
+class FolderEditDialog(private val album: Feed, private val callBack: (String) -> Unit) :
     BaseDialogFragment<DialogFolderEditBinding, FolderEditViewModel>() {
     override val viewModel: FolderEditViewModel by viewModels()
     override val layoutId: Int = R.layout.dialog_folder_edit
@@ -32,7 +32,7 @@ class FolderEditDialog(private val album: AlbumResponse, private val callBack: (
             viewModel.event.collect {
                 when (it) {
                     FolderEditViewModel.Event.Cancel -> dismiss()
-                    FolderEditViewModel.Event.Complete -> viewModel.editAlbums(album.id.toString())
+                    FolderEditViewModel.Event.Complete -> viewModel.editAlbums(album.id)
                     is FolderEditViewModel.Event.Album -> {
                         callBack.invoke(it.name)
                         dismiss()

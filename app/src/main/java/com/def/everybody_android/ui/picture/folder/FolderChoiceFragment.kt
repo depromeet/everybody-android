@@ -1,6 +1,5 @@
 package com.def.everybody_android.ui.picture.folder
 
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import com.def.everybody_android.BR
 import com.def.everybody_android.R
@@ -22,28 +21,11 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
     private lateinit var adapter: RecyclerViewAdapter
 
     override fun init() {
-        viewModel.getAlbums()
+        viewModel.getFeeds()
         adapter = RecyclerViewAdapter {
             if (it is Unit) {
-                FolderAddDialog { data ->
-                    adapter.addItem(
-                        RecyclerItem(
-                            FolderChoiceViewModel.Item(
-                                "",
-                                data.name ?: "",
-                                ResourcesCompat.getDrawable(
-                                    resources,
-                                    R.drawable.test_feed,
-                                    null
-                                )!!,
-                                false,
-                                data.id,
-                                data.description ?: ""
-                            ),
-                            R.layout.item_folder_choice,
-                            BR.data
-                        )
-                    )
+                FolderAddDialog {
+                    viewModel.getFeeds()
                 }.show(childFragmentManager, "")
             } else if (it is FolderChoiceViewModel.Item) {
                 val checkIndex = adapter.getItems()
@@ -61,12 +43,12 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
                             )
                         ), checkIndex
                     )
-                    viewModel.valueMap["album_id"] = ""
+                    viewModel.valueMap["albumId"] = ""
                 }
                 val index = adapter.getItems().indexOfFirst { data -> data.data == it }
                 if (index > -1) {
                     val data = adapter.getItems()[index]
-                    viewModel.valueMap["album_id"] = it.id.toString()
+                    viewModel.valueMap["albumId"] = it.id.toString()
                     adapter.changeItem(data.copy(data = it.copy(isCheck = !it.isCheck)), index)
                 }
             }
@@ -74,16 +56,16 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         binding.recyclerFolder.addItemDecoration(FolderItemDecoration())
         binding.recyclerFolder.adapter = adapter
         repeatOnStarted {
-            viewModel.albumsResponse.collect {
+            viewModel.feedsResponse.collect {
                 val item = it.map { data ->
-                    val image = data.thumbnailUrl
+                    val image = if (data.feedPicture.isEmpty()) "" else data.feedPicture.first().imagePath
                     val recyclerData = FolderChoiceViewModel.Item(
-                        image ?: "",
-                        data.name ?: "",
-                        ResourcesCompat.getDrawable(resources, R.drawable.test_feed, null)!!,
-                        false,
                         data.id,
-                        data.description ?: ""
+                        image,
+                        data.name,
+                        R.drawable.test_feed,
+                        false,
+                        data.description
                     )
                     RecyclerItem(
                         recyclerData,
@@ -99,7 +81,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
 
     fun getValue() {
         val map = viewModel.valueMap
-        if (map.containsKey("album_id")) {
+        if (map.containsKey("albumId")) {
             activity?.apply {
                 if (this is PictureActivity) {
                     photoUpload(map)

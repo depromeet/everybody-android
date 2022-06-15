@@ -15,10 +15,10 @@
         android:orientation="vertical">
 
         <ImageView
-            imageUrl="@{data.imageUrl}"
-            placeholder="@{data.holder}"
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            placeholder="@{data.holder}"
+            imageUrl="@{data.imageUrl}"
             android:background="@drawable/rectangle_radius_4_stroke_2"
             android:padding="2dp" />
 
