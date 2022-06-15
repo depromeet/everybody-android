@@ -182,6 +182,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             UserRepo.migrationCompleted()
         }){
+            onClickEvent(ClickEvent.Migration)
             settingFeedList()
         }
     }
@@ -245,6 +246,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         object FeedBack : ClickEvent()
         object Created : ClickEvent()
         object Sign : ClickEvent()
+        object Migration:ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
         data class PanoramaActivity(val data: Feed) : ClickEvent()
     }

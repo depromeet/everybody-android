@@ -189,8 +189,9 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                     }
                     DownloadViewModel.Event.Close -> finish()
                     DownloadViewModel.Event.Download -> {
-                        downloadDialog.show(supportFragmentManager, "")
-                        viewModel.onDownloadClick(adapter.getItems().map { (it.data as Item).imageUrl })
+                        MessageDialog(true){}.setMessage("다운로드","다운로드기능은 추후 업데이트됩니다.").show(supportFragmentManager, "")
+//                        downloadDialog.show(supportFragmentManager, "")
+//                        viewModel.onDownloadClick(adapter.getItems().map { (it.data as Item).imageUrl })
                     }
                     is DownloadViewModel.Event.DownloadFile -> {
                         runOnUiThread {

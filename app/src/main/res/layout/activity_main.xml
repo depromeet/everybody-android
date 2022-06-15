@@ -72,7 +72,7 @@
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="취준생고양이1323" />
+            android:text="눈바디" />
 
         <TextView
             android:id="@+id/tv_goal"
@@ -84,7 +84,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="천천히 그리고 꾸준히" />
+            android:text="천천히 그리고 꾸준히" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_full_sort"
