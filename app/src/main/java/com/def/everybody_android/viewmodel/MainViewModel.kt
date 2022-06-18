@@ -148,10 +148,12 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         runScope({
             AlbumRepo.getAlbums()
         }) { data ->
+            val dataList = data.filter { !it.thumbnailUrl.isNullOrEmpty() }
+            if(dataList.isEmpty()) return@runScope
             CoroutineScope(Dispatchers.Main).launch {
                 loadingDialog.show(activity.supportFragmentManager, "")
                 launch(Dispatchers.IO) {
-                    val migrations = data.map { album ->
+                    val migrations = dataList.map { album ->
                         val pictures =
                             listOf(album.pictures.whole.orEmpty(), album.pictures.upper.orEmpty(), album.pictures.lower.orEmpty()).flatten()
                         Migration(album.id, album.name, SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(album.createdAt), pictures.map { picture ->

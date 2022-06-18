@@ -14,11 +14,11 @@ import com.def.everybody_android.databinding.ActivityMainBinding
 import com.def.everybody_android.di.HiltApplication.Companion.userData
 import com.def.everybody_android.dto.UserData
 import com.def.everybody_android.dto.request.SignInRequest
-import com.def.everybody_android.dto.request.SignUpRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.feedback.FeedBackDialog
+import com.def.everybody_android.ui.dialog.message.MessageDialog
 import com.def.everybody_android.ui.dialog.migrations.MigrationsDialog
 import com.def.everybody_android.ui.panorama.PanoramaActivity
 import com.def.everybody_android.viewmodel.MainViewModel
@@ -53,14 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     private fun sign() {
-        if (localStorage.getUserId() < 0) {
-            val device = SignUpRequest.Device(
-                "ANDROID",
-                localStorage.getDeviceToken(),
-                localStorage.getFcmToken()
-            )
-            viewModel.signUp(SignUpRequest(device = device, kind = "SIMPLE", password = "1234"))
-        } else {
+        if (localStorage.getUserId() >= 0) {
             viewModel.signIn(SignInRequest(localStorage.getUserId(), "1234"))
         }
     }
@@ -97,8 +90,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     MainViewModel.ClickEvent.FeedBack -> FeedBackDialog().show(supportFragmentManager, "")
                     MainViewModel.ClickEvent.Created -> createForResult.launch(Intent(this@MainActivity, CreateFolderActivity::class.java))
                     MainViewModel.ClickEvent.Sign -> viewModel.getUserData()
-                    MainViewModel.ClickEvent.Migration -> sharedPreferences.edit {
-                        putBoolean("isMigration", true)
+                    MainViewModel.ClickEvent.Migration -> {
+                        MessageDialog(true) {}.setMessage("완료", "서버 정보를 앱으로 이동해왔습니다.\n이제 안전하게 저장하세요!\n더이상 서버에 사진을 저장하지 않습니다!")
+                            .show(supportFragmentManager, "")
+                        sharedPreferences.edit {
+                            putBoolean("isMigration", true)
+                        }
                     }
                 }
             }
