@@ -45,7 +45,7 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                     putExtra("id", id.toString())
                 })
             } else if (it is Item) {
-                val index = gridAdapter.getItems().indexOfFirst { data -> data.data == it }
+                val index = gridAdapter.getItems().indexOfFirst { data -> data.data === it }
                 gridAdapter.changeItem(
                     gridAdapter.getItems()[index].copy(data = it.copy(isCheck = !it.isCheck)),
                     index

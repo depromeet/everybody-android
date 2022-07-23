@@ -58,7 +58,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         repeatOnStarted {
             viewModel.feedsResponse.collect {
                 val item = it.map { data ->
-                    val image = if (data.feedPicture.isEmpty()) "" else data.feedPicture.first().imagePath
+                    val image = if (data.feedPicture.isEmpty()) "" else data.feedPicture.last().imagePath
                     val recyclerData = FolderChoiceViewModel.Item(
                         data.id,
                         image,

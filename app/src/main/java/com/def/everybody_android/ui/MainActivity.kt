@@ -49,7 +49,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         feedSort()
         onClickCamara()
         onClickMyPage()
-        viewModel.settingFeedList()
     }
 
     private fun sign() {
@@ -63,6 +62,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             val intent = Intent(this, MyPageActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.settingFeedList()
     }
 
     private fun liveEvent() {
