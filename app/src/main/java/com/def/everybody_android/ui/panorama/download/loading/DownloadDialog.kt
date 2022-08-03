@@ -38,6 +38,14 @@ class DownloadDialog : BaseDialogFragment<DialogDownloadBinding, DownloadViewMod
         binding.twTitle.text = getString(R.string.str_download_complete_title)
     }
 
+    fun onCancel() {
+        isComplete = true
+        binding.imgComplete.isVisible = true
+        binding.twConfirm.text = getString(R.string.str_confirm)
+        binding.twContent.text = getString(R.string.str_download_complete)
+        binding.twTitle.text = getString(R.string.str_download_cancel_title)
+    }
+
     override fun init() {
         super.init()
         repeatOnStarted {

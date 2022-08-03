@@ -9,10 +9,8 @@ import android.graphics.drawable.ColorDrawable
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
+import android.provider.Settings
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,13 +21,15 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.isVisible
-import com.def.everybody_android.*
+import com.def.everybody_android.BR
 import com.def.everybody_android.R
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityCameraBinding
 import com.def.everybody_android.pref.LocalStorage
+import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.toast
 import com.def.everybody_android.ui.picture.PictureActivity
 import com.def.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,16 +128,46 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         super.onCreate(savedInstanceState)
         albumId = intent.getStringExtra("id") ?: ""
         binding.pvFinder.post {
-            setPermissionCallback(
-                arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-            ) {
-                displayId = binding.pvFinder.display.displayId
-                cameraExecutor = Executors.newSingleThreadExecutor()
-                cameraSetting()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                setPermissionCallback(arrayOf(Manifest.permission.CAMERA)) {
+                    if(Environment.isExternalStorageManager()){
+                        displayId = binding.pvFinder.display.displayId
+                        cameraExecutor = Executors.newSingleThreadExecutor()
+                        cameraSetting()
+                        return@setPermissionCallback
+                    }
+                    try {
+                        val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                        intent.addCategory("android.intent.category.DEFAULT")
+                        intent.data = Uri.parse(String.format("package:%s", applicationContext.packageName))
+                        setDataPermissionCallback(intent) {
+                            displayId = binding.pvFinder.display.displayId
+                            cameraExecutor = Executors.newSingleThreadExecutor()
+                            cameraSetting()
+                        }
+                    } catch (e: Exception) {
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                        setDataPermissionCallback(intent) {
+                            displayId = binding.pvFinder.display.displayId
+                            cameraExecutor = Executors.newSingleThreadExecutor()
+                            cameraSetting()
+                        }
+                    }
+                }
+            } else {
+                setPermissionCallback(
+                    arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                ) {
+                    displayId = binding.pvFinder.display.displayId
+                    cameraExecutor = Executors.newSingleThreadExecutor()
+                    cameraSetting()
+                }
             }
         }
         adapter = RecyclerViewAdapter {

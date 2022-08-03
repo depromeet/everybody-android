@@ -2,9 +2,7 @@ package com.def.everybody_android.ui.panorama.download
 
 import android.content.Context
 import android.graphics.Point
-import android.media.MediaScannerConnection
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
@@ -25,10 +23,6 @@ import com.def.everybody_android.ui.panorama.PanoramaViewPagerAdapter
 import com.def.everybody_android.ui.panorama.download.loading.DownloadDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import okhttp3.ResponseBody
-import java.io.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 @AndroidEntryPoint
@@ -189,14 +183,9 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                     }
                     DownloadViewModel.Event.Close -> finish()
                     DownloadViewModel.Event.Download -> {
-                        MessageDialog(true){}.setMessage("다운로드","다운로드기능은 추후 업데이트됩니다.").show(supportFragmentManager, "")
-//                        downloadDialog.show(supportFragmentManager, "")
-//                        viewModel.onDownloadClick(adapter.getItems().map { (it.data as Item).imageUrl })
-                    }
-                    is DownloadViewModel.Event.DownloadFile -> {
-                        runOnUiThread {
-                            writeResponseBodyToDisk(it.body)
-                        }
+//                        MessageDialog(true){}.setMessage("다운로드","다운로드기능은 추후 업데이트됩니다.").show(supportFragmentManager, "")
+                        downloadDialog.show(supportFragmentManager, "")
+                        viewModel.onDownloadClick(getFilePath(this@DownloadActivity), adapter.getItems().map { (it.data as Item).imageUrl })
                     }
                     DownloadViewModel.Event.Refresh -> {
                         MessageDialog(true) {
@@ -222,6 +211,11 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                         }.setMessage("삭제한 사진을 모두 복구하시겠어요?", "확인을 누르면 기존에 편집한 모든 사진이 복구됩니다.").show(supportFragmentManager, "")
 
                     }
+                    DownloadViewModel.Event.DownloadCancel -> downloadDialog.onCancel()
+                    is DownloadViewModel.Event.DownloadFile -> {
+                        galleryScan(this@DownloadActivity, it.path)
+                        downloadDialog.onComplete()
+                    }
                 }
             }
         }
@@ -235,45 +229,4 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
         val viewModel: DownloadViewModel
     )
 
-    private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
-        val futureStudioIconFile =
-            File(getOutputDirectory(), SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis()) + ".mp4")
-        return try {
-            var inputStream: InputStream? = null
-            var outputStream: OutputStream? = null
-            try {
-                val fileReader = ByteArray(4096)
-                val fileSize = body.contentLength()
-                var fileSizeDownloaded: Long = 0
-                inputStream = body.byteStream()
-                outputStream = FileOutputStream(futureStudioIconFile)
-                while (true) {
-                    val read: Int = inputStream.read(fileReader)
-                    if (read == -1) {
-                        break
-                    }
-                    outputStream.write(fileReader, 0, read)
-                    fileSizeDownloaded += read.toLong()
-                    Log.e("asdas", "${((fileSizeDownloaded.toFloat() / fileSize) * 100f).toInt()}")
-                    downloadDialog.onDownload(((fileSizeDownloaded.toFloat() / fileSize) * 100f).toInt())
-                }
-                outputStream.flush()
-                true
-            } catch (e: IOException) {
-                e.printStackTrace()
-                false
-            } finally {
-                inputStream?.close()
-                outputStream?.close()
-                MediaScannerConnection.scanFile(
-                    applicationContext, arrayOf(futureStudioIconFile.path),  // 추가할 파일의 경로
-                    null
-                )  // Mime type
-                { _, _ -> runOnUiThread { downloadDialog.onComplete() } }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            false
-        }
-    }
 }

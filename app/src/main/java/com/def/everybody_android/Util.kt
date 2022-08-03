@@ -2,7 +2,7 @@ package com.def.everybody_android
 
 import android.content.Context
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
 import android.util.DisplayMetrics
@@ -24,20 +24,17 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.databinding.ViewTopToastBinding
 import com.def.everybody_android.db.Album
 import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.dto.Feed
-import com.def.everybody_android.ui.MainActivity
 import io.realm.Realm
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import kotlin.math.roundToInt
@@ -81,6 +78,21 @@ fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED, block)
     }
+}
+
+fun getFilePath(context: Context) : String {
+    val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "눈바디")
+    if (!dir.exists()) {
+        dir.mkdirs()
+    }
+    val extension = ".mp4"
+    val dest = File(dir.path + File.separator + System.currentTimeMillis().div(1000L) + extension)
+    return dest.absolutePath
+}
+
+fun galleryScan(context: Context,path: String) {
+    val file = File(path)
+    MediaScannerConnection.scanFile(context, arrayOf(file.toString()), null, null)
 }
 
 fun Context.toast(@DrawableRes resId: Int) {

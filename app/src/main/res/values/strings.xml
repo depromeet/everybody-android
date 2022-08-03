@@ -12,6 +12,8 @@
     <string name="str_cancel">취소</string>
     <string name="str_download_title">비디오 저장 중 ... %s</string>
     <string name="str_download_complete_title">비디오 저장 완료!</string>
+    <string name="str_download_cancel_title">비디오 저장 실패!</string>
     <string name="str_download">눈바디 영상이 만들어지고 있어요!\n앱을 종료하거나 기기를 잠그지마세요.</string>
-    <string name="str_download_complete">비디오가 저장이 완료되었엉요!\n사진 앨범에서 저장된 비디오를 확인해 보세요.</string>
+    <string name="str_download_complete">비디오가 저장이 완료되었어요!\n사진 앨범에서 저장된 비디오를 확인해 보세요.</string>
+    <string name="str_download_cancel">비디오가 저장이 실패되었어요!\n다시 시도하거나 개발자에게 문의해보세요.</string>
 </resources>

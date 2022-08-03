@@ -1,7 +1,11 @@
 package com.def.everybody_android.base
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -19,6 +23,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
     abstract val viewModel: R
     val realm = Realm.getDefaultInstance()
     private var permissionAction = {}
+    private var dataPermissionAction = {}
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             it.entries.forEach { data ->
@@ -31,6 +36,13 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
             permissionAction.invoke()
             permissionAction = {}
         }
+    private val dataPermissionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (Environment.isExternalStorageManager()) {
+            dataPermissionAction.invoke()
+            dataPermissionAction = {}
+        } else toast("모든 파일에 대한 접근을 허용해주십시오.")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,5 +61,10 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
     fun setPermissionCallback(permission: Array<String>, action: () -> (Unit)) {
         permissionAction = action
         permissionLauncher.launch(permission)
+    }
+
+    fun setDataPermissionCallback(permission: Intent, action: () -> (Unit)) {
+        dataPermissionAction = action
+        dataPermissionLauncher.launch(permission)
     }
 }

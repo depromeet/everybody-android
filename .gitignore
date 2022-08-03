@@ -147,3 +147,4 @@ fabric.properties
 .idea/codeStyles/codeStyleConfig.xml
 .idea/codeStyles/Project.xml
 app/release/app-release.zip
+*.mp4
