@@ -128,46 +128,16 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         super.onCreate(savedInstanceState)
         albumId = intent.getStringExtra("id") ?: ""
         binding.pvFinder.post {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                setPermissionCallback(arrayOf(Manifest.permission.CAMERA)) {
-                    if(Environment.isExternalStorageManager()){
-                        displayId = binding.pvFinder.display.displayId
-                        cameraExecutor = Executors.newSingleThreadExecutor()
-                        cameraSetting()
-                        return@setPermissionCallback
-                    }
-                    try {
-                        val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                        intent.addCategory("android.intent.category.DEFAULT")
-                        intent.data = Uri.parse(String.format("package:%s", applicationContext.packageName))
-                        setDataPermissionCallback(intent) {
-                            displayId = binding.pvFinder.display.displayId
-                            cameraExecutor = Executors.newSingleThreadExecutor()
-                            cameraSetting()
-                        }
-                    } catch (e: Exception) {
-                        val intent = Intent()
-                        intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                        setDataPermissionCallback(intent) {
-                            displayId = binding.pvFinder.display.displayId
-                            cameraExecutor = Executors.newSingleThreadExecutor()
-                            cameraSetting()
-                        }
-                    }
-                }
-            } else {
-                setPermissionCallback(
-                    arrayOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                ) {
-                    displayId = binding.pvFinder.display.displayId
-                    cameraExecutor = Executors.newSingleThreadExecutor()
-                    cameraSetting()
-                }
+            setPermissionCallback(
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            ) {
+                displayId = binding.pvFinder.display.displayId
+                cameraExecutor = Executors.newSingleThreadExecutor()
+                cameraSetting()
             }
         }
         adapter = RecyclerViewAdapter {

@@ -42,7 +42,7 @@ class DownloadDialog : BaseDialogFragment<DialogDownloadBinding, DownloadViewMod
         isComplete = true
         binding.imgComplete.isVisible = true
         binding.twConfirm.text = getString(R.string.str_confirm)
-        binding.twContent.text = getString(R.string.str_download_complete)
+        binding.twContent.text = getString(R.string.str_download_cancel)
         binding.twTitle.text = getString(R.string.str_download_cancel_title)
     }
 
