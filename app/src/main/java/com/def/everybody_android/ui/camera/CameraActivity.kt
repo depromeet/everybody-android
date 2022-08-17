@@ -109,7 +109,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.apply {
                     val fileUri =
-                        ContentUriUtil.getFilePath(this@CameraActivity, this).toString()
+                    ContentUriUtil.getFilePath(this@CameraActivity, this).toString()
                     startActivity(
                         Intent(
                             this@CameraActivity,

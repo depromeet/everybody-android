@@ -9,6 +9,7 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -17,6 +18,7 @@ import com.def.everybody_android.base.BaseFragment
 import com.def.everybody_android.databinding.FragmentPictureBinding
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.ui.camera.CameraActivity
+import com.def.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import java.io.File
@@ -24,8 +26,6 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import android.provider.MediaStore
-import java.io.OutputStream
 
 
 @AndroidEntryPoint
@@ -152,24 +152,28 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         binding.clPicture.draw(canvas)
-        if(!localStorage.isAppStorage()){
+        if (!localStorage.isAppStorage()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) saveImageInQ(bitmap)
             else saveTheImageLegacyStyle(bitmap)
-        }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            requireContext().sendBroadcast(Intent(Camera.ACTION_NEW_PICTURE, image.toUri()))
-        }
-        val newExif = ExifInterface(image)
-        newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
-        newExif.saveAttributes()
-        activity?.apply {
-            if (this is PictureActivity) {
-                val valueMap = hashMapOf(
-                    "bodyPart" to part,
-                    "image" to image
-                )
-                saveComplete(valueMap)
+        } else {
+            val image = CameraActivity.createFile(requireContext().filesDir, CameraActivity.FILENAME, CameraActivity.PHOTO_EXTENSION)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                requireContext().sendBroadcast(Intent(Camera.ACTION_NEW_PICTURE, image.toUri()))
+            } else {
+
+            }
+            val newExif = ExifInterface(image)
+            newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
+            newExif.saveAttributes()
+            activity?.apply {
+                if (this is PictureActivity) {
+                    val valueMap = hashMapOf(
+                        "bodyPart" to part,
+                        "image" to image.path
+                    )
+                    saveComplete(valueMap)
+                }
             }
         }
     }
@@ -191,19 +195,45 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
 
         contentResolver.also { resolver ->
             imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, imageUri?.let { resolver.openOutputStream(it) })
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageUri?.let { resolver.openOutputStream(it) })
         }
 
         contentValues.clear()
         contentValues.put(MediaStore.Video.Media.IS_PENDING, 0)
         contentResolver.update(imageUri!!, contentValues, null, null)
+        val fileUri =
+            ContentUriUtil.getFilePath(requireContext(), imageUri!!).toString()
+        activity?.apply {
+            if (this is PictureActivity) {
+                val valueMap = hashMapOf(
+                    "bodyPart" to part,
+                    "image" to fileUri
+                )
+                saveComplete(valueMap)
+            }
+        }
     }
 
-    private fun saveTheImageLegacyStyle(bitmap:Bitmap){
+    private fun saveTheImageLegacyStyle(bitmap: Bitmap) {
         val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val image = File(imagesDir, SimpleDateFormat(CameraActivity.FILENAME, Locale.US)
-            .format(System.currentTimeMillis()) + CameraActivity.PHOTO_EXTENSION)
+        val image = File(
+            imagesDir, SimpleDateFormat(CameraActivity.FILENAME, Locale.US)
+                .format(System.currentTimeMillis()) + CameraActivity.PHOTO_EXTENSION
+        )
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
+        requireContext().sendBroadcast(Intent(Camera.ACTION_NEW_PICTURE, image.toUri()))
+        val newExif = ExifInterface(image)
+        newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")
+        newExif.saveAttributes()
+        activity?.apply {
+            if (this is PictureActivity) {
+                val valueMap = hashMapOf(
+                    "bodyPart" to part,
+                    "image" to image.toString()
+                )
+                saveComplete(valueMap)
+            }
+        }
     }
 
     private fun settingNumberPickerEvent() {
