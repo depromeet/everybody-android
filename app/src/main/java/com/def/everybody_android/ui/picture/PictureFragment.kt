@@ -160,8 +160,6 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(image))
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 requireContext().sendBroadcast(Intent(Camera.ACTION_NEW_PICTURE, image.toUri()))
-            } else {
-
             }
             val newExif = ExifInterface(image)
             newExif.setAttribute(ExifInterface.TAG_ORIENTATION, "1")

@@ -31,16 +31,6 @@
             app:layout_constraintTop_toTopOf="@id/tw_title" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintBottom_toBottomOf="@id/img_more"
-            app:layout_constraintEnd_toStartOf="@id/img_more"
-            app:layout_constraintTop_toTopOf="@id/img_more" />
-
-        <ImageView
             android:id="@+id/img_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -216,14 +206,35 @@
             app:layout_constraintTop_toBottomOf="@id/img_more">
 
             <ImageView
+                android:id="@+id/img_edit"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
+                android:src="@drawable/ic_check_line"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/gray_60" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray_30"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_edit" />
+
+            <ImageView
                 android:id="@+id/img_more_edit"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
                 android:onClick="@{()->vm.onClickEvent(Event.AlbumEdit.INSTANCE)}"
                 android:src="@drawable/ic_edit"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_edit"
                 app:tint="@color/gray_60" />
 
             <View
@@ -268,6 +279,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/img_more_delete"
                 app:tint="@color/gray_60" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="42dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
+                android:text="사진 선택"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/img_edit"
+                app:layout_constraintEnd_toStartOf="@id/img_edit"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/img_edit" />
 
             <TextView
                 android:layout_width="wrap_content"

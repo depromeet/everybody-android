@@ -65,7 +65,7 @@ class DownloadViewModel @Inject constructor() : BaseViewModel() {
         var queryAudio: String? = ""
         for (i in paths.indices) {
             query = query?.trim()
-            query += "[" + i + ":v]scale=${1080}x${1200},setdar=${1080}/${1200}[" + i + "v];"
+            query += "[" + i + ":v]scale=${720}x${960},setdar=${720}/${960}[" + i + "v];"
 
             queryAudio = queryAudio?.trim()
             queryAudio += "[" + i + "v][" + paths.size + ":a]"
