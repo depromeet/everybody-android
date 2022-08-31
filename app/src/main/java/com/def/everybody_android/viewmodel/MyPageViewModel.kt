@@ -49,6 +49,8 @@ class MyPageViewModel @Inject constructor() : BaseViewModel() {
         object Google : Event()
         object Alarm : Event()
         object Finish : Event()
+        object Storage : Event()
+        object Thumbnail : Event()
     }
 
 }

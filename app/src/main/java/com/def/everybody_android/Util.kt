@@ -80,7 +80,7 @@ fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
     }
 }
 
-fun getFilePath(context: Context) : String {
+fun getFilePath(context: Context): String {
     val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "눈바디")
     if (!dir.exists()) {
         dir.mkdirs()
@@ -90,7 +90,7 @@ fun getFilePath(context: Context) : String {
     return dest.absolutePath
 }
 
-fun galleryScan(context: Context,path: String) {
+fun galleryScan(context: Context, path: String) {
     val file = File(path)
     MediaScannerConnection.scanFile(context, arrayOf(file.toString()), null, null)
 }
@@ -118,11 +118,11 @@ fun Context.topToast(message: String) {
     toast.show()
 }
 
-fun List<Album>.toFeeds(): List<Feed> {
-    return this.map { it.toFeed() }
+fun List<Album>.toFeeds(isBlind: Boolean = false): List<Feed> {
+    return this.map { it.toFeed(isBlind) }
 }
 
-fun Album.toFeed(): Feed {
+fun Album.toFeed(isBlind: Boolean = false): Feed {
     val diffDays = (System.currentTimeMillis() - this.feedCreated.time) / (1000 * 24 * 60 * 60)
     return Feed(
         this.id,
@@ -131,7 +131,8 @@ fun Album.toFeed(): Feed {
         "${diffDays}일간의 기록",
         if (this.feedPictureDataList.isEmpty()) "" else this.feedPictureDataList.last()?.imagePath ?: "",
         R.drawable.test_feed,
-        this.feedPictureDataList
+        this.feedPictureDataList,
+        isBlind
     )
 }
 
@@ -160,6 +161,21 @@ fun folderLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
     )
 }
+
+@BindingAdapter("imageUrl", "placeholder", "isBlind")
+fun folderLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int, isBlind: Boolean) {
+    if (isBlind) {
+        view.setImageResource(R.drawable.ic_thumbnail_blind)
+    } else {
+        if (url.isEmpty()) view.setImageResource(placeholder)
+        else view.imageLoad(
+            File(url),
+            RequestOptions().transform(CenterCrop(), RoundedCorners(view.context.convertDpToPx(4)))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+        )
+    }
+}
+
 
 @BindingAdapter("imagePanoramaUrl", "placeholderPanorama")
 fun panoramaLoadImage(view: ImageView, url: String, @DrawableRes placeholder: Int) {

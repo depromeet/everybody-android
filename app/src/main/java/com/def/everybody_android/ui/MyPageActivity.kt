@@ -31,8 +31,8 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
         userData?.apply {
             profile(this)
         }
-        appStorage()
         binding.ibStorage.isSelected = localStorage.isAppStorage()
+        binding.ibThumbnail.isSelected = localStorage.isThumbnailBlind()
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
@@ -59,15 +59,16 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                             }
                         }
                     }
+                    MyPageViewModel.Event.Storage -> {
+                        binding.ibStorage.isSelected = !binding.ibStorage.isSelected
+                        localStorage.setAppStorage(binding.ibStorage.isSelected)
+                    }
+                    MyPageViewModel.Event.Thumbnail -> {
+                        binding.ibThumbnail.isSelected = !binding.ibThumbnail.isSelected
+                        localStorage.setThumbnailBlind(binding.ibThumbnail.isSelected)
+                    }
                 }
             }
-        }
-    }
-
-    private fun appStorage() {
-        binding.ibStorage.setOnClickListener {
-            binding.ibStorage.isSelected = !binding.ibStorage.isSelected
-            localStorage.setAppStorage(binding.ibStorage.isSelected)
         }
     }
 

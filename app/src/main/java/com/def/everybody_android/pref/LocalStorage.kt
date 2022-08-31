@@ -17,4 +17,8 @@ interface LocalStorage {
     fun isAppStorage(): Boolean
 
     fun setAppStorage(isStorage: Boolean)
+
+    fun isThumbnailBlind(): Boolean
+
+    fun setThumbnailBlind(isThumbnailBlind: Boolean)
 }

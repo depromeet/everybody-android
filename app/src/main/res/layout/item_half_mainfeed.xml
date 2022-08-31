@@ -22,6 +22,7 @@
             android:scaleType="centerCrop"
             imageUrl="@{repo.image}"
             placeholder="@{repo.placeHolder}"
+            isBlind="@{repo.isBlind}"
             android:layout_marginStart="11dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

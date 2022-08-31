@@ -9,6 +9,7 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     private val devicePrimaryKey = "DeviceToken"
     private val userId = "UserId"
     private val storage = "Storage"
+    private val thumbnail = "thumbnail"
 
 
     override fun saveFcmToken(token: String) =
@@ -42,6 +43,15 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     override fun setAppStorage(isStorage: Boolean) {
         getPref(context).edit().let {
             it.putBoolean(storage, isStorage)
+            it.apply()
+        }
+    }
+
+    override fun isThumbnailBlind(): Boolean = getPref(context).getBoolean(thumbnail, false)
+
+    override fun setThumbnailBlind(isThumbnailBlind: Boolean) {
+        getPref(context).edit().let {
+            it.putBoolean(thumbnail, isThumbnailBlind)
             it.apply()
         }
     }

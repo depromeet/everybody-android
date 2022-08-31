@@ -9,8 +9,10 @@ import android.graphics.drawable.ColorDrawable
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.*
-import android.provider.Settings
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
@@ -109,7 +111,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.apply {
                     val fileUri =
-                    ContentUriUtil.getFilePath(this@CameraActivity, this).toString()
+                        ContentUriUtil.getFilePath(this@CameraActivity, this).toString()
                     startActivity(
                         Intent(
                             this@CameraActivity,
@@ -286,9 +288,9 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
             .setTargetRotation(rotation)
             .build()
             .also {
-                it.setAnalyzer(Executors.newSingleThreadExecutor(), { luma ->
+                it.setAnalyzer(Executors.newSingleThreadExecutor()) { luma ->
                     Log.d(TAG, "Average luminosity: $luma")
-                })
+                }
             }
         cameraProvider.unbindAll()
         try {

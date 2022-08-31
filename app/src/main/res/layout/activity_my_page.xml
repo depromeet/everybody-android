@@ -204,7 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
-            android:text="눈바디 앱에서 촬영된 사진을 앱에만 저장합니다"
+            android:text="눈바디 앱에서 촬영된 사진을 앱에만 저장합니다."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_storage" />
 
@@ -214,6 +214,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:background="@color/white"
+            android:onClick="@{()->vm.onClickEvent(Event.Storage.INSTANCE)}"
             android:src="@drawable/selector_alarm"
             app:layout_constraintBottom_toTopOf="@id/view_storage_bottom"
             app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +227,49 @@
             android:layout_marginTop="16dp"
             android:background="@color/gray_10"
             app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+        <TextView
+            android:id="@+id/tv_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="썸네일 가리기"
+            android:textColor="@color/gray_80"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_storage_bottom" />
+
+        <TextView
+            android:id="@+id/tv_thumbnail_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:text="앨범 썸네일을 기본 이미지로 가릴 수 있습니다."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_thumbnail" />
+
+        <ImageButton
+            android:id="@+id/ib_thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:onClick="@{()->vm.onClickEvent(Event.Thumbnail.INSTANCE)}"
+            android:src="@drawable/selector_alarm"
+            app:layout_constraintBottom_toTopOf="@id/view_thumbnail_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_storage_bottom" />
+
+        <View
+            android:id="@+id/view_thumbnail_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray_10"
+            app:layout_constraintTop_toBottomOf="@+id/tv_thumbnail_description" />
 
         <ImageView
             android:id="@+id/img_kakao"

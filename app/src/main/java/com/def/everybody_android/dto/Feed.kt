@@ -10,5 +10,6 @@ data class Feed(
     val description: String,
     val image: String,
     val placeHolder: Int,
-    val feedPicture: List<MainFeedPictureData>
+    val feedPicture: List<MainFeedPictureData>,
+    val isBlind: Boolean
 )
