@@ -21,4 +21,8 @@ interface LocalStorage {
     fun isThumbnailBlind(): Boolean
 
     fun setThumbnailBlind(isThumbnailBlind: Boolean)
+
+    fun isAuthentication(): Boolean
+
+    fun setAuthentication(isAuthentication: Boolean)
 }

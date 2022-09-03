@@ -1,7 +1,11 @@
 package com.def.everybody_android.ui
 
 import android.content.Intent
+import android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.activity.viewModels
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.def.everybody_android.R
@@ -28,11 +32,19 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
     lateinit var localStorage: LocalStorage
 
     override fun init() {
+
+        val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate(BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> binding.groupAuthentication.isVisible = true
+            else -> binding.groupAuthentication.isVisible = false
+        }
+
         userData?.apply {
             profile(this)
         }
         binding.ibStorage.isSelected = localStorage.isAppStorage()
         binding.ibThumbnail.isSelected = localStorage.isThumbnailBlind()
+        binding.ibAuthentication.isSelected = localStorage.isAuthentication()
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
@@ -66,6 +78,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                     MyPageViewModel.Event.Thumbnail -> {
                         binding.ibThumbnail.isSelected = !binding.ibThumbnail.isSelected
                         localStorage.setThumbnailBlind(binding.ibThumbnail.isSelected)
+                    }
+                    MyPageViewModel.Event.Authentication -> {
+                        binding.ibAuthentication.isSelected = !binding.ibAuthentication.isSelected
+                        localStorage.setAuthentication(binding.ibAuthentication.isSelected)
                     }
                 }
             }

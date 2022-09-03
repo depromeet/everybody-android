@@ -10,6 +10,7 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     private val userId = "UserId"
     private val storage = "Storage"
     private val thumbnail = "thumbnail"
+    private val authentication = "authentication"
 
 
     override fun saveFcmToken(token: String) =
@@ -52,6 +53,15 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     override fun setThumbnailBlind(isThumbnailBlind: Boolean) {
         getPref(context).edit().let {
             it.putBoolean(thumbnail, isThumbnailBlind)
+            it.apply()
+        }
+    }
+
+    override fun isAuthentication(): Boolean = getPref(context).getBoolean(authentication, false)
+
+    override fun setAuthentication(isAuthentication: Boolean) {
+        getPref(context).edit().let {
+            it.putBoolean(authentication, isAuthentication)
             it.apply()
         }
     }

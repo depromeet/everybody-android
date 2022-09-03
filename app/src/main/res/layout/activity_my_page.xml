@@ -271,6 +271,55 @@
             android:background="@color/gray_10"
             app:layout_constraintTop_toBottomOf="@+id/tv_thumbnail_description" />
 
+        <TextView
+            android:id="@+id/tv_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="생체인증"
+            android:textColor="@color/gray_80"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_thumbnail_bottom" />
+
+        <TextView
+            android:id="@+id/tv_authentication_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:text="생체인증을 사용해 앱 잠금을 할 수 있습니다."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_authentication" />
+
+        <ImageButton
+            android:id="@+id/ib_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:onClick="@{()->vm.onClickEvent(Event.Authentication.INSTANCE)}"
+            android:src="@drawable/selector_alarm"
+            app:layout_constraintBottom_toTopOf="@id/view_authentication_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_thumbnail_bottom" />
+
+        <View
+            android:id="@+id/view_authentication_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray_10"
+            app:layout_constraintTop_toBottomOf="@+id/tv_authentication_description" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="ib_authentication,tv_authentication,tv_authentication_description,view_authentication_bottom" />
+
         <ImageView
             android:id="@+id/img_kakao"
             android:layout_width="48dp"

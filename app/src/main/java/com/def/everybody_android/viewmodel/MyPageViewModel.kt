@@ -51,6 +51,7 @@ class MyPageViewModel @Inject constructor() : BaseViewModel() {
         object Finish : Event()
         object Storage : Event()
         object Thumbnail : Event()
+        object Authentication : Event()
     }
 
 }

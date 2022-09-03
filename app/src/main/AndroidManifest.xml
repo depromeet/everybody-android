@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 
     <application
         android:name="com.def.everybody_android.di.HiltApplication"
@@ -71,6 +72,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.panorama.download.DownloadActivity" />
+        <activity android:name=".ui.authentication.AuthenticationActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
