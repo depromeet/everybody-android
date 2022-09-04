@@ -1,7 +1,8 @@
 package com.def.everybody_android.ui
 
+import android.app.Activity
 import android.content.Intent
-import android.hardware.biometrics.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
@@ -16,6 +17,7 @@ import com.def.everybody_android.dto.UserData
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.toast
+import com.def.everybody_android.ui.authentication.AuthenticationActivity
 import com.def.everybody_android.viewmodel.MyPageViewModel
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +32,15 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
 
     @Inject
     lateinit var localStorage: LocalStorage
+
+    private val clearLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                binding.ibAuthentication.isSelected = !binding.ibAuthentication.isSelected
+                localStorage.setAuthentication(binding.ibAuthentication.isSelected)
+            }
+        }
+
 
     override fun init() {
 
@@ -80,6 +91,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                         localStorage.setThumbnailBlind(binding.ibThumbnail.isSelected)
                     }
                     MyPageViewModel.Event.Authentication -> {
+                        if (binding.ibAuthentication.isSelected) {
+                            clearLauncher.launch(Intent(this@MyPageActivity, AuthenticationActivity::class.java))
+                            return@collect
+                        }
                         binding.ibAuthentication.isSelected = !binding.ibAuthentication.isSelected
                         localStorage.setAuthentication(binding.ibAuthentication.isSelected)
                     }

@@ -1,9 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.def.everybody_android.ui.authentication.AuthenticationViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tw_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:lineSpacingExtra="4sp"
+            android:text="생체인증"
+            android:textColor="@color/gray_90"
+            android:textSize="18sp"
+            android:translationY="-1.8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_authentication"
+            app:layout_constraintBottom_toTopOf="@id/tw_info_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_title"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tw_info_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="생체 인증을 해제하시겠습니까?"
+            android:textColor="@color/gray_80"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/tw_info_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_icon" />
+
+        <TextView
+            android:id="@+id/tw_info_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="생체 인증을 해제하려면\n잠금 해제를 눌러 생체 인증을 시도해주세요."
+            android:textColor="@color/gray_60"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toTopOf="@id/tw_clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tw_info_1" />
+
+        <TextView
+            android:id="@+id/tw_clear"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/shape_authentication_clear"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:onClick="@{()->vm.onClickEvent()}"
+            android:text="잠금 해제"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
