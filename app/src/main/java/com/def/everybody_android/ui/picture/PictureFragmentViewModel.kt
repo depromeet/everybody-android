@@ -26,6 +26,8 @@ class PictureFragmentViewModel @Inject constructor() : BaseViewModel() {
         object TimeNow : ClickEvent()
         object TimePerson : ClickEvent()
         object TimePicture : ClickEvent()
+        object WeightTab : ClickEvent()
+        object WeightCheck : ClickEvent()
     }
 
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.def.everybody_android.ui.picture.PictureFragmentViewModel.ClickEvent" />
+
+        <variable
+            name="vm"
+            type="com.def.everybody_android.ui.picture.PictureFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_weight_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.WeightCheck.INSTANCE)}"
+            android:src="@drawable/selector_alarm"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{()->vm.onClickEvent(ClickEvent.WeightCheck.INSTANCE)}"
+            android:text="몸무게 입력"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/ib_weight_check"
+            app:layout_constraintStart_toEndOf="@id/ib_weight_check"
+            app:layout_constraintTop_toTopOf="@id/ib_weight_check" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_first"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@id/np_last"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ib_weight_check"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            app:np_wheelItemCount="3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.shawnlin.numberpicker.NumberPicker
+            android:id="@+id/np_last"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/np_first"
+            app:layout_constraintTop_toBottomOf="@id/ib_weight_check"
+            app:np_dividerColor="@android:color/transparent"
+            app:np_dividerDistance="0dp"
+            app:np_dividerThickness="0dp"
+            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextSize="16sp"
+            app:np_textColor="@color/gray_40"
+            app:np_textSize="12sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="."
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/np_last"
+            app:layout_constraintEnd_toEndOf="@id/np_last"
+            app:layout_constraintStart_toStartOf="@id/np_last"
+            app:layout_constraintTop_toTopOf="@id/np_last" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

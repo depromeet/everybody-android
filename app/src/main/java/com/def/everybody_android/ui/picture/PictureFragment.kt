@@ -47,30 +47,30 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         viewModel.onClickEvent(PictureFragmentViewModel.ClickEvent.PartTab)
         viewModel.onClickEvent(PictureFragmentViewModel.ClickEvent.PartWhole)
         viewModel.onClickEvent(PictureFragmentViewModel.ClickEvent.TimePicture)
-        binding.includePictureTime.npDay.typeface =
-            requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureTime.npDay.typeface = requireContext().typeFace(R.font.pretendard_regular)
         binding.includePictureTime.npDay.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npYear.typeface =
-            requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureTime.npYear.typeface = requireContext().typeFace(R.font.pretendard_regular)
         binding.includePictureTime.npYear.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npMonth.typeface =
-            requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureTime.npMonth.typeface = requireContext().typeFace(R.font.pretendard_regular)
         binding.includePictureTime.npMonth.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npMin.typeface =
-            requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureTime.npMin.typeface = requireContext().typeFace(R.font.pretendard_regular)
         binding.includePictureTime.npMin.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npHour.typeface =
-            requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureTime.npHour.typeface = requireContext().typeFace(R.font.pretendard_regular)
         binding.includePictureTime.npHour.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
+        binding.includePictureWeight.npFirst.typeface = requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureWeight.npFirst.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
+        binding.includePictureWeight.npLast.typeface = requireContext().typeFace(R.font.pretendard_regular)
+        binding.includePictureWeight.npLast.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
         settingNumberPickerValue()
         settingNumberPickerEvent()
+        settingWeightEvent()
+        settingWeightValue()
     }
 
     private fun setPictureTime() {
         val date = datePictureFormat.format(Date(File(image).lastModified())).split(" ")
         val infoText = dateTextFormat.format(System.currentTimeMillis()).split(" ")
-        binding.twDate.text = date[0]
-        binding.twTime.text = "${date[1]} ${date[2]}"
+        binding.twDate.text = "${date[0]} ${date[1]} ${date[2]}"
         binding.includePictureTime.twYear.text = infoText[0]
         binding.includePictureTime.twMonth.text = infoText[1]
         binding.includePictureTime.twDay.text = infoText[2]
@@ -80,8 +80,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     private fun setNowTime() {
         val date = datePictureFormat.format(System.currentTimeMillis()).split(" ")
         val infoText = dateTextFormat.format(System.currentTimeMillis()).split(" ")
-        binding.twDate.text = date[0]
-        binding.twTime.text = "${date[1]} ${date[2]}"
+        binding.twDate.text = "${date[0]} ${date[1]} ${date[2]}"
         binding.includePictureTime.twYear.text = infoText[0]
         binding.includePictureTime.twMonth.text = infoText[1]
         binding.includePictureTime.twDay.text = infoText[2]
@@ -94,19 +93,19 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
-                    PictureFragmentViewModel.ClickEvent.PartTab, PictureFragmentViewModel.ClickEvent.TimeTab -> {
-                        binding.twPartChoice.isSelected =
-                            it == PictureFragmentViewModel.ClickEvent.PartTab
-                        binding.twTimeChoice.isSelected =
-                            it == PictureFragmentViewModel.ClickEvent.TimeTab
+                    PictureFragmentViewModel.ClickEvent.PartTab, PictureFragmentViewModel.ClickEvent.TimeTab, PictureFragmentViewModel.ClickEvent.WeightTab -> {
+                        binding.twPartChoice.isSelected = it == PictureFragmentViewModel.ClickEvent.PartTab
+                        binding.twTimeChoice.isSelected = it == PictureFragmentViewModel.ClickEvent.TimeTab
+                        binding.twWeightChoice.isSelected = it == PictureFragmentViewModel.ClickEvent.WeightTab
                         binding.twPartChoice.typeface =
                             requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.PartTab) R.font.pretendard_bold else R.font.pretendard_regular)
                         binding.twTimeChoice.typeface =
                             requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.TimeTab) R.font.pretendard_bold else R.font.pretendard_regular)
-                        binding.includePicturePart.root.isVisible =
-                            it == PictureFragmentViewModel.ClickEvent.PartTab
-                        binding.includePictureTime.root.isVisible =
-                            it == PictureFragmentViewModel.ClickEvent.TimeTab
+                        binding.twWeightChoice.typeface =
+                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.WeightTab) R.font.pretendard_bold else R.font.pretendard_regular)
+                        binding.includePicturePart.root.isVisible = it == PictureFragmentViewModel.ClickEvent.PartTab
+                        binding.includePictureTime.root.isVisible = it == PictureFragmentViewModel.ClickEvent.TimeTab
+                        binding.includePictureWeight.root.isVisible = it == PictureFragmentViewModel.ClickEvent.WeightTab
                     }
                     PictureFragmentViewModel.ClickEvent.PartUpper, PictureFragmentViewModel.ClickEvent.PartWhole, PictureFragmentViewModel.ClickEvent.PartLower -> {
                         binding.includePicturePart.flWhole.isSelected =
@@ -141,6 +140,11 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                         if (it == PictureFragmentViewModel.ClickEvent.TimePicture) setPictureTime()
                         if (it == PictureFragmentViewModel.ClickEvent.TimeNow) setNowTime()
                     }
+                    PictureFragmentViewModel.ClickEvent.WeightCheck -> {
+                        binding.includePictureWeight.ibWeightCheck.isSelected = !binding.includePictureWeight.ibWeightCheck.isSelected
+                        binding.twWeight.isVisible = binding.includePictureWeight.ibWeightCheck.isSelected
+                        localStorage.setWeightVisible(binding.includePictureWeight.ibWeightCheck.isSelected)
+                    }
                 }
             }
         }
@@ -152,6 +156,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         binding.clPicture.draw(canvas)
+        localStorage.setWeight(binding.twWeight.text.toString().replace("km", ""))
         if (!localStorage.isAppStorage()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) saveImageInQ(bitmap)
             else saveTheImageLegacyStyle(bitmap)
@@ -253,13 +258,41 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         time.npHour.setOnValueChangedListener { picker, _, newVal ->
             val old =
                 oldTimeFormat.parse("$newVal:${time.npMin.value}")
-            binding.twTime.text = timeFormat.format(old)
+            val dateText = binding.twDate.text.split(".")
+            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${dateText[2]} $old"
         }
         time.npMin.setOnValueChangedListener { picker, _, newVal ->
             val old =
                 oldTimeFormat.parse("${time.npHour.value}:$newVal")
-            binding.twTime.text = timeFormat.format(old)
+            val dateText = binding.twDate.text.split(".")
+            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${dateText[2]} $old"
         }
+    }
+
+    private fun settingWeightEvent() {
+        val weight = binding.includePictureWeight
+        weight.npFirst.setOnValueChangedListener { _, _, newVal ->
+            val value = binding.twWeight.text.toString().split(".")[1].replace("km", "")
+            binding.twWeight.text = "${newVal}.${value}km"
+        }
+        weight.npLast.setOnValueChangedListener { _, _, newVal ->
+            val value = binding.twWeight.text.toString().split(".")[0]
+            binding.twWeight.text = "${value}.${newVal}km"
+        }
+    }
+
+    private fun settingWeightValue() {
+        val weight = binding.includePictureWeight
+        val weightValue = localStorage.getWeight().split(".")
+        weight.npFirst.minValue = 0
+        weight.npFirst.maxValue = 150
+        weight.npLast.minValue = 1
+        weight.npLast.maxValue = 9
+        weight.npFirst.value = weightValue[0].toIntDefault()
+        weight.npLast.value = weightValue[1].toIntDefault()
+        binding.includePictureWeight.ibWeightCheck.isSelected = localStorage.isWeightVisible()
+        binding.twWeight.isVisible = localStorage.isWeightVisible()
+        binding.twWeight.text = localStorage.getWeight() + "km"
     }
 
     private fun settingNumberPickerValue() {

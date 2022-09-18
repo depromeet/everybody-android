@@ -203,3 +203,9 @@ fun prepareFilePart(key: String, fileUri: Uri): MultipartBody.Part {
     val requestFile = file.asRequestBody("multipart/form-data".toMediaType())
     return MultipartBody.Part.createFormData(key, file.name, requestFile)
 }
+
+fun String.toIntDefault(): Int {
+    val isNumber = chars().allMatch(Character::isDigit)
+    return if (isNumber) toInt()
+    else 0
+}

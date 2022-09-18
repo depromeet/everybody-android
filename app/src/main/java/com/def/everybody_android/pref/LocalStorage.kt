@@ -25,4 +25,12 @@ interface LocalStorage {
     fun isAuthentication(): Boolean
 
     fun setAuthentication(isAuthentication: Boolean)
+
+    fun setWeight(weight: String)
+
+    fun getWeight(): String
+
+    fun setWeightVisible(isVisible: Boolean)
+
+    fun isWeightVisible(): Boolean
 }

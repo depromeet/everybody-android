@@ -19,7 +19,6 @@
             android:id="@+id/tw_part_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:fontFamily="@font/pretendard_regular"
             android:text="해당 부위로 사진이 분류됩니다."
             android:textColor="@color/gray_60"

@@ -45,43 +45,45 @@
                         android:layout_height="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <TextView
                         android:id="@+id/tw_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginBottom="24dp"
                         android:textColor="@color/gray_10"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        tools:text="2021.10.01" />
+                        android:fontFamily="@font/pretendard_regular"
+                        tools:text="2021.10.01 AM 9:00" />
 
                     <TextView
-                        android:id="@+id/tw_time"
+                        android:id="@+id/tw_weight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="12dp"
+                        app:layout_constraintStart_toStartOf="@id/tw_date"
+                        app:layout_constraintBottom_toTopOf="@id/tw_date"
                         android:textColor="@color/gray_10"
-                        android:textSize="24sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="AM 9:00" />
+                        android:textSize="30sp"
+                        tools:text="61.3kg"
+                        android:fontFamily="@font/pretendard_regular"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tw_part_choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:onClick="@{()->vm.onClickEvent(ClickEvent.PartTab.INSTANCE)}"
                     android:text="부위 선택"
                     android:textColor="@color/selector_purple_black333"
+                    android:gravity="center"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toStartOf="@id/tw_time_choice"
                     app:layout_constraintStart_toStartOf="parent"
@@ -89,16 +91,30 @@
 
                 <TextView
                     android:id="@+id/tw_time_choice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
                     android:fontFamily="@font/pretendard_bold"
                     android:onClick="@{()->vm.onClickEvent(ClickEvent.TimeTab.INSTANCE)}"
                     android:text="시간 입력"
+                    android:gravity="center"
+                    android:textColor="@color/selector_purple_black333"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@id/tw_weight_choice"
+                    app:layout_constraintStart_toEndOf="@id/tw_part_choice"
+                    app:layout_constraintTop_toBottomOf="@id/cl_picture" />
+
+                <TextView
+                    android:id="@+id/tw_weight_choice"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:onClick="@{()->vm.onClickEvent(ClickEvent.WeightTab.INSTANCE)}"
+                    android:text="몸무게"
                     android:textColor="@color/selector_purple_black333"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tw_part_choice"
+                    app:layout_constraintStart_toEndOf="@id/tw_time_choice"
                     app:layout_constraintTop_toBottomOf="@id/cl_picture" />
 
                 <include
@@ -118,6 +134,18 @@
                 <include
                     android:id="@+id/include_picture_time"
                     layout="@layout/include_picture_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tw_part_choice"
+                    app:vm="@{vm}" />
+
+                <include
+                    android:id="@+id/include_picture_weight"
+                    layout="@layout/include_picture_weight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:visibility="gone"

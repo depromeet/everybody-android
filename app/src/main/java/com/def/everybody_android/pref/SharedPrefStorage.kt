@@ -11,6 +11,8 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     private val storage = "Storage"
     private val thumbnail = "thumbnail"
     private val authentication = "authentication"
+    private val weight = "weight"
+    private val weightVisible = "weightVisible"
 
 
     override fun saveFcmToken(token: String) =
@@ -65,6 +67,24 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
             it.apply()
         }
     }
+
+    override fun setWeight(weight: String) {
+        getPref(context).edit().let {
+            it.putString(this.weight, weight)
+            it.apply()
+        }
+    }
+
+    override fun getWeight(): String = getPref(context).getString(weight, "50.3") ?: "50.3"
+
+    override fun setWeightVisible(isVisible: Boolean) {
+        getPref(context).edit().let {
+            it.putBoolean(weightVisible, isVisible)
+            it.apply()
+        }
+    }
+
+    override fun isWeightVisible(): Boolean = getPref(context).getBoolean(weightVisible, false)
 
     private fun getPref(context: Context): SharedPreferences =
         context.getSharedPreferences("pref", Context.MODE_PRIVATE)
