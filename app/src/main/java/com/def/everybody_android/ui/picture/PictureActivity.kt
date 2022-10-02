@@ -77,13 +77,18 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                     PictureViewModel.ClickEvent.Back -> {
                         val transaction = supportFragmentManager.beginTransaction()
                         if (isFolder) {
+                            viewModel.sendingClickEvents("selectAlbum/btn/back")
                             transaction.hide(folderChoiceFragment)
                             transaction.show(pictureFragment)
                             transaction.commit()
                             isFolder = false
-                        } else finish()
+                        } else {
+                            viewModel.sendingClickEvents("photo/btn/back")
+                            finish()
+                        }
                     }
                     PictureViewModel.ClickEvent.Next -> {
+                        viewModel.sendingClickEvents("photo/btn/complete")
                         if (isFolder) folderChoiceFragment.getValue()
                         else {
                             setPermissionCallback(
@@ -98,6 +103,7 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                         }
                     }
                     PictureViewModel.ClickEvent.Complete -> {
+                        viewModel.sendingClickEvents("selectAlbum/btn/album")
                         loadingDialog.dismiss()
                         finish()
                     }

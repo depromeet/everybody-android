@@ -22,9 +22,13 @@ class FolderAddDialog(private val callBack: () -> Unit) : BaseDialogFragment<Dia
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    FolderAddViewModel.Event.Cancel -> dismiss()
+                    FolderAddViewModel.Event.Cancel -> {
+                        dismiss()
+                        viewModel.sendingClickEvents("albumCreateModal/btn/cancle")
+                    }
                     FolderAddViewModel.Event.Complete -> {
                         viewModel.createAlbums()
+                        viewModel.sendingClickEvents("albumCreateModal/btn/complete")
                         callBack.invoke()
                         dismiss()
                     }

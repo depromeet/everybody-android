@@ -25,6 +25,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
         adapter = RecyclerViewAdapter {
             if (it is Unit) {
                 FolderAddDialog {
+                    viewModel.sendingClickEvents("selectAlbum/btn/addAlbum")
                     viewModel.getFeeds()
                 }.show(childFragmentManager, "")
             } else if (it is FolderChoiceViewModel.Item) {

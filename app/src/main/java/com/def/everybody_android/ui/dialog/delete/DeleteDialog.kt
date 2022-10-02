@@ -25,8 +25,12 @@ class DeleteDialog(private val count: Int, private val action: () -> Unit) :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    DeleteViewModel.Event.Cancel -> dismiss()
+                    DeleteViewModel.Event.Cancel -> {
+                        viewModel.sendingClickEvents("selectPhoto/deletePhotoModal/btn/cancle")
+                        dismiss()
+                    }
                     DeleteViewModel.Event.Delete -> {
+                        viewModel.sendingClickEvents("selectPhoto/deletePhotoModal/btn/complete")
                         action.invoke()
                         dismiss()
                     }

@@ -99,9 +99,18 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                         binding.twLower.typeface =
                             typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
                         val list = when (it.type) {
-                            1 -> whole
-                            2 -> upper
-                            else -> lower
+                            1 -> {
+                                viewModel.sendingClickEvents("selectPhoto/tab/whole")
+                                whole
+                            }
+                            2 -> {
+                                viewModel.sendingClickEvents("selectPhoto/tab/upper")
+                                upper
+                            }
+                            else -> {
+                                viewModel.sendingClickEvents("selectPhoto/tab/lower")
+                                lower
+                            }
                         }
                         recyclerSetting(list)
                     }

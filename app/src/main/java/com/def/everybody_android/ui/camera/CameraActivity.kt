@@ -162,8 +162,11 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                         adapter.getItems()[index].copy(data = it.copy(isCheck = !it.isCheck)),
                         index
                     )
-                    if (it.poseImage is Unit) binding.imgPvPose.isVisible = false
-                    else {
+                    if (it.poseImage is Unit) {
+                        binding.imgPvPose.isVisible = false
+                        viewModel.sendingClickEvents("camera/poseFilter/noPose")
+                    } else {
+                        viewModel.sendingClickEvents("camera/poseFilter/pose" + index)
                         binding.imgPvPose.isVisible = true
                         binding.imgPvPose.setImageResource(it.poseImage as @DrawableRes Int)
                     }
@@ -182,10 +185,22 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         repeatOnStarted {
             viewModel.clickEvent.collect {
                 when (it) {
-                    CameraViewModel.ClickEvent.Album -> openFileDocument()
-                    CameraViewModel.ClickEvent.Pose -> binding.motionCamera.transitionToEnd()
-                    CameraViewModel.ClickEvent.Shutter -> clickShutter()
-                    CameraViewModel.ClickEvent.Back -> finish()
+                    CameraViewModel.ClickEvent.Album -> {
+                        openFileDocument()
+                        viewModel.sendingClickEvents("camera/btn/album")
+                    }
+                    CameraViewModel.ClickEvent.Pose -> {
+                        binding.motionCamera.transitionToEnd()
+                        viewModel.sendingClickEvents("camera/btn/pose")
+                    }
+                    CameraViewModel.ClickEvent.Shutter -> {
+                        clickShutter()
+                        viewModel.sendingClickEvents("camera/btn/shot")
+                    }
+                    CameraViewModel.ClickEvent.Back -> {
+                        finish()
+                        viewModel.sendingClickEvents("camera/btn/back")
+                    }
                     CameraViewModel.ClickEvent.Switch -> {
                         lensFacing =
                             if (CameraSelector.LENS_FACING_FRONT == lensFacing) CameraSelector.LENS_FACING_BACK
@@ -195,8 +210,12 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                     CameraViewModel.ClickEvent.Grid -> {
                         binding.imgGrid.isSelected = !binding.imgGrid.isSelected
                         binding.includeGrid.isVisible = binding.imgGrid.isSelected
+                        if (binding.includeGrid.isVisible) viewModel.sendingClickEvents("camera/toggle/grid/on")
+                        else viewModel.sendingClickEvents("camera/toggle/grid/off")
                     }
-                    CameraViewModel.ClickEvent.Expand -> binding.motionCamera.transitionToStart()
+                    CameraViewModel.ClickEvent.Expand -> {
+                        binding.motionCamera.transitionToStart()
+                    }
                 }
             }
         }

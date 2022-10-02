@@ -31,9 +31,13 @@ class FolderEditDialog(private val album: Feed, private val callBack: (String) -
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    FolderEditViewModel.Event.Cancel -> dismiss()
+                    FolderEditViewModel.Event.Cancel -> {
+                        viewModel.sendingClickEvents("viewAlbum/editModal/btn/cancel")
+                        dismiss()
+                    }
                     FolderEditViewModel.Event.Complete -> viewModel.editAlbums(album.id)
                     is FolderEditViewModel.Event.Album -> {
+                        viewModel.sendingClickEvents("viewAlbum/editModal/btn/complete")
                         callBack.invoke(it.name)
                         dismiss()
                     }

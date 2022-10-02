@@ -143,4 +143,7 @@ dependencies {
     //지문인식
     implementation 'androidx.biometric:biometric:1.1.0'
 
+    //MixPanel
+    implementation 'com.mixpanel.android:mixpanel-android:7.0.1'
+
 }

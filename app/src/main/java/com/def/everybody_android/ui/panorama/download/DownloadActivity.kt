@@ -165,6 +165,7 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                 when (it) {
                     is DownloadViewModel.Event.Delete -> {
                         if (adapter.itemCount <= 2) return@collect topToast("사진이 최소 2장이상 필요해요.")
+                        viewModel.sendingClickEvents("saveVideo/btn/photoDelete")
                         val recyclerList = adapter.getItems().filter { item -> item.data != it.item }.mapIndexed { index, recyclerItem ->
                             recyclerItem.copy(data = (recyclerItem.data as Item).copy(isEnable = index == 0, count = (index + 1).toString()))
                         }
@@ -181,13 +182,18 @@ class DownloadActivity : BaseActivity<ActivityDownloadBinding, DownloadViewModel
                         )
                         binding.imgRefresh.isInvisible = false
                     }
-                    DownloadViewModel.Event.Close -> finish()
+                    DownloadViewModel.Event.Close -> {
+                        viewModel.sendingClickEvents("saveVideo/btn/back")
+                        finish()
+                    }
                     DownloadViewModel.Event.Download -> {
+                        viewModel.sendingClickEvents("saveVideo/btn/save")
 //                        MessageDialog(true){}.setMessage("다운로드","다운로드기능은 추후 업데이트됩니다.").show(supportFragmentManager, "")
                         downloadDialog.show(supportFragmentManager, "")
                         viewModel.onDownloadClick(getFilePath(this@DownloadActivity), adapter.getItems().map { (it.data as Item).imageUrl })
                     }
                     DownloadViewModel.Event.Refresh -> {
+                        viewModel.sendingClickEvents("saveVideo/btn/undo")
                         MessageDialog(true) {
                             adapter.setItems(imageList.mapIndexed { index, MainFeedPictureData ->
                                 RecyclerItem(

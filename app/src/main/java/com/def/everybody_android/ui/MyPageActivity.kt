@@ -64,7 +64,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                         intent.putExtra("userData", userData)
                         startActivity(intent)
                     }
-                    MyPageViewModel.Event.Complete, MyPageViewModel.Event.Finish -> finish()
+                    MyPageViewModel.Event.Complete, MyPageViewModel.Event.Finish -> {
+                        viewModel.sendingClickEvents("setting/btn/back")
+                        finish()
+                    }
                     MyPageViewModel.Event.Google -> TODO()
                     MyPageViewModel.Event.Kakao -> {
                         UserApiClient.instance.loginWithKakaoTalk(this@MyPageActivity) { token, error ->
@@ -85,10 +88,14 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                     MyPageViewModel.Event.Storage -> {
                         binding.ibStorage.isSelected = !binding.ibStorage.isSelected
                         localStorage.setAppStorage(binding.ibStorage.isSelected)
+                        if(binding.ibStorage.isSelected) viewModel.sendingClickEvents("setting/saveApp/toggle/on")
+                        else viewModel.sendingClickEvents("setting/saveApp/toggle/off")
                     }
                     MyPageViewModel.Event.Thumbnail -> {
                         binding.ibThumbnail.isSelected = !binding.ibThumbnail.isSelected
                         localStorage.setThumbnailBlind(binding.ibThumbnail.isSelected)
+                        if(binding.ibStorage.isSelected) viewModel.sendingClickEvents("setting/hiddenThumb/toggle/on")
+                        else viewModel.sendingClickEvents("setting/hiddenThumb/toggle/off")
                     }
                     MyPageViewModel.Event.Authentication -> {
                         if (binding.ibAuthentication.isSelected) {
@@ -97,6 +104,8 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>() {
                         }
                         binding.ibAuthentication.isSelected = !binding.ibAuthentication.isSelected
                         localStorage.setAuthentication(binding.ibAuthentication.isSelected)
+                        if(binding.ibStorage.isSelected) viewModel.sendingClickEvents("setting/faceId/toggle/on")
+                        else viewModel.sendingClickEvents("setting/faceId/toggle/off")
                     }
                 }
             }

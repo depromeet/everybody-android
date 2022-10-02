@@ -38,6 +38,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     private val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "KR"))
     private val dateTextFormat = SimpleDateFormat("yyyy MMM dd kk:mm", Locale("en", "KR"))
     private var part = "whole"
+    private var isFirst = true
 
     @Inject
     lateinit var localStorage: LocalStorage
@@ -65,6 +66,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         settingNumberPickerEvent()
         settingWeightEvent()
         settingWeightValue()
+        isFirst = false
     }
 
     private fun setPictureTime() {
@@ -106,6 +108,11 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                         binding.includePicturePart.root.isVisible = it == PictureFragmentViewModel.ClickEvent.PartTab
                         binding.includePictureTime.root.isVisible = it == PictureFragmentViewModel.ClickEvent.TimeTab
                         binding.includePictureWeight.root.isVisible = it == PictureFragmentViewModel.ClickEvent.WeightTab
+                        if (!isFirst) {
+                            if (it == PictureFragmentViewModel.ClickEvent.PartTab) viewModel.sendingClickEvents("photo/tab/selectPart")
+                            if (it == PictureFragmentViewModel.ClickEvent.TimeTab) viewModel.sendingClickEvents("photo/tab/inputTime")
+                            if (it == PictureFragmentViewModel.ClickEvent.WeightTab) viewModel.sendingClickEvents("photo/tab/inputWeight")
+                        }
                     }
                     PictureFragmentViewModel.ClickEvent.PartUpper, PictureFragmentViewModel.ClickEvent.PartWhole, PictureFragmentViewModel.ClickEvent.PartLower -> {
                         binding.includePicturePart.flWhole.isSelected =
@@ -125,6 +132,11 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                             PictureFragmentViewModel.ClickEvent.PartUpper -> "upper"
                             else -> "whole"
                         }
+                        if (!isFirst) {
+                            if (it == PictureFragmentViewModel.ClickEvent.PartWhole) viewModel.sendingClickEvents("photo/selectPart/btn/whole")
+                            if (it == PictureFragmentViewModel.ClickEvent.PartLower) viewModel.sendingClickEvents("photo/selectPart/btn/lower")
+                            if (it == PictureFragmentViewModel.ClickEvent.PartUpper) viewModel.sendingClickEvents("photo/selectPart/btn/upper")
+                        }
                     }
                     PictureFragmentViewModel.ClickEvent.TimeNow, PictureFragmentViewModel.ClickEvent.TimePicture, PictureFragmentViewModel.ClickEvent.TimePerson -> {
                         binding.includePictureTime.groupNumberpicker.isVisible =
@@ -139,11 +151,20 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                             it == PictureFragmentViewModel.ClickEvent.TimePerson
                         if (it == PictureFragmentViewModel.ClickEvent.TimePicture) setPictureTime()
                         if (it == PictureFragmentViewModel.ClickEvent.TimeNow) setNowTime()
+                        if (!isFirst) {
+                            if (it == PictureFragmentViewModel.ClickEvent.TimePicture) viewModel.sendingClickEvents("photo/btn/photoTime")
+                            if (it == PictureFragmentViewModel.ClickEvent.TimeNow) viewModel.sendingClickEvents("photo/btn/currentTime")
+                            if (it == PictureFragmentViewModel.ClickEvent.TimePerson) viewModel.sendingClickEvents("photo/btn/directInput")
+                        }
                     }
                     PictureFragmentViewModel.ClickEvent.WeightCheck -> {
                         binding.includePictureWeight.ibWeightCheck.isSelected = !binding.includePictureWeight.ibWeightCheck.isSelected
                         binding.twWeight.isVisible = binding.includePictureWeight.ibWeightCheck.isSelected
                         localStorage.setWeightVisible(binding.includePictureWeight.ibWeightCheck.isSelected)
+                        if (!isFirst) {
+                            if (binding.twWeight.isVisible) viewModel.sendingClickEvents("photo/inputWeight/toggle/on")
+                            else viewModel.sendingClickEvents("photo/inputWeight/toggle/off")
+                        }
                     }
                 }
             }

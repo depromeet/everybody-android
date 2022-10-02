@@ -91,8 +91,12 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         }
                         binding.twTitle.text = data.name
                     }
-                    PanoramaViewModel.Event.Close -> finish()
+                    PanoramaViewModel.Event.Close -> {
+                        viewModel.sendingClickEvents("viewAlbum/btn/back")
+                        finish()
+                    }
                     PanoramaViewModel.Event.Edit -> {
+                        viewModel.sendingClickEvents("viewAlbum/btn/setting")
                         startActivity(
                             Intent(
                                 this@PanoramaActivity,
@@ -108,6 +112,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         binding.groupPanorama.isVisible = !binding.imgListType.isSelected
                     }
                     PanoramaViewModel.Event.Camera -> {
+                        viewModel.sendingClickEvents("selectPhoto/btn/addPhoto")
                         startActivity(
                             Intent(
                                 this@PanoramaActivity,
@@ -128,9 +133,18 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         binding.twLower.typeface =
                             typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
                         val list = when (it.type) {
-                            1 -> whole
-                            2 -> upper
-                            else -> lower
+                            1 -> {
+                                viewModel.sendingClickEvents("selectPhoto/tab/whole")
+                                whole
+                            }
+                            2 -> {
+                                viewModel.sendingClickEvents("selectPhoto/tab/upper")
+                                upper
+                            }
+                            else -> {
+                                viewModel.sendingClickEvents("selectPhoto/tab/lower")
+                                lower
+                            }
                         }
                         viewPagerSetting(list)
                         recyclerSetting(list)
@@ -142,6 +156,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                     PanoramaViewModel.Event.AlbumEdit -> {
                         albumData?.apply {
                             FolderEditDialog(this) {
+                                viewModel.sendingClickEvents("viewAlbum/dropDown/editAlbumName")
                                 binding.twTitle.text = it
                                 albumData = albumData?.copy(name = it)
                                 topToast("앨범이름이 수정되었습니다.")
@@ -163,8 +178,10 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                             putExtra("image", img.toTypedArray())
                             putExtra("title", binding.twTitle.text.toString())
                         })
+                        viewModel.sendingClickEvents("viewAlbum/dropDown/saveVideo")
                     }
                     PanoramaViewModel.Event.DeleteComplete -> {
+                        viewModel.sendingClickEvents("viewAlbum/dropDown/deleteAlbum")
                         topToast("앨범이 삭제되었습니다.")
                         finish()
                     }

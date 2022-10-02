@@ -47,20 +47,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         deviceToken()
         fcmToken()
         feedSort()
-        onClickCamara()
-        onClickMyPage()
     }
 
     private fun sign() {
         if (localStorage.getUserId() >= 0) {
             viewModel.signIn(SignInRequest(localStorage.getUserId(), "1234"))
-        }
-    }
-
-    private fun onClickMyPage() {
-        binding.ibProfile.setOnClickListener {
-            val intent = Intent(this, MyPageActivity::class.java)
-            startActivity(intent)
         }
     }
 
@@ -101,6 +92,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                             putBoolean("isMigration", true)
                         }
                     }
+                    MainViewModel.ClickEvent.SettingProfile -> {
+                        val intent = Intent(this@MainActivity, MyPageActivity::class.java)
+                        startActivity(intent)
+                    }
+                    MainViewModel.ClickEvent.Camera -> {
+                        val intent = Intent(this@MainActivity, CameraActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             }
         }
@@ -109,13 +108,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     private fun user(data: UserData) {
         binding.tvNickname.text = data.nickName
         binding.tvGoal.text = data.motto
-    }
-
-    private fun onClickCamara() {
-        binding.ibCamera.setOnClickListener {
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     private fun feedSort() {

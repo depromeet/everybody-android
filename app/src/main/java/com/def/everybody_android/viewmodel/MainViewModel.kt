@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.MutableLiveData
@@ -30,11 +29,9 @@ import com.def.everybody_android.nextAlbumId
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.toFeed
 import com.def.everybody_android.toFeeds
-import com.def.everybody_android.ui.dialog.loading.LoadingDialog
 import com.def.everybody_android.ui.dialog.migrations.MigrationsDialog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
-import io.realm.RealmList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -71,6 +68,14 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     val clickEvent = _clickEvent.asEventFlow()
 
     fun onClickEvent(event: ClickEvent) {
+        when (event) {
+            ClickEvent.Created -> sendingClickEvents("main/btn/addAlbum")
+            ClickEvent.FeedBack -> sendingClickEvents("main/btn/feedBack")
+            ClickEvent.Camera -> sendingClickEvents("main/btn/shot")
+            is ClickEvent.PanoramaActivity -> sendingClickEvents("main/album")
+            ClickEvent.SettingProfile -> sendingClickEvents("main/btn/settingProfile")
+            else -> {}
+        }
         viewModelScope.launch { _clickEvent.emit(event) }
     }
 
@@ -149,7 +154,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
             AlbumRepo.getAlbums()
         }) { data ->
             val dataList = data.filter { !it.thumbnailUrl.isNullOrEmpty() }
-            if(dataList.isEmpty()) return@runScope
+            if (dataList.isEmpty()) return@runScope
             CoroutineScope(Dispatchers.Main).launch {
                 loadingDialog.show(activity.supportFragmentManager, "")
                 launch(Dispatchers.IO) {
@@ -180,10 +185,10 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         }
     }
 
-    private fun migrationCompleted(){
+    private fun migrationCompleted() {
         runScope({
             UserRepo.migrationCompleted()
-        }){
+        }) {
             onClickEvent(ClickEvent.Migration)
             settingFeedList()
         }
@@ -248,7 +253,9 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         object FeedBack : ClickEvent()
         object Created : ClickEvent()
         object Sign : ClickEvent()
-        object Migration:ClickEvent()
+        object SettingProfile : ClickEvent()
+        object Camera : ClickEvent()
+        object Migration : ClickEvent()
         data class GetUserData(val data: UserData) : ClickEvent()
         data class PanoramaActivity(val data: Feed) : ClickEvent()
     }

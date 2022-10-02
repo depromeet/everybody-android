@@ -1,7 +1,6 @@
 package com.def.everybody_android.base
 
 import android.os.Bundle
-import android.os.Environment
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +9,10 @@ import androidx.databinding.ViewDataBinding
 import com.def.everybody_android.BR
 import com.def.everybody_android.repeatOnStarted
 import com.def.everybody_android.toast
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import io.realm.Realm
 import kotlinx.coroutines.flow.collect
+import org.json.JSONObject
 
 abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatActivity() {
     lateinit var binding: T
@@ -19,6 +20,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
     abstract val layoutId: Int
     abstract val viewModel: R
     val realm = Realm.getDefaultInstance()
+    private val mixpanelAPI: MixpanelAPI by lazy { MixpanelAPI.getInstance(this, "96abc171423dea4c9d24642c4e40f1b9", true) }
     private var permissionAction = {}
     private var dataPermissionAction = {}
     private val permissionLauncher =
@@ -36,7 +38,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel.setMixpanel(mixpanelAPI)
         binding = DataBindingUtil.setContentView(this, layoutId)
         binding.lifecycleOwner = this@BaseActivity
         binding.setVariable(BR.vm, viewModel)
@@ -47,6 +49,10 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
         repeatOnStarted {
             viewModel.toast.collect { toast(it) }
         }
+    }
+
+    fun sendingClickEvents(event: String) {
+        mixpanelAPI.track(event)
     }
 
     fun setPermissionCallback(permission: Array<String>, action: () -> (Unit)) {

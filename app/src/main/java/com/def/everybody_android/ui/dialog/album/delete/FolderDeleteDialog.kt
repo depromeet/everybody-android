@@ -25,8 +25,12 @@ class FolderDeleteDialog(private val action: () -> Unit) :
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    FolderDeleteViewModel.Event.Cancel -> dismiss()
+                    FolderDeleteViewModel.Event.Cancel -> {
+                        viewModel.sendingClickEvents("viewAlbum/deleteModal/btn/cancel")
+                        dismiss()
+                    }
                     FolderDeleteViewModel.Event.Delete -> {
+                        viewModel.sendingClickEvents("viewAlbum/deleteModal/btn/delete")
                         action.invoke()
                         dismiss()
                     }

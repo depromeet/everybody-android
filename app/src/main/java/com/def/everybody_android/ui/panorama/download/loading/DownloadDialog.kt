@@ -50,6 +50,8 @@ class DownloadDialog : BaseDialogFragment<DialogDownloadBinding, DownloadViewMod
         super.init()
         repeatOnStarted {
             viewModel.event.collect {
+                if(isComplete) viewModel.sendingClickEvents("saveVideo/saveModal/btn/confirm")
+                else viewModel.sendingClickEvents("saveVideo/saveModal/btn/cancel")
                 dismiss()
             }
         }
