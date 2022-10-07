@@ -19,7 +19,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     lateinit var binding: B
     abstract val viewModel: VM
     abstract val layoutId : Int
-    private val mixpanelAPI: MixpanelAPI by lazy { MixpanelAPI.getInstance(requireContext(), "96abc171423dea4c9d24642c4e40f1b9", true) }
+    private val mixpanelAPI: MixpanelAPI by lazy { MixpanelAPI.getInstance(requireContext(), "b3f588cfd882645e185d2cf0ca08260c", true) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
