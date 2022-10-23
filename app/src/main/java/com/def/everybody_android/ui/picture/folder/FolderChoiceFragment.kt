@@ -29,6 +29,7 @@ class FolderChoiceFragment : BaseFragment<FragmentFolderChoiceBinding, FolderCho
                     viewModel.getFeeds()
                 }.show(childFragmentManager, "")
             } else if (it is FolderChoiceViewModel.Item) {
+                viewModel.sendingClickEvents("selectAlbum/btn/album")
                 val checkIndex = adapter.getItems()
                     .indexOfFirst { data ->
                         if (data.data is FolderChoiceViewModel.Item) data.data.isCheck

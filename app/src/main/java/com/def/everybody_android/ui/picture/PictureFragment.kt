@@ -177,7 +177,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
             Bitmap.createBitmap(pictureView.width, pictureView.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         binding.clPicture.draw(canvas)
-        localStorage.setWeight(binding.twWeight.text.toString().replace("km", ""))
+        localStorage.setWeight(binding.twWeight.text.toString().replace("kg", ""))
         if (!localStorage.isAppStorage()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) saveImageInQ(bitmap)
             else saveTheImageLegacyStyle(bitmap)
@@ -293,12 +293,12 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     private fun settingWeightEvent() {
         val weight = binding.includePictureWeight
         weight.npFirst.setOnValueChangedListener { _, _, newVal ->
-            val value = binding.twWeight.text.toString().split(".")[1].replace("km", "")
-            binding.twWeight.text = "${newVal}.${value}km"
+            val value = binding.twWeight.text.toString().split(".")[1].replace("kg", "")
+            binding.twWeight.text = "${newVal}.${value}kg"
         }
         weight.npLast.setOnValueChangedListener { _, _, newVal ->
             val value = binding.twWeight.text.toString().split(".")[0]
-            binding.twWeight.text = "${value}.${newVal}km"
+            binding.twWeight.text = "${value}.${newVal}kg"
         }
     }
 
@@ -313,7 +313,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         weight.npLast.value = weightValue[1].toIntDefault()
         binding.includePictureWeight.ibWeightCheck.isSelected = localStorage.isWeightVisible()
         binding.twWeight.isVisible = localStorage.isWeightVisible()
-        binding.twWeight.text = localStorage.getWeight() + "km"
+        binding.twWeight.text = localStorage.getWeight() + "kg"
     }
 
     private fun settingNumberPickerValue() {

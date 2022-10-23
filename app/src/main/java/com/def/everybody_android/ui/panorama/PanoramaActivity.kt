@@ -96,7 +96,7 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         finish()
                     }
                     PanoramaViewModel.Event.Edit -> {
-                        viewModel.sendingClickEvents("viewAlbum/btn/setting")
+                        viewModel.sendingClickEvents("viewAlbum/dropDown/selectPhoto")
                         startActivity(
                             Intent(
                                 this@PanoramaActivity,
@@ -149,7 +149,10 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                         viewPagerSetting(list)
                         recyclerSetting(list)
                     }
-                    PanoramaViewModel.Event.More -> binding.clMore.isVisible = !binding.clMore.isVisible
+                    PanoramaViewModel.Event.More -> {
+                        binding.clMore.isVisible = !binding.clMore.isVisible
+                        viewModel.sendingClickEvents("viewAlbum/btn/setting")
+                    }
                     PanoramaViewModel.Event.AlbumDelete -> FolderDeleteDialog {
                         viewModel.deleteAlbum(id)
                     }.show(supportFragmentManager, "")

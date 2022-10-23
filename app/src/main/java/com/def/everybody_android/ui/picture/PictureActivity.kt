@@ -88,9 +88,11 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                         }
                     }
                     PictureViewModel.ClickEvent.Next -> {
-                        viewModel.sendingClickEvents("photo/btn/complete")
-                        if (isFolder) folderChoiceFragment.getValue()
-                        else {
+                        if (isFolder) {
+                            folderChoiceFragment.getValue()
+                            viewModel.sendingClickEvents("albumCreateModal/btn/complete")
+                        } else {
+                            viewModel.sendingClickEvents("photo/btn/complete")
                             setPermissionCallback(
                                 arrayOf(
                                     Manifest.permission.CAMERA,
@@ -103,7 +105,6 @@ class PictureActivity : BaseActivity<ActivityPictureBinding, PictureViewModel>()
                         }
                     }
                     PictureViewModel.ClickEvent.Complete -> {
-                        viewModel.sendingClickEvents("selectAlbum/btn/album")
                         loadingDialog.dismiss()
                         finish()
                     }
