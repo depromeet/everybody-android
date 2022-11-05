@@ -20,7 +20,7 @@ abstract class BaseActivity<T : ViewDataBinding, R : BaseViewModel> : AppCompatA
     abstract val layoutId: Int
     abstract val viewModel: R
     val realm = Realm.getDefaultInstance()
-    private val mixpanelAPI: MixpanelAPI by lazy { MixpanelAPI.getInstance(this, "b3f588cfd882645e185d2cf0ca08260c", true) }
+    private val mixpanelAPI: MixpanelAPI by lazy { MixpanelAPI.getInstance(this, "af1a177d85b27b3271a61511d8965ca9", true) }
     private var permissionAction = {}
     private var dataPermissionAction = {}
     private val permissionLauncher =

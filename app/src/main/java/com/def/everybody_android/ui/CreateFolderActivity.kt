@@ -25,11 +25,13 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding, CreateFol
 
     private fun back() {
         binding.ibBefore.setOnClickListener {
+            viewModel.sendingClickEvents("album/btn/back")
             finish()
         }
     }
 
     private fun edittextClick() {
+        binding.etFolderName.setOnClickListener { viewModel.sendingClickEvents("album/btn/albumInput") }
         binding.etFolderName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -49,6 +51,7 @@ class CreateFolderActivity : BaseActivity<ActivityCreateFolderBinding, CreateFol
     private fun createAlbum() {
         binding.ibSave.setOnClickListener {
             if (binding.etFolderName.text.toString().isNotEmpty()) {
+                viewModel.sendingClickEvents("album/btn/save")
                 viewModel.createFolder(binding.etFolderName.text.toString())
                 toast()
                 setResult(RESULT_OK)
