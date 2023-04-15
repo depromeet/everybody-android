@@ -33,4 +33,20 @@ interface LocalStorage {
     fun setWeightVisible(isVisible: Boolean)
 
     fun isWeightVisible(): Boolean
+
+    fun setGrid(isGrid: Boolean)
+
+    fun isGrid(): Boolean
+
+    fun setPose(index: Int)
+
+    fun getPose(): Int
+
+    fun setPicturePart(part: String)
+
+    fun getPicturePart(): String
+
+    fun setTimeSetting(timeSetting: String)
+
+    fun getTimeSetting(): String
 }

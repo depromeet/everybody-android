@@ -46,8 +46,18 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     private fun initSetting() {
         setPictureTime()
         viewModel.onClickEvent(PictureFragmentViewModel.ClickEvent.PartTab)
-        viewModel.onClickEvent(PictureFragmentViewModel.ClickEvent.PartWhole)
-        viewModel.onClickEvent(PictureFragmentViewModel.ClickEvent.TimePicture)
+        viewModel.onClickEvent(
+            when (localStorage.getPicturePart()) {
+                "whole" -> PictureFragmentViewModel.ClickEvent.PartWhole
+                "upper" -> PictureFragmentViewModel.ClickEvent.PartUpper
+                else -> PictureFragmentViewModel.ClickEvent.PartLower
+            }
+        )
+        viewModel.onClickEvent(when(localStorage.getTimeSetting()){
+            "photoTime"->PictureFragmentViewModel.ClickEvent.TimePicture
+            "currentTime"->PictureFragmentViewModel.ClickEvent.TimeNow
+            else->PictureFragmentViewModel.ClickEvent.TimePerson
+        })
         binding.includePictureTime.npDay.typeface = requireContext().typeFace(R.font.pretendard_regular)
         binding.includePictureTime.npDay.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
         binding.includePictureTime.npYear.typeface = requireContext().typeFace(R.font.pretendard_regular)
@@ -132,6 +142,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                             PictureFragmentViewModel.ClickEvent.PartUpper -> "upper"
                             else -> "whole"
                         }
+                        localStorage.setPicturePart(part)
                         if (!isFirst) {
                             if (it == PictureFragmentViewModel.ClickEvent.PartWhole) viewModel.sendingClickEvents("photo/selectPart/btn/whole")
                             if (it == PictureFragmentViewModel.ClickEvent.PartLower) viewModel.sendingClickEvents("photo/selectPart/btn/lower")
@@ -152,9 +163,18 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                         if (it == PictureFragmentViewModel.ClickEvent.TimePicture) setPictureTime()
                         if (it == PictureFragmentViewModel.ClickEvent.TimeNow) setNowTime()
                         if (!isFirst) {
-                            if (it == PictureFragmentViewModel.ClickEvent.TimePicture) viewModel.sendingClickEvents("photo/btn/photoTime")
-                            if (it == PictureFragmentViewModel.ClickEvent.TimeNow) viewModel.sendingClickEvents("photo/btn/currentTime")
-                            if (it == PictureFragmentViewModel.ClickEvent.TimePerson) viewModel.sendingClickEvents("photo/btn/directInput")
+                            if (it == PictureFragmentViewModel.ClickEvent.TimePicture) {
+                                localStorage.setTimeSetting("photoTime")
+                                viewModel.sendingClickEvents("photo/btn/photoTime")
+                            }
+                            if (it == PictureFragmentViewModel.ClickEvent.TimeNow) {
+                                localStorage.setTimeSetting("currentTime")
+                                viewModel.sendingClickEvents("photo/btn/currentTime")
+                            }
+                            if (it == PictureFragmentViewModel.ClickEvent.TimePerson) {
+                                localStorage.setTimeSetting("directInput")
+                                viewModel.sendingClickEvents("photo/btn/directInput")
+                            }
                         }
                     }
                     PictureFragmentViewModel.ClickEvent.WeightCheck -> {

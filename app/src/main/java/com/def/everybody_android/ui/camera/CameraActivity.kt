@@ -79,24 +79,26 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
         R.drawable.ic_pose_woman_upper,
         R.drawable.ic_pose_woman_lower
     )
-    private val poseList = listOf(
-        Unit,
-        R.drawable.ic_man_whole,
-        R.drawable.ic_man_upper,
-        R.drawable.ic_man_lower,
-        R.drawable.ic_woman_whole,
-        R.drawable.ic_woman_upper,
-        R.drawable.ic_woman_lower
-    ).mapIndexed { index, any ->
-        RecyclerItem(
-            PoseData(
-                poseSelectList[index],
-                index > 0,
-                any,
-                index == 0
-            ), R.layout.item_camera_pose, BR.data
-        )
-    }.toMutableList()
+    private val poseList by lazy {
+        listOf(
+            Unit,
+            R.drawable.ic_man_whole,
+            R.drawable.ic_man_upper,
+            R.drawable.ic_man_lower,
+            R.drawable.ic_woman_whole,
+            R.drawable.ic_woman_upper,
+            R.drawable.ic_woman_lower
+        ).mapIndexed { index, any ->
+            RecyclerItem(
+                PoseData(
+                    poseSelectList[index],
+                    index > 0,
+                    any,
+                    localStorage.getPose() == index
+                ), R.layout.item_camera_pose, BR.data
+            )
+        }.toMutableList()
+    }
 
     data class PoseData(
         @DrawableRes val image: Int,
@@ -166,15 +168,26 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                         binding.imgPvPose.isVisible = false
                         viewModel.sendingClickEvents("camera/poseFilter/noPose")
                     } else {
-                        viewModel.sendingClickEvents("camera/poseFilter/pose" + index)
+                        viewModel.sendingClickEvents("camera/poseFilter/pose$index")
                         binding.imgPvPose.isVisible = true
                         binding.imgPvPose.setImageResource(it.poseImage as @DrawableRes Int)
                     }
+                    localStorage.setPose(index)
                 }
             }
         }.apply {
             setItems(poseList)
         }
+        poseList.map { it.data as PoseData }.find { it.isCheck }?.let {
+            if (it.poseImage is Unit) {
+                binding.imgPvPose.isVisible = false
+            } else {
+                binding.imgPvPose.isVisible = true
+                binding.imgPvPose.setImageResource(it.poseImage as @DrawableRes Int)
+            }
+        }
+        binding.imgGrid.isSelected = localStorage.isGrid()
+        binding.includeGrid.isVisible = binding.imgGrid.isSelected
         binding.recyclerPose.adapter = adapter
         Handler(Looper.myLooper() ?: return).postDelayed({
             binding.groupInfo.isVisible = false
@@ -210,6 +223,7 @@ class CameraActivity : BaseActivity<ActivityCameraBinding, CameraViewModel>() {
                     CameraViewModel.ClickEvent.Grid -> {
                         binding.imgGrid.isSelected = !binding.imgGrid.isSelected
                         binding.includeGrid.isVisible = binding.imgGrid.isSelected
+                        localStorage.setGrid(binding.imgGrid.isSelected)
                         if (binding.includeGrid.isVisible) viewModel.sendingClickEvents("camera/toggle/grid/on")
                         else viewModel.sendingClickEvents("camera/toggle/grid/off")
                     }

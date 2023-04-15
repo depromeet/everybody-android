@@ -13,6 +13,10 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     private val authentication = "authentication"
     private val weight = "weight"
     private val weightVisible = "weightVisible"
+    private val grid = "grid"
+    private val pose = "pose"
+    private val picturePart = "picturePart"
+    private val timeSetting = "timeSetting"
 
 
     override fun saveFcmToken(token: String) =
@@ -85,6 +89,41 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
     }
 
     override fun isWeightVisible(): Boolean = getPref(context).getBoolean(weightVisible, false)
+    override fun setGrid(isGrid: Boolean) {
+        getPref(context).edit().let {
+            it.putBoolean(grid, isGrid)
+            it.apply()
+        }
+    }
+
+    override fun isGrid(): Boolean = getPref(context).getBoolean(grid, false)
+
+    override fun setPose(index: Int) {
+        getPref(context).edit().let {
+            it.putInt(pose, index)
+            it.apply()
+        }
+    }
+
+    override fun getPose(): Int = getPref(context).getInt(pose, 0)
+
+    override fun setPicturePart(part: String) {
+        getPref(context).edit().let {
+            it.putString(picturePart, part)
+            it.apply()
+        }
+    }
+
+    override fun getPicturePart(): String = getPref(context).getString(picturePart, "whole") ?: "whole"
+
+    override fun setTimeSetting(timeSetting: String) {
+        getPref(context).edit().let {
+            it.putString(this.timeSetting, timeSetting)
+            it.apply()
+        }
+    }
+
+    override fun getTimeSetting(): String = getPref(context).getString(timeSetting, "photoTime") ?: "photoTime"
 
     private fun getPref(context: Context): SharedPreferences =
         context.getSharedPreferences("pref", Context.MODE_PRIVATE)
