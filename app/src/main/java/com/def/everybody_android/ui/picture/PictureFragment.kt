@@ -21,6 +21,7 @@ import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.viewmodel.ContentUriUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import okhttp3.internal.assertThreadDoesntHoldLock
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -283,6 +284,7 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
     private fun settingNumberPickerEvent() {
         val time = binding.includePictureTime
         val oldTimeFormat = SimpleDateFormat("kk:mm")
+        val timeFormat = SimpleDateFormat("a hh:mm", Locale("en", "KR"))
         time.npYear.setOnValueChangedListener { picker, _, newVal ->
             val dateText = binding.twDate.text.split(".")
             binding.twDate.text =
@@ -294,19 +296,20 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         }
         time.npDay.setOnValueChangedListener { _, _, newVal ->
             val dateText = binding.twDate.text.split(".")
-            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${newVal}"
+            val timeText = binding.twDate.text.split(" ")
+            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${newVal} ${timeText[1]} ${timeText[2]}"
         }
         time.npHour.setOnValueChangedListener { picker, _, newVal ->
             val old =
                 oldTimeFormat.parse("$newVal:${time.npMin.value}")
-            val dateText = binding.twDate.text.split(".")
-            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${dateText[2]} $old"
+            val dateText = binding.twDate.text.split(" ")[0].split(".")
+            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${dateText[2]} ${timeFormat.format(old)}"
         }
         time.npMin.setOnValueChangedListener { picker, _, newVal ->
             val old =
                 oldTimeFormat.parse("${time.npHour.value}:$newVal")
-            val dateText = binding.twDate.text.split(".")
-            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${dateText[2]} $old"
+            val dateText = binding.twDate.text.split(" ")[0].split(".")
+            binding.twDate.text = "${dateText[0]}.${dateText[1]}.${dateText[2]} ${timeFormat.format(old)}"
         }
     }
 
@@ -338,8 +341,8 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
 
     private fun settingNumberPickerValue() {
         val time = binding.includePictureTime
-        val year = SimpleDateFormat("yyyy").format(System.currentTimeMillis()).toInt()
-        val yearArray = Array(10) { i -> year - i }.map { it.toString() }.toTypedArray()
+        val dd = Date()
+        val yearArray = Array(10) { i -> dd.year - i }.map { it.toString() }.toTypedArray()
         time.npYear.minValue = 1
         time.npYear.maxValue = yearArray.size
         time.npYear.value = 1
@@ -349,10 +352,12 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
         time.npMonth.displayedValues = DateData.month
         time.npDay.minValue = 1
         time.npDay.maxValue = 31
+        time.npDay.value = dd.day
         time.npHour.minValue = 1
         time.npHour.maxValue = 24
+        time.npHour.value = dd.hours
         time.npMin.minValue = 0
         time.npMin.maxValue = 59
-        time.npMin.value = 0
+        time.npMin.value = dd.minutes
     }
 }
