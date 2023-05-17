@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:onClick="@{()->vm.onClickEvent(ClickEvent.WeightCheck.INSTANCE)}"
             android:text="몸무게 입력"
             android:textColor="@color/black"

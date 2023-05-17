@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:gravity="center_vertical"
             android:text="눈바디 사용 경험을 알려 주세요."
             android:textColor="@color/gray_90"

@@ -51,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:enabled="@{data.enable}"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
             android:maxLines="1"
             android:text="@{data.count}"

@@ -93,11 +93,11 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                         binding.twUpper.isSelected = it.type == 2
                         binding.twLower.isSelected = it.type == 3
                         binding.twWhole.typeface =
-                            typeFace(if (it.type == 1) R.font.pretendard_bold else R.font.pretendard_regular)
+                            typeFace(if (it.type == 1) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twUpper.typeface =
-                            typeFace(if (it.type == 2) R.font.pretendard_bold else R.font.pretendard_regular)
+                            typeFace(if (it.type == 2) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twLower.typeface =
-                            typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
+                            typeFace(if (it.type == 3) R.font.lineseed_bold else R.font.lineseed_regular)
                         val list = when (it.type) {
                             1 -> {
                                 viewModel.sendingClickEvents("selectPhoto/tab/whole")

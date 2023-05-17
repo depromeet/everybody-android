@@ -59,20 +59,20 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
             "currentTime"->PictureFragmentViewModel.ClickEvent.TimeNow
             else->PictureFragmentViewModel.ClickEvent.TimePerson
         })
-        binding.includePictureTime.npDay.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureTime.npDay.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npYear.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureTime.npYear.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npMonth.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureTime.npMonth.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npMin.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureTime.npMin.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureTime.npHour.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureTime.npHour.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureWeight.npFirst.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureWeight.npFirst.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
-        binding.includePictureWeight.npLast.typeface = requireContext().typeFace(R.font.pretendard_regular)
-        binding.includePictureWeight.npLast.setSelectedTypeface(requireContext().typeFace(R.font.pretendard_semibold))
+        binding.includePictureTime.npDay.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureTime.npDay.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
+        binding.includePictureTime.npYear.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureTime.npYear.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
+        binding.includePictureTime.npMonth.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureTime.npMonth.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
+        binding.includePictureTime.npMin.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureTime.npMin.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
+        binding.includePictureTime.npHour.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureTime.npHour.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
+        binding.includePictureWeight.npFirst.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureWeight.npFirst.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
+        binding.includePictureWeight.npLast.typeface = requireContext().typeFace(R.font.lineseed_regular)
+        binding.includePictureWeight.npLast.setSelectedTypeface(requireContext().typeFace(R.font.lineseed_bold))
         settingNumberPickerValue()
         settingNumberPickerEvent()
         settingWeightEvent()
@@ -111,11 +111,11 @@ class PictureFragment(private val image: String, private val isAlbum: Boolean) :
                         binding.twTimeChoice.isSelected = it == PictureFragmentViewModel.ClickEvent.TimeTab
                         binding.twWeightChoice.isSelected = it == PictureFragmentViewModel.ClickEvent.WeightTab
                         binding.twPartChoice.typeface =
-                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.PartTab) R.font.pretendard_bold else R.font.pretendard_regular)
+                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.PartTab) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twTimeChoice.typeface =
-                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.TimeTab) R.font.pretendard_bold else R.font.pretendard_regular)
+                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.TimeTab) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twWeightChoice.typeface =
-                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.WeightTab) R.font.pretendard_bold else R.font.pretendard_regular)
+                            requireContext().typeFace(if (it == PictureFragmentViewModel.ClickEvent.WeightTab) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.includePicturePart.root.isVisible = it == PictureFragmentViewModel.ClickEvent.PartTab
                         binding.includePictureTime.root.isVisible = it == PictureFragmentViewModel.ClickEvent.TimeTab
                         binding.includePictureWeight.root.isVisible = it == PictureFragmentViewModel.ClickEvent.WeightTab
