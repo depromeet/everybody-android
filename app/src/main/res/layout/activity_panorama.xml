@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
 
         <import type="com.def.everybody_android.ui.panorama.PanoramaViewModel.Event" />
@@ -11,14 +10,9 @@
             name="vm"
             type="com.def.everybody_android.ui.panorama.PanoramaViewModel" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:fitsSystemWindows="true">
-
-
+        android:layout_height="match_parent">
         <ImageView
             android:id="@+id/img_back"
             android:layout_width="wrap_content"
@@ -35,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:onClick="@{()->vm.onClickEvent(Event.More.INSTANCE)}"
-            android:src="@drawable/ic_option"
+            android:onClick="@{()->vm.onClickEvent(Event.Delete.INSTANCE)}"
+            android:src="@drawable/ic_del"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +39,7 @@
             android:id="@+id/tw_title"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:fontFamily="@font/lineseed_bold"
+            android:fontFamily="@font/lineseed_regular"
             android:gravity="center"
             android:textColor="@color/black_333"
             android:textSize="18sp"
@@ -53,81 +47,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="사진 촬영" />
-
-        <TextView
-            android:id="@+id/tw_whole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/lineseed_regular"
-            android:onClick="@{()->vm.onPoseType(1)}"
-            android:paddingStart="12dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="16dp"
-            android:text="전신"
-            android:textColor="@color/selector_purple_gray60"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_title" />
-
-        <TextView
-            android:id="@+id/tw_upper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lineseed_regular"
-            android:onClick="@{()->vm.onPoseType(2)}"
-            android:paddingStart="12dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="16dp"
-            android:text="상체"
-            android:textColor="@color/selector_purple_gray60"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tw_whole"
-            app:layout_constraintTop_toBottomOf="@id/tw_title" />
-
-        <TextView
-            android:id="@+id/tw_lower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lineseed_regular"
-            android:onClick="@{()->vm.onPoseType(3)}"
-            android:paddingStart="12dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="16dp"
-            android:text="하체"
-            android:textColor="@color/selector_purple_gray60"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@id/tw_upper"
-            app:layout_constraintTop_toBottomOf="@id/tw_title" />
-
-        <ImageView
-            android:id="@+id/img_list_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:onClick="@{()->vm.onClickEvent(Event.ListType.INSTANCE)}"
-            android:paddingStart="12dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="16dp"
-            android:src="@drawable/selector_panorama_list"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_title" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_grid"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_whole"
-            app:spanCount="3" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_panorama"
@@ -137,7 +56,7 @@
             app:layout_constraintBottom_toTopOf="@id/recycler_panorama"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_whole" />
+            app:layout_constraintTop_toBottomOf="@id/tw_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_panorama"
@@ -150,206 +69,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/item_panorama_tab" />
-
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_panorama"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="recycler_panorama,vp_panorama" />
-
-        <TextView
-            android:id="@+id/tw_empty"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:fontFamily="@font/lineseed_regular"
-            android:gravity="center"
-            android:text="저장된 사진이 없습니다.\n지금 사진을 찍어 기록해보세요."
-            android:textColor="@color/gray_50"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/tw_camera"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_whole"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/tw_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:background="@drawable/rectangle_radius_28"
-            android:backgroundTint="@color/purple"
-            android:fontFamily="@font/lineseed_regular"
-            android:gravity="center"
-            android:onClick="@{()->vm.onClickEvent(Event.Camera.INSTANCE)}"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:text="사진 촬영"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_empty" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rectangle_radius_4_stroke_2_more"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/img_more"
-            app:layout_constraintTop_toBottomOf="@id/img_more">
-
-            <ImageView
-                android:id="@+id/img_edit"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="16dp"
-                android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
-                android:src="@drawable/ic_check_line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/gray_60" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/gray_30"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_edit" />
-
-            <ImageView
-                android:id="@+id/img_more_edit"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:onClick="@{()->vm.onClickEvent(Event.AlbumEdit.INSTANCE)}"
-                android:src="@drawable/ic_edit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_edit"
-                app:tint="@color/gray_60" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/gray_30"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_more_edit" />
-
-
-            <ImageView
-                android:id="@+id/img_more_delete"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:onClick="@{()->vm.onClickEvent(Event.AlbumDelete.INSTANCE)}"
-                android:src="@drawable/ic_del"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_more_edit"
-                app:tint="@color/gray_60" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/gray_30"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_more_delete" />
-
-            <ImageView
-                android:id="@+id/img_more_share"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="16dp"
-                android:onClick="@{()->vm.onClickEvent(Event.Share.INSTANCE)}"
-                android:src="@drawable/ic_share"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_more_delete"
-                app:tint="@color/gray_60" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="42dp"
-                android:fontFamily="@font/lineseed_regular"
-                android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
-                android:text="사진 선택"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/img_edit"
-                app:layout_constraintEnd_toStartOf="@id/img_edit"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/img_edit" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="42dp"
-                android:fontFamily="@font/lineseed_regular"
-                android:onClick="@{()->vm.onClickEvent(Event.AlbumEdit.INSTANCE)}"
-                android:text="앨범 이름 수정"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/img_more_edit"
-                app:layout_constraintEnd_toStartOf="@id/img_more_edit"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/img_more_edit" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="42dp"
-                android:fontFamily="@font/lineseed_regular"
-                android:onClick="@{()->vm.onClickEvent(Event.AlbumDelete.INSTANCE)}"
-                android:text="앨범 삭제"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/img_more_delete"
-                app:layout_constraintEnd_toStartOf="@id/img_more_edit"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/img_more_delete" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="42dp"
-                android:fontFamily="@font/lineseed_regular"
-                android:onClick="@{()->vm.onClickEvent(Event.Share.INSTANCE)}"
-                android:text="동영상 저장"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/img_more_share"
-                app:layout_constraintEnd_toStartOf="@id/img_more_edit"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/img_more_share" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/group_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="tw_camera,tw_empty" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

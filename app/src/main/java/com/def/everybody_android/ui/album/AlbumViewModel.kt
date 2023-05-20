@@ -1,4 +1,4 @@
-package com.def.everybody_android.ui.panorama.edit
+package com.def.everybody_android.ui.album
 
 import androidx.lifecycle.viewModelScope
 import com.def.everybody_android.base.BaseViewModel
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PanoramaEditViewModel @Inject constructor() : BaseViewModel() {
+class AlbumViewModel @Inject constructor() : BaseViewModel() {
 
     private val _event = MutableEventFlow<Event>()
     val event = _event.asEventFlow()
@@ -23,28 +23,28 @@ class PanoramaEditViewModel @Inject constructor() : BaseViewModel() {
         viewModelScope.launch { _event.emit(Event.PoseType(type)) }
     }
 
-    fun deletePictures(id: Long, path: String) {
-        realm.where(Album::class.java).containsValue("id", id).findFirst()?.apply {
-            realm.executeTransaction {
-                val index = this.feedPictureDataList.indexOfFirst { picture -> picture.imagePath == path }
-                if (index > -1) this.feedPictureDataList.remove(this.feedPictureDataList[index])
-                viewModelScope.launch { _event.emit(Event.DeleteComplete) }
-            }
-        }
-    }
-
-
     fun getAlbum(id: Long) {
         realm.where(Album::class.java).containsValue("id", id).findFirst()?.apply {
             viewModelScope.launch { _event.emit(Event.Album(this@apply)) }
         }
     }
 
+    fun deleteAlbum(id: Long) {
+        viewModelScope.launch { _event.emit(Event.DeleteComplete) }
+    }
+
     sealed class Event {
         object Close : Event()
-        object Delete : Event()
+        object Edit : Event()
+        object ListType : Event()
+        object Camera : Event()
+        object More : Event()
+        object AlbumDelete : Event()
+        object AlbumEdit : Event()
         object DeleteComplete : Event()
+        object Share : Event()
         data class PoseType(val type: Int) : Event()
         data class Album(val album: com.def.everybody_android.db.Album) : Event()
     }
+
 }

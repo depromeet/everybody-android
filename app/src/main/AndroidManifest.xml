@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
         android:name="com.def.everybody_android.di.HiltApplication"
@@ -14,8 +14,8 @@
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
@@ -56,10 +56,13 @@
             android:name="com.def.everybody_android.ui.picture.PictureActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.def.everybody_android.ui.album.AlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.def.everybody_android.ui.panorama.PanoramaActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity"
+            android:name="com.def.everybody_android.ui.album.edit.PanoramaEditActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.def.everybody_android.ui.splash.SplashActivity"
@@ -71,7 +74,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.panorama.download.DownloadActivity" />
+        <activity android:name=".ui.album.download.DownloadActivity" />
         <activity android:name=".ui.authentication.AuthenticationActivity" />
 
         <provider

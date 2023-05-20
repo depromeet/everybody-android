@@ -8,7 +8,7 @@
 
         <variable
             name="data"
-            type="com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity.Item" />
+            type="com.def.everybody_android.ui.album.edit.PanoramaEditActivity.Item" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

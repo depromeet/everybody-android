@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.panorama.download.loading.DownloadViewModel.Event" />
+        <import type="com.def.everybody_android.ui.album.download.loading.DownloadViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.def.everybody_android.ui.panorama.download.loading.DownloadViewModel" />
+            type="com.def.everybody_android.ui.album.download.loading.DownloadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

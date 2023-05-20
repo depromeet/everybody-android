@@ -1,13 +1,15 @@
 package com.def.everybody_android.ui.panorama
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Point
+import android.os.Build
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewpager.widget.ViewPager
 import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
@@ -15,183 +17,66 @@ import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityPanoramaBinding
 import com.def.everybody_android.db.MainFeedPictureData
-import com.def.everybody_android.dto.Feed
-import com.def.everybody_android.ui.camera.CameraActivity
-import com.def.everybody_android.ui.dialog.album.delete.FolderDeleteDialog
-import com.def.everybody_android.ui.dialog.album.edit.FolderEditDialog
-import com.def.everybody_android.ui.panorama.download.DownloadActivity
-import com.def.everybody_android.ui.panorama.edit.PanoramaEditActivity
-import dagger.hilt.android.AndroidEntryPoint
+import com.def.everybody_android.ui.album.PanoramaViewPagerAdapter
+import com.def.everybody_android.ui.dialog.message.MessageDialog
 import kotlinx.coroutines.flow.collect
 
-
-@AndroidEntryPoint
 class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel>() {
     override val layoutId: Int = R.layout.activity_panorama
     override val viewModel: PanoramaViewModel by viewModels()
-    private val whole = mutableListOf<MainFeedPictureData>()
-    private val upper = mutableListOf<MainFeedPictureData>()
-    private val lower = mutableListOf<MainFeedPictureData>()
-    private var id: Long = -1
-    private var albumData: Feed? = null
-    private lateinit var gridAdapter: RecyclerViewAdapter
     private lateinit var panoramaAdapter: RecyclerViewAdapter
-
-    override fun onResume() {
-        super.onResume()
-        if (!intent.hasExtra("id")) return finish()
-        id = intent.getLongExtra("id", -1)
-        viewModel.getAlbum(id)
-    }
+    private val screenWidth: Int
+        get() {
+            val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                this.display
+            } else {
+                wm.defaultDisplay
+            }
+            val size = Point()
+            display?.getSize(size)
+            return size.x
+        }
+    private val items = arrayListOf<MainFeedPictureData>()
+    private var selectedIndex = 0
 
     override fun init() {
         super.init()
-        gridAdapter = RecyclerViewAdapter { }
         panoramaAdapter = RecyclerViewAdapter { }
-        binding.recyclerGrid.addItemDecoration(PanoramaItemDecoration())
-        binding.recyclerGrid.adapter = gridAdapter
-        viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
+        selectedIndex = intent.getIntExtra("index", 0)
+        items.addAll(intent.getParcelableArrayExtra("items").orEmpty().map { it as MainFeedPictureData })
+        binding.twTitle.text = intent.getStringExtra("title").orEmpty()
         settingPanorama()
+        viewPagerSetting(items)
         repeatOnStarted {
             viewModel.event.collect {
                 when (it) {
-                    is PanoramaViewModel.Event.Album -> {
-                        val data = it.album.toFeed()
-                        albumData = data
-                        whole.clear()
-                        upper.clear()
-                        lower.clear()
-                        whole.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "whole" })
-                        upper.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "upper" })
-                        lower.addAll(data.feedPicture.filter { picture -> picture.bodyPart == "lower" })
-                        val latestPart = when {
-                            whole.isNotEmpty() -> "whole"
-                            upper.isNotEmpty() -> "upper"
-                            lower.isNotEmpty() -> "lower"
-                            else -> "whole"
-                        }
-                        when (latestPart) {
-                            "whole" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(1))
-                            "upper" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(2))
-                            "lower" -> viewModel.onClickEvent(PanoramaViewModel.Event.PoseType(3))
-                        }
-                        when {
-                            binding.twWhole.isSelected -> {
-                                viewPagerSetting(whole)
-                                recyclerSetting(whole)
+                    PanoramaViewModel.Event.Close -> finish()
+                    PanoramaViewModel.Event.Delete -> {
+                        MessageDialog(true) {
+                            val index = panoramaAdapter.getItems().indexOfFirst { item -> (item.data as Item).isEnable }
+                            if (index > -1) {
+                                val item = items[index]
+                                viewModel.deletePictures(item.albumId, item.imagePath)
                             }
-                            binding.twUpper.isSelected -> {
-                                viewPagerSetting(upper)
-                                recyclerSetting(upper)
-                            }
-                            binding.twLower.isSelected -> {
-                                viewPagerSetting(lower)
-                                recyclerSetting(lower)
-                            }
-                        }
-                        binding.twTitle.text = data.name
-                    }
-                    PanoramaViewModel.Event.Close -> {
-                        viewModel.sendingClickEvents("viewAlbum/btn/back")
-                        finish()
-                    }
-                    PanoramaViewModel.Event.Edit -> {
-                        viewModel.sendingClickEvents("viewAlbum/dropDown/selectPhoto")
-                        startActivity(
-                            Intent(
-                                this@PanoramaActivity,
-                                PanoramaEditActivity::class.java
-                            ).apply {
-                                putExtra("id", id)
-                            }
-                        )
-                    }
-                    PanoramaViewModel.Event.ListType -> {
-                        binding.imgListType.isSelected = !binding.imgListType.isSelected
-                        binding.recyclerGrid.isVisible = binding.imgListType.isSelected
-                        binding.groupPanorama.isVisible = !binding.imgListType.isSelected
-                    }
-                    PanoramaViewModel.Event.Camera -> {
-                        viewModel.sendingClickEvents("selectPhoto/btn/addPhoto")
-                        startActivity(
-                            Intent(
-                                this@PanoramaActivity,
-                                CameraActivity::class.java
-                            ).apply {
-                                putExtra("id", id.toString())
-                            }
-                        )
-                    }
-                    is PanoramaViewModel.Event.PoseType -> {
-                        binding.twWhole.isSelected = it.type == 1
-                        binding.twUpper.isSelected = it.type == 2
-                        binding.twLower.isSelected = it.type == 3
-                        binding.twWhole.typeface =
-                            typeFace(if (it.type == 1) R.font.lineseed_bold else R.font.lineseed_regular)
-                        binding.twUpper.typeface =
-                            typeFace(if (it.type == 2) R.font.lineseed_bold else R.font.lineseed_regular)
-                        binding.twLower.typeface =
-                            typeFace(if (it.type == 3) R.font.lineseed_bold else R.font.lineseed_regular)
-                        val list = when (it.type) {
-                            1 -> {
-                                viewModel.sendingClickEvents("selectPhoto/tab/whole")
-                                whole
-                            }
-                            2 -> {
-                                viewModel.sendingClickEvents("selectPhoto/tab/upper")
-                                upper
-                            }
-                            else -> {
-                                viewModel.sendingClickEvents("selectPhoto/tab/lower")
-                                lower
-                            }
-                        }
-                        viewPagerSetting(list)
-                        recyclerSetting(list)
-                    }
-                    PanoramaViewModel.Event.More -> {
-                        binding.clMore.isVisible = !binding.clMore.isVisible
-                        viewModel.sendingClickEvents("viewAlbum/btn/setting")
-                    }
-                    PanoramaViewModel.Event.AlbumDelete -> FolderDeleteDialog {
-                        viewModel.deleteAlbum(id)
-                    }.show(supportFragmentManager, "")
-                    PanoramaViewModel.Event.AlbumEdit -> {
-                        albumData?.apply {
-                            FolderEditDialog(this) {
-                                viewModel.sendingClickEvents("viewAlbum/dropDown/editAlbumName")
-                                binding.twTitle.text = it
-                                albumData = albumData?.copy(name = it)
-                                topToast("앨범이름이 수정되었습니다.")
-                            }.show(supportFragmentManager, "")
-                        }
-                    }
-                    PanoramaViewModel.Event.Share -> {
-                        val img = when {
-                            binding.twWhole.isSelected -> whole
-                            binding.twUpper.isSelected -> upper
-                            else -> lower
-                        }
-                        if (img.isEmpty()) {
-                            toast("비어있는 사진첩입니다.")
-                            return@collect
-                        }
-                        if (img.size < 2) return@collect topToast("사진이 최소 2장이상 필요해요.")
-                        startActivity(Intent(this@PanoramaActivity, DownloadActivity::class.java).apply {
-                            putExtra("image", img.toTypedArray())
-                            putExtra("title", binding.twTitle.text.toString())
-                        })
-                        viewModel.sendingClickEvents("viewAlbum/dropDown/saveVideo")
+                        }.setMessage("사진을 삭제하시겠습니까?", "삭제를 누르면 사진이 완전히 삭제됩니다.").show(supportFragmentManager, "")
                     }
                     PanoramaViewModel.Event.DeleteComplete -> {
-                        viewModel.sendingClickEvents("viewAlbum/dropDown/deleteAlbum")
-                        topToast("앨범이 삭제되었습니다.")
-                        finish()
+                        val index = panoramaAdapter.getItems().indexOfFirst { item -> (item.data as Item).isEnable }
+                        if (index > -1) {
+                            topToast("사진이 삭제되었습니다.")
+                            items.removeAt(index)
+                            panoramaAdapter.deleteItem(index)
+                            if (selectedIndex > items.lastIndex) selectedIndex = -1
+                            viewPagerSetting(items)
+                            if (items.size == 0) finish()
+                        }
                     }
                 }
             }
         }
     }
+
 
     private fun settingPanorama() {
         var currentPosition = RecyclerView.NO_POSITION
@@ -286,27 +171,6 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
         binding.vpPanorama.addOnPageChangeListener(vpListener)
     }
 
-    private val screenWidth: Int
-        get() {
-            val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val display = wm.defaultDisplay
-            val size = Point()
-            display.getSize(size)
-            return size.x
-        }
-
-    private fun recyclerSetting(data: List<MainFeedPictureData>) {
-        binding.groupEmpty.isVisible = data.isEmpty()
-        gridAdapter.setItems(data.map {
-            RecyclerItem(
-                PanoramaViewPagerAdapter.Item(
-                    it.imagePath,
-                    R.drawable.test_feed
-                ), R.layout.item_panorama_grid, BR.data
-            )
-        })
-    }
-
     private fun viewPagerSetting(data: List<MainFeedPictureData>) {
         binding.vpPanorama.adapter = PanoramaViewPagerAdapter().apply { setItems(data) }
         binding.vpPanorama.offscreenPageLimit = data.size
@@ -315,11 +179,12 @@ class PanoramaActivity : BaseActivity<ActivityPanoramaBinding, PanoramaViewModel
                 Item(
                     picture.imagePath,
                     R.drawable.test_feed,
-                    index == 0,
+                    index == selectedIndex,
                     (index + 1).toString()
                 ), R.layout.item_panorama_tab, BR.data
             )
         })
+        binding.vpPanorama.postDelayed({ binding.vpPanorama.setCurrentItem(selectedIndex, false) }, 300)
     }
 
     data class Item(

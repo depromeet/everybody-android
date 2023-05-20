@@ -1,4 +1,4 @@
-package com.def.everybody_android.ui.panorama.download
+package com.def.everybody_android.ui.album.download
 
 import android.content.Context
 import android.graphics.Point
@@ -19,8 +19,8 @@ import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityDownloadBinding
 import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.ui.dialog.message.MessageDialog
-import com.def.everybody_android.ui.panorama.PanoramaViewPagerAdapter
-import com.def.everybody_android.ui.panorama.download.loading.DownloadDialog
+import com.def.everybody_android.ui.album.PanoramaViewPagerAdapter
+import com.def.everybody_android.ui.album.download.loading.DownloadDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

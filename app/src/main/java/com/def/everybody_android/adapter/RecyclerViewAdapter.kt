@@ -70,6 +70,11 @@ class RecyclerViewAdapter(private val clickCallBack: (Any) -> Unit) :
         }
     }
 
+    fun deleteItem(index: Int) {
+        items.removeAt(index)
+        notifyItemRemoved(index)
+    }
+
     fun changeItem(item: RecyclerItem, position: Int) {
         items[position] = item
         notifyItemChanged(position)

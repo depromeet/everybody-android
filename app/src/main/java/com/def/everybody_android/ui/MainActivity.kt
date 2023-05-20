@@ -20,7 +20,7 @@ import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.feedback.FeedBackDialog
 import com.def.everybody_android.ui.dialog.message.MessageDialog
 import com.def.everybody_android.ui.dialog.migrations.MigrationsDialog
-import com.def.everybody_android.ui.panorama.PanoramaActivity
+import com.def.everybody_android.ui.album.AlbumActivity
 import com.def.everybody_android.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,7 +77,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     is MainViewModel.ClickEvent.PanoramaActivity -> startActivity(
                         Intent(
                             this@MainActivity,
-                            PanoramaActivity::class.java
+                            AlbumActivity::class.java
                         ).apply {
                             putExtra("id", it.data.id)
                         }
