@@ -28,7 +28,8 @@
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tw_title" />
+            app:layout_constraintTop_toTopOf="@id/tw_title"
+            app:tint="@color/text_primary" />
 
         <ImageView
             android:id="@+id/img_more"
@@ -39,7 +40,8 @@
             android:src="@drawable/ic_option"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tw_title"
@@ -47,7 +49,7 @@
             android:layout_height="48dp"
             android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
-            android:textColor="@color/black_333"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,10 +58,10 @@
 
         <TextView
             android:id="@+id/tw_whole"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:fontFamily="@font/lineseed_regular"
+            android:gravity="center"
             android:onClick="@{()->vm.onPoseType(1)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
@@ -68,14 +70,25 @@
             android:text="전신"
             android:textColor="@color/selector_purple_gray60"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/tw_upper"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tw_title" />
 
+        <View
+            android:id="@+id/vw_whole"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/purple"
+            app:layout_constraintBottom_toBottomOf="@id/tw_whole"
+            app:layout_constraintEnd_toEndOf="@id/tw_whole"
+            app:layout_constraintStart_toStartOf="@id/tw_whole" />
+
         <TextView
             android:id="@+id/tw_upper"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lineseed_regular"
+            android:gravity="center"
             android:onClick="@{()->vm.onPoseType(2)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
@@ -84,14 +97,25 @@
             android:text="상체"
             android:textColor="@color/selector_purple_gray60"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/tw_lower"
             app:layout_constraintStart_toEndOf="@id/tw_whole"
             app:layout_constraintTop_toBottomOf="@id/tw_title" />
 
+        <View
+            android:id="@+id/vw_upper"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/purple"
+            app:layout_constraintBottom_toBottomOf="@id/tw_upper"
+            app:layout_constraintEnd_toEndOf="@id/tw_upper"
+            app:layout_constraintStart_toStartOf="@id/tw_upper" />
+
         <TextView
             android:id="@+id/tw_lower"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lineseed_regular"
+            android:gravity="center"
             android:onClick="@{()->vm.onPoseType(3)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
@@ -100,22 +124,18 @@
             android:text="하체"
             android:textColor="@color/selector_purple_gray60"
             android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tw_upper"
             app:layout_constraintTop_toBottomOf="@id/tw_title" />
 
-        <ImageView
-            android:id="@+id/img_list_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:onClick="@{()->vm.onClickEvent(Event.ListType.INSTANCE)}"
-            android:paddingStart="12dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="16dp"
-            android:src="@drawable/selector_panorama_list"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tw_title" />
+        <View
+            android:id="@+id/vw_lower"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/purple"
+            app:layout_constraintBottom_toBottomOf="@id/tw_lower"
+            app:layout_constraintEnd_toEndOf="@id/tw_lower"
+            app:layout_constraintStart_toStartOf="@id/tw_lower" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_grid"
@@ -258,7 +278,7 @@
                 android:fontFamily="@font/lineseed_regular"
                 android:onClick="@{()->vm.onClickEvent(Event.Edit.INSTANCE)}"
                 android:text="사진 선택"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_edit"
                 app:layout_constraintEnd_toStartOf="@id/img_edit"
@@ -274,7 +294,7 @@
                 android:fontFamily="@font/lineseed_regular"
                 android:onClick="@{()->vm.onClickEvent(Event.AlbumEdit.INSTANCE)}"
                 android:text="앨범 이름 수정"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_more_edit"
                 app:layout_constraintEnd_toStartOf="@id/img_more_edit"
@@ -306,7 +326,7 @@
                 android:fontFamily="@font/lineseed_regular"
                 android:onClick="@{()->vm.onClickEvent(Event.Share.INSTANCE)}"
                 android:text="동영상 저장"
-                android:textColor="@color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/img_more_share"
                 app:layout_constraintEnd_toStartOf="@id/img_more_edit"

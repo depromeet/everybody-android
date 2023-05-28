@@ -14,8 +14,8 @@
         android:layout_height="match_parent">
 
         <ImageView
-            imageUrl="@{data.imageUrl}"
-            placeholder="@{data.holder}"
+            imagePanoramaUrl="@{data.imageUrl}"
+            placeholderPanorama="@{data.holder}"
             android:id="@+id/img"
             android:scaleType="fitXY"
             android:layout_width="match_parent"

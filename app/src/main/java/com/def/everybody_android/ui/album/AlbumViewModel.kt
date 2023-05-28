@@ -36,7 +36,6 @@ class AlbumViewModel @Inject constructor() : BaseViewModel() {
     sealed class Event {
         object Close : Event()
         object Edit : Event()
-        object ListType : Event()
         object Camera : Event()
         object More : Event()
         object AlbumDelete : Event()

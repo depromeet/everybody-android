@@ -38,7 +38,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/lineseed_bold"
             android:text="@string/setting_profile"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
             android:hint="닉네임을 입력해주세요"
             android:text="눈바디"
             android:textColor="@color/text_secondary"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/text_primary"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/tv_nickname"
             app:layout_constraintTop_toBottomOf="@+id/iv_profile_image" />
@@ -131,7 +131,7 @@
             android:fontFamily="@font/lineseed_regular"
             android:text="천천히 그리고 꾸준히"
             android:textColor="@color/text_secondary"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/text_primary"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/tv_nickname"
             app:layout_constraintTop_toBottomOf="@+id/view_nickname_bottom" />

@@ -2,7 +2,6 @@ package com.def.everybody_android.ui.album
 
 import android.content.Intent
 import androidx.activity.viewModels
-import androidx.annotation.DrawableRes
 import androidx.core.view.isVisible
 import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
@@ -114,10 +113,6 @@ class AlbumActivity : BaseActivity<ActivityAlbumBinding, AlbumViewModel>() {
                             }
                         )
                     }
-                    AlbumViewModel.Event.ListType -> {
-                        binding.imgListType.isSelected = !binding.imgListType.isSelected
-                        binding.recyclerGrid.isVisible = binding.imgListType.isSelected
-                    }
                     AlbumViewModel.Event.Camera -> {
                         viewModel.sendingClickEvents("selectPhoto/btn/addPhoto")
                         startActivity(
@@ -133,6 +128,9 @@ class AlbumActivity : BaseActivity<ActivityAlbumBinding, AlbumViewModel>() {
                         binding.twWhole.isSelected = it.type == 1
                         binding.twUpper.isSelected = it.type == 2
                         binding.twLower.isSelected = it.type == 3
+                        binding.vwWhole.isVisible = it.type == 1
+                        binding.vwUpper.isVisible = it.type == 2
+                        binding.vwLower.isVisible = it.type == 3
                         binding.twWhole.typeface =
                             typeFace(if (it.type == 1) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twUpper.typeface =

@@ -54,7 +54,7 @@
             android:fontFamily="@font/lineseed_regular"
             android:onClick="@{()->vm.onClickEvent(Event.Cancel.INSTANCE)}"
             android:text="취소"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tw_complete"
