@@ -23,7 +23,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:onClick="@{()->vm.onClickEvent(ClickEvent.WeightCheck.INSTANCE)}"
             android:src="@drawable/selector_alarm"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
             app:np_dividerThickness="0dp"
             app:np_selectedTextColor="@color/black"
             app:np_selectedTextSize="16sp"
-            app:np_textColor="@color/gray_40"
+            app:np_textColor="@color/text_tertiary"
             app:np_textSize="12sp"
             app:np_wheelItemCount="3"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -73,7 +73,7 @@
             app:np_dividerThickness="0dp"
             app:np_selectedTextColor="@color/black"
             app:np_selectedTextSize="16sp"
-            app:np_textColor="@color/gray_40"
+            app:np_textColor="@color/text_tertiary"
             app:np_textSize="12sp"
             tools:ignore="SpeakableTextPresentCheck" />
 

@@ -24,7 +24,7 @@
             android:layout_marginTop="32dp"
             android:fontFamily="@font/lineseed_bold"
             android:text="폴더명을 입력해주세요."
-            android:textColor="@color/gray_90"
+            android:textColor="@color/text_primary"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
             android:background="@drawable/rectangle_title_edit"
             android:fontFamily="@font/lineseed_regular"
             android:onTextChanged="@{vm::onNameChanged}"
-            android:textColor="@color/gray_90"
+            android:textColor="@color/text_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tw_title" />

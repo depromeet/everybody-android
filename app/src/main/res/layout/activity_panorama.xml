@@ -22,7 +22,8 @@
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tw_title" />
+            app:layout_constraintTop_toTopOf="@id/tw_title"
+            app:tint="@color/text_primary" />
 
         <ImageView
             android:id="@+id/img_more"
@@ -33,7 +34,8 @@
             android:src="@drawable/ic_del"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tw_title"
@@ -41,7 +43,7 @@
             android:layout_height="48dp"
             android:fontFamily="@font/lineseed_regular"
             android:gravity="center"
-            android:textColor="@color/black_333"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

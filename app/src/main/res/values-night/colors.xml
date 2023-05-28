@@ -10,15 +10,30 @@
     <color name="icActive">#FFFFFFFF</color>
     <color name="icFocused">#DDFFFFFF</color>
     <color name="icPressed">#AAFFFFFF</color>
-    <color name="gray_10">#F8F9FA</color>
-    <color name="gray_20">#EAECEF</color>
-    <color name="gray_30">#DFE2E6</color>
-    <color name="gray_40">#CFD4D9</color>
-    <color name="gray_50">#AEB5BC</color>
-    <color name="gray_60">#878E95</color>
-    <color name="gray_70">#878E95</color>
-    <color name="gray_80">#353A3F</color>
-    <color name="gray_90">#222529</color>
+
+    <color name="blue_gray_50">#FAFAFB</color>
+    <color name="blue_gray_100">#EEEFF1</color>
+    <color name="blue_gray_200">#E3E5E8</color>
+    <color name="blue_gray_300">#CCD1D6</color>
+    <color name="blue_gray_400">#BEC4CD</color>
+    <color name="blue_gray_500">#8D97A5</color>
+    <color name="blue_gray_600">#6E7987</color>
+    <color name="blue_gray_700">#4B5562</color>
+    <color name="blue_gray_800">#343E4B</color>
+    <color name="blue_gray_900">#191F28</color>
+
+    <color name="background_default">@color/black</color>
+    <color name="background_neutral">#F0000000</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#D9FFFFFF</color>
+    <color name="text_tertiary">#A6FFFFFF</color>
+    <color name="text_disabled">#80FFFFFF</color>
+    <color name="input_background">#0FFFFFFF</color>
+    <color name="input_border">#000000</color>
+    <color name="toast_background">@color/purple_200</color>
+    <color name="toast_border">@color/purple_700</color>
+    <color name="toast_text">@color/purple_700</color>
+
     <color name="purple">#7448FF</color>
     <color name="purple_op90">#E67448FF</color>
     <color name="purple_op80">#CC7448FF</color>

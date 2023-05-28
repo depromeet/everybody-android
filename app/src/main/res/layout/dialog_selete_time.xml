@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="320dp"
         android:layout_height="227dp"
-        android:background="@color/white">
+        android:background="@color/background_default">
 
         <com.shawnlin.numberpicker.NumberPicker
             android:id="@+id/np_hour"
@@ -31,7 +31,7 @@
             app:np_min="1"
             app:np_selectedTextColor="@color/black"
             app:np_selectedTextSize="18sp"
-            app:np_textColor="@color/gray_60"
+            app:np_textColor="@color/text_tertiary"
             app:np_textSize="12sp"
             app:np_wheelItemCount="3" />
 
@@ -67,7 +67,7 @@
             app:np_min="0"
             app:np_selectedTextColor="@color/black"
             app:np_selectedTextSize="18sp"
-            app:np_textColor="@color/gray_60"
+            app:np_textColor="@color/text_tertiary"
             app:np_textSize="12sp"
             app:np_wheelItemCount="3" />
 
@@ -75,7 +75,7 @@
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:fontFamily="@font/lineseed_regular"
             android:text="취소"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +86,7 @@
             android:id="@+id/btn_check"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:fontFamily="@font/lineseed_regular"
             android:text="확인"
             android:textColor="@color/purple"
