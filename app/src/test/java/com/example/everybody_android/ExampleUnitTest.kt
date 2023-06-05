@@ -1,4 +1,4 @@
-package com.def.everybody_android
+package com.example.everybody_android
 
 import org.junit.Test
 
