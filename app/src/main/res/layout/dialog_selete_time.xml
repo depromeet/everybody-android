@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="320dp"
         android:layout_height="227dp"
-        android:background="@color/white">
+        android:background="@color/background_default">
 
         <com.shawnlin.numberpicker.NumberPicker
             android:id="@+id/np_hour"
@@ -29,9 +29,9 @@
             app:np_dividerThickness="0dp"
             app:np_max="24"
             app:np_min="1"
-            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextColor="@color/text_primary"
             app:np_selectedTextSize="18sp"
-            app:np_textColor="@color/gray_60"
+            app:np_textColor="@color/text_tertiary"
             app:np_textSize="12sp"
             app:np_wheelItemCount="3" />
 
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:text=":"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/np_hour"
@@ -65,9 +65,9 @@
             app:np_dividerThickness="0dp"
             app:np_max="59"
             app:np_min="0"
-            app:np_selectedTextColor="@color/black"
+            app:np_selectedTextColor="@color/text_primary"
             app:np_selectedTextSize="18sp"
-            app:np_textColor="@color/gray_60"
+            app:np_textColor="@color/text_tertiary"
             app:np_textSize="12sp"
             app:np_wheelItemCount="3" />
 
@@ -75,8 +75,8 @@
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="@color/white"
-            android:fontFamily="@font/pretendard_regular"
+            android:background="@color/background_default"
+            android:fontFamily="@font/lineseed_regular"
             android:text="취소"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_check"
@@ -86,10 +86,10 @@
             android:id="@+id/btn_check"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:background="@color/white"
-            android:fontFamily="@font/pretendard_regular"
+            android:background="@color/background_default"
+            android:fontFamily="@font/lineseed_regular"
             android:text="확인"
-            android:textColor="#7448FF"
+            android:textColor="@color/purple"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_cancel" />

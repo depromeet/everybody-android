@@ -1,20 +1,17 @@
-package com.def.everybody_android.ui.panorama.edit
+package com.def.everybody_android.ui.album.edit
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import com.def.everybody_android.*
 import com.def.everybody_android.adapter.RecyclerItem
 import com.def.everybody_android.adapter.RecyclerViewAdapter
 import com.def.everybody_android.base.BaseActivity
-import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ActivityPanoramaEditBinding
 import com.def.everybody_android.db.MainFeedPictureData
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.delete.DeleteDialog
-import com.def.everybody_android.ui.dialog.service.ServiceDialog
-import com.def.everybody_android.ui.panorama.PanoramaItemDecoration
+import com.def.everybody_android.ui.album.PanoramaItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -93,11 +90,11 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                         binding.twUpper.isSelected = it.type == 2
                         binding.twLower.isSelected = it.type == 3
                         binding.twWhole.typeface =
-                            typeFace(if (it.type == 1) R.font.pretendard_bold else R.font.pretendard_regular)
+                            typeFace(if (it.type == 1) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twUpper.typeface =
-                            typeFace(if (it.type == 2) R.font.pretendard_bold else R.font.pretendard_regular)
+                            typeFace(if (it.type == 2) R.font.lineseed_bold else R.font.lineseed_regular)
                         binding.twLower.typeface =
-                            typeFace(if (it.type == 3) R.font.pretendard_bold else R.font.pretendard_regular)
+                            typeFace(if (it.type == 3) R.font.lineseed_bold else R.font.lineseed_regular)
                         val list = when (it.type) {
                             1 -> {
                                 viewModel.sendingClickEvents("selectPhoto/tab/whole")
@@ -117,7 +114,7 @@ class PanoramaEditActivity : BaseActivity<ActivityPanoramaEditBinding, PanoramaE
                     PanoramaEditViewModel.Event.DeleteComplete -> {
                         deleteCount--
                         if (deleteCount == 0) {
-                            toast(R.drawable.ic_toast_delete)
+                            topToast("사진이 삭제되었습니다.")
                             finish()
                         }
                     }

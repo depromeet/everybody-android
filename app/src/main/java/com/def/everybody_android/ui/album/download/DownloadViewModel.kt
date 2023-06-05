@@ -1,4 +1,4 @@
-package com.def.everybody_android.ui.panorama.download
+package com.def.everybody_android.ui.album.download
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope

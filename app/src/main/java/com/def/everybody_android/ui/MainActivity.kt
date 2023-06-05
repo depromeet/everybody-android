@@ -12,17 +12,14 @@ import com.def.everybody_android.R
 import com.def.everybody_android.base.BaseActivity
 import com.def.everybody_android.databinding.ActivityMainBinding
 import com.def.everybody_android.di.HiltApplication.Companion.userData
-import com.def.everybody_android.dto.UserData
-import com.def.everybody_android.dto.request.SignInRequest
 import com.def.everybody_android.pref.LocalStorage
 import com.def.everybody_android.repeatOnStarted
+import com.def.everybody_android.ui.album.AlbumActivity
 import com.def.everybody_android.ui.camera.CameraActivity
 import com.def.everybody_android.ui.dialog.feedback.FeedBackDialog
 import com.def.everybody_android.ui.dialog.message.MessageDialog
 import com.def.everybody_android.ui.dialog.migrations.MigrationsDialog
-import com.def.everybody_android.ui.panorama.PanoramaActivity
 import com.def.everybody_android.viewmodel.MainViewModel
-import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -45,14 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun init() {
         liveEvent()
         deviceToken()
-        fcmToken()
         feedSort()
-    }
-
-    private fun sign() {
-        if (localStorage.getUserId() >= 0) {
-            viewModel.signIn(SignInRequest(localStorage.getUserId(), "1234"))
-        }
     }
 
     override fun onResume() {
@@ -77,7 +67,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     is MainViewModel.ClickEvent.PanoramaActivity -> startActivity(
                         Intent(
                             this@MainActivity,
-                            PanoramaActivity::class.java
+                            AlbumActivity::class.java
                         ).apply {
                             putExtra("id", it.data.id)
                         }
@@ -105,31 +95,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
     }
 
-    private fun user(data: UserData) {
-        binding.tvNickname.text = data.nickName
-        binding.tvGoal.text = data.motto
-    }
-
     private fun feedSort() {
-
         if (viewModel.fullFeedAdapter.itemCount != 0) binding.clNoFeed.visibility = View.GONE
-
         if (!feedStatus) {
             binding.rvFullSort.visibility = View.VISIBLE
-            binding.rvHalfSort.visibility = View.GONE
+            binding.rvHalfSort.visibility = View.INVISIBLE
         } else {
-            binding.rvFullSort.visibility = View.GONE
+            binding.rvFullSort.visibility = View.INVISIBLE
             binding.rvHalfSort.visibility = View.VISIBLE
         }
         feedStatus = !feedStatus
-    }
-
-    private fun fcmToken() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            localStorage.saveFcmToken(it)
-            println("Token $it")
-            if (!sharedPreferences.getBoolean("isMigration", false)) sign()
-        }
     }
 
     @SuppressLint("HardwareIds")

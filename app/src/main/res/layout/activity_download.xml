@@ -5,17 +5,17 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.panorama.download.DownloadViewModel.Event" />
+        <import type="com.def.everybody_android.ui.album.download.DownloadViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.def.everybody_android.ui.panorama.download.DownloadViewModel" />
+            type="com.def.everybody_android.ui.album.download.DownloadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@color/text_primary"
         android:fitsSystemWindows="true">
 
 
@@ -35,7 +35,7 @@
             android:id="@+id/tw_title"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="18sp"

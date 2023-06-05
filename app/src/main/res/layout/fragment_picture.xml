@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/background_default">
 
         <ScrollView
             android:layout_width="0dp"
@@ -56,11 +56,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginBottom="24dp"
-                        android:textColor="@color/gray_10"
+                        android:textColor="@color/background_neutral"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:fontFamily="@font/pretendard_regular"
+                        android:fontFamily="@font/lineseed_regular"
                         tools:text="2021.10.01 AM 9:00" />
 
                     <TextView
@@ -69,17 +69,17 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="@id/tw_date"
                         app:layout_constraintBottom_toTopOf="@id/tw_date"
-                        android:textColor="@color/gray_10"
+                        android:textColor="@color/background_neutral"
                         android:textSize="30sp"
                         tools:text="61.3kg"
-                        android:fontFamily="@font/pretendard_regular"/>
+                        android:fontFamily="@font/lineseed_regular"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:id="@+id/tw_part_choice"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:fontFamily="@font/pretendard_bold"
+                    android:fontFamily="@font/lineseed_bold"
                     android:onClick="@{()->vm.onClickEvent(ClickEvent.PartTab.INSTANCE)}"
                     android:text="부위 선택"
                     android:textColor="@color/selector_purple_black333"
@@ -93,7 +93,7 @@
                     android:id="@+id/tw_time_choice"
                     android:layout_width="0dp"
                     android:layout_height="48dp"
-                    android:fontFamily="@font/pretendard_bold"
+                    android:fontFamily="@font/lineseed_bold"
                     android:onClick="@{()->vm.onClickEvent(ClickEvent.TimeTab.INSTANCE)}"
                     android:text="시간 입력"
                     android:gravity="center"
@@ -108,7 +108,7 @@
                     android:layout_width="0dp"
                     android:layout_height="48dp"
                     android:gravity="center"
-                    android:fontFamily="@font/pretendard_bold"
+                    android:fontFamily="@font/lineseed_bold"
                     android:onClick="@{()->vm.onClickEvent(ClickEvent.WeightTab.INSTANCE)}"
                     android:text="몸무게"
                     android:textColor="@color/selector_purple_black333"

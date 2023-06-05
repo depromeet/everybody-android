@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +30,8 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="34dp"
             android:text="@string/type_folder_name"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/gray_90"
+            android:fontFamily="@font/lineseed_bold"
+            android:textColor="@color/text_primary"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ib_before" />
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="34dp"
             android:src="@drawable/ic_gray_storage"
-            android:background="@color/white"
+            android:background="@color/background_default"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

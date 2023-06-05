@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.panorama.download.DownloadViewModel.Event" />
+        <import type="com.def.everybody_android.ui.album.download.DownloadViewModel.Event" />
 
         <variable
             name="data"
-            type="com.def.everybody_android.ui.panorama.download.DownloadActivity.Item" />
+            type="com.def.everybody_android.ui.album.download.DownloadActivity.Item" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:enabled="@{data.enable}"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
             android:maxLines="1"
             android:text="@{data.count}"

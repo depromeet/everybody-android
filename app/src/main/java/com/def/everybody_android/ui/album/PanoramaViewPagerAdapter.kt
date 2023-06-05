@@ -1,4 +1,4 @@
-package com.def.everybody_android.ui.panorama
+package com.def.everybody_android.ui.album
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.viewpager.widget.PagerAdapter
 import com.def.everybody_android.R
-import com.def.everybody_android.data.response.base.Picture
 import com.def.everybody_android.databinding.ItemPanoramaListBinding
 import com.def.everybody_android.db.MainFeedPictureData
 

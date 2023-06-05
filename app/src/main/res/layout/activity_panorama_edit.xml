@@ -5,17 +5,17 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.panorama.edit.PanoramaEditViewModel.Event" />
+        <import type="com.def.everybody_android.ui.album.edit.PanoramaEditViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.def.everybody_android.ui.panorama.edit.PanoramaEditViewModel" />
+            type="com.def.everybody_android.ui.album.edit.PanoramaEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/background_default">
 
         <ImageView
             android:id="@+id/img_share"
@@ -26,7 +26,8 @@
             android:src="@drawable/ic_del"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tw_title"
@@ -34,13 +35,13 @@
             android:layout_height="48dp"
             android:layout_marginStart="20dp"
             android:drawablePadding="8dp"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
             android:onClick="@{()->vm.onClickEvent(Event.Close.INSTANCE)}"
-            android:textColor="#333333"
+            android:textColor="@color/text_primary"
             android:textSize="14sp"
             app:drawableLeftCompat="@drawable/ic_close"
-            app:drawableTint="#333333"
+            app:drawableTint="@color/text_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="사진 촬영" />
@@ -50,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:onClick="@{()->vm.onPoseType(1)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
@@ -66,7 +67,7 @@
             android:id="@+id/tw_upper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:onClick="@{()->vm.onPoseType(2)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
@@ -82,7 +83,7 @@
             android:id="@+id/tw_lower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:onClick="@{()->vm.onPoseType(3)}"
             android:paddingStart="12dp"
             android:paddingTop="16dp"

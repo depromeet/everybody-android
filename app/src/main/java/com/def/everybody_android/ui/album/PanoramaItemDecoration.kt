@@ -1,4 +1,4 @@
-package com.def.everybody_android.ui.panorama
+package com.def.everybody_android.ui.album
 
 import android.graphics.Rect
 import android.view.View

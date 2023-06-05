@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="com.def.everybody_android.ui.panorama.download.loading.DownloadViewModel.Event" />
+        <import type="com.def.everybody_android.ui.album.download.loading.DownloadViewModel.Event" />
 
         <variable
             name="vm"
-            type="com.def.everybody_android.ui.panorama.download.loading.DownloadViewModel" />
+            type="com.def.everybody_android.ui.album.download.loading.DownloadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,9 +27,9 @@
             android:layout_marginStart="55dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="55dp"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,10 +70,10 @@
             android:layout_marginStart="55dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="55dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:gravity="center"
             android:text="@string/str_download"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:onClick="@{()->vm.onClickEvent(Event.Confirm.INSTANCE)}"
             android:text="@string/str_cancel"
             android:textSize="18sp"

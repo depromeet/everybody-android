@@ -18,8 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:src="@drawable/ic_back"
+            android:tint="@color/text_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +31,7 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="34dp"
             android:text="@string/select_day"
-            android:textColor="@color/gray_90"
+            android:textColor="@color/text_primary"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageButton" />
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="13dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:src="@drawable/ic_one_week"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="13dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:src="@drawable/ic_one_month"
             app:layout_constraintStart_toEndOf="@+id/ib_one_week"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -63,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="13dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:src="@drawable/ic_three_month"
             app:layout_constraintStart_toEndOf="@+id/ib_one_month"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -75,7 +76,7 @@
             android:layout_marginStart="68dp"
             android:layout_marginTop="43dp"
             android:text="@string/start_day"
-            android:textColor="@color/gray_90"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ib_one_week" />

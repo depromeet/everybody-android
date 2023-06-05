@@ -22,14 +22,14 @@
     <color name="blue_gray_800">#343E4B</color>
     <color name="blue_gray_900">#191F28</color>
 
-    <color name="background_default">@color/white</color>
-    <color name="background_neutral">#0F000000</color>
-    <color name="text_primary">@color/blue_gray_800</color>
-    <color name="text_secondary">@color/blue_gray_700</color>
-    <color name="text_tertiary">@color/blue_gray_500</color>
-    <color name="text_disabled">#80343E4B</color>
-    <color name="input_background">@color/white</color>
-    <color name="input_border">#EAECEF</color>
+    <color name="background_default">@color/black</color>
+    <color name="background_neutral">#F0000000</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#D9FFFFFF</color>
+    <color name="text_tertiary">#A6FFFFFF</color>
+    <color name="text_disabled">#80FFFFFF</color>
+    <color name="input_background">#0FFFFFFF</color>
+    <color name="input_border">#000000</color>
     <color name="toast_background">@color/purple_200</color>
     <color name="toast_border">@color/purple_700</color>
     <color name="toast_text">@color/purple_700</color>

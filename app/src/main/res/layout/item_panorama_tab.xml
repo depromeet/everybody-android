@@ -30,7 +30,7 @@
             android:background="@drawable/rectangle_radius_12"
             android:backgroundTint="@color/selector_purple_white"
             android:enabled="@{data.enable}"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
             android:maxLength="4"
             android:text="@{data.count}"

@@ -81,6 +81,7 @@ dependencies {
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
+    androidTestImplementation 'junit:junit:4.12'
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 

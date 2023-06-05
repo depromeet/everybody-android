@@ -16,7 +16,7 @@
         android:id="@+id/motion_camera"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/background_default"
         app:layoutDescription="@xml/scene_camera">
 
         <ImageView
@@ -28,7 +28,8 @@
             android:src="@drawable/ic_back"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tw_title" />
+            app:layout_constraintTop_toTopOf="@id/tw_title"
+            app:tint="@color/text_primary" />
 
 
         <ImageView
@@ -40,16 +41,17 @@
             android:src="@drawable/ic_switch"
             app:layout_constraintBottom_toBottomOf="@id/tw_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tw_title" />
+            app:layout_constraintTop_toTopOf="@id/tw_title"
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tw_title"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:fontFamily="@font/pretendard_bold"
+            android:fontFamily="@font/lineseed_bold"
             android:gravity="center"
             android:text="사진 촬영"
-            android:textColor="#333333"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +111,7 @@
             android:id="@+id/tw_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/lineseed_regular"
             android:gravity="center"
             android:text="원하는 포즈를 선택하세요"
             android:textColor="@color/white"
@@ -129,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="72dp"
             android:layout_marginBottom="26dp"
-            android:background="@color/white"
+            android:background="@color/background_default"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="20dp"
@@ -170,10 +172,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:fontFamily="@font/pretendard_semibold"
+            android:fontFamily="@font/lineseed_bold"
             android:onClick="@{()->vm.onClickEvent(ClickEvent.Pose.INSTANCE)}"
             android:text="포즈"
-            android:textColor="@color/gray_90"
+            android:textColor="@color/text_primary"
             app:layout_constraintBottom_toBottomOf="@id/img_shutter"
             app:layout_constraintEnd_toEndOf="@id/img_pose"
             app:layout_constraintStart_toStartOf="@id/img_pose"
@@ -190,17 +192,18 @@
             app:layout_constraintEnd_toStartOf="@id/img_shutter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/img_shutter"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            app:tint="@color/text_primary" />
 
         <TextView
             android:id="@+id/tw_album"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:fontFamily="@font/pretendard_semibold"
+            android:fontFamily="@font/lineseed_bold"
             android:onClick="@{()->vm.onClickEvent(ClickEvent.Album.INSTANCE)}"
             android:text="앨범"
-            android:textColor="@color/gray_90"
+            android:textColor="@color/text_primary"
             app:layout_constraintBottom_toBottomOf="@id/img_shutter"
             app:layout_constraintEnd_toEndOf="@id/img_album"
             app:layout_constraintStart_toStartOf="@id/img_album"
@@ -221,7 +224,8 @@
             android:src="@drawable/ic_expand"
             app:layout_constraintBottom_toBottomOf="@id/img_shutter"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/img_shutter" />
+            app:layout_constraintTop_toTopOf="@id/img_shutter"
+            app:tint="@color/text_primary" />
 
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
